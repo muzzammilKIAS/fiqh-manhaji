@@ -1,0 +1,14 @@
+{
+  "name": "fiqh-manhaji-ibadat",
+  "version": "1.0.0",
+  "private": true,
+  "description": "موسوعة الفقه المنهجي – قسم العبادات: database-driven Arabic RTL encyclopedia (single-file web app)",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "test": "node tests/smoke.test.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0",
+    "jszip": "3.10.1"
+  }
+}

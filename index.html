@@ -1,0 +1,2372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>موسوعة الفقه المنهجي – قسم العبادات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- ================================================================
+     CSS
+     ================================================================ -->
+<style>
+:root{
+  --bg:#F6F5F0; --surface:#FFFFFF; --surface-2:#F0EEE6; --ink:#1B2621; --muted:#56615B;
+  --line:#E2DFD4; --emerald:#145A41; --emerald-2:#1E7356; --emerald-soft:#E6EFEA;
+  --gold:#94732F; --gold-line:#C9AE6E; --gold-soft:#F6EFDD; --quran:#F2F7F4; --danger:#9B2C2C;
+  --ui:'Cairo', 'Segoe UI', Tahoma, 'Noto Sans Arabic', sans-serif;
+  --nass:'Amiri', 'Traditional Arabic', 'Times New Roman', serif;
+  --ease:cubic-bezier(.25,1,.5,1);
+  --bar:60px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1412; --surface:#141E1A; --surface-2:#1A2622; --ink:#E7E5DC; --muted:#A3ADA7;
+    --line:#2A3833; --emerald:#7CC9A7; --emerald-2:#95D6BA; --emerald-soft:#173029;
+    --gold:#D2B46C; --gold-line:#8C7542; --gold-soft:#2A2617; --quran:#12221C; --danger:#E08585;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1412; --surface:#141E1A; --surface-2:#1A2622; --ink:#E7E5DC; --muted:#A3ADA7;
+  --line:#2A3833; --emerald:#7CC9A7; --emerald-2:#95D6BA; --emerald-soft:#173029;
+  --gold:#D2B46C; --gold-line:#8C7542; --gold-soft:#2A2617; --quran:#12221C; --danger:#E08585;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--bar) + 12px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.8}
+img{max-width:100%}
+a{color:var(--emerald-2)}
+:focus-visible{outline:2px solid var(--emerald-2);outline-offset:2px;border-radius:4px}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{line-height:1.4;margin:0}
+p{margin:0 0 .8em}
+[hidden]{display:none!important}
+
+/* ---------- top bar ---------- */
+.demo-ribbon{background:var(--gold-soft);color:var(--ink);border-bottom:1px solid var(--gold-line);font-size:.86rem;padding:.4rem 1rem;text-align:center}
+.demo-ribbon a{font-weight:700}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;height:var(--bar);display:flex;align-items:center;gap:.75rem;padding:0 1rem;background:var(--surface);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--emerald);font-family:var(--nass);font-size:1.45rem;font-weight:700;white-space:nowrap}
+.brand svg{width:22px;height:22px;color:var(--gold)}
+.top-search{flex:1;max-width:420px;margin-inline-start:auto;position:relative}
+.top-search input{width:100%;height:40px;border:1px solid var(--line);background:var(--bg);border-radius:20px;padding:0 2.4rem 0 1rem}
+.top-search svg{position:absolute;inset-inline-start:.8rem;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
+.icon-btn{display:inline-grid;place-items:center;width:40px;height:40px;border:1px solid transparent;background:none;border-radius:10px;cursor:pointer;color:var(--ink)}
+.icon-btn:hover{background:var(--surface-2)}
+.icon-btn svg{width:22px;height:22px}
+.menu-btn,.search-link{display:none}
+.theme-btn{border:1px solid var(--line);background:var(--surface);border-radius:20px;height:38px;padding:0 .9rem;cursor:pointer;white-space:nowrap;font-size:.88rem}
+.theme-btn:hover{background:var(--surface-2)}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:272px minmax(0,1fr)}
+.sidebar{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--bar));align-self:start;height:calc(100vh - var(--bar) - env(safe-area-inset-top,0px));overflow:auto;border-inline-end:1px solid var(--line);background:var(--surface);padding:1.1rem .8rem 1.5rem;display:flex;flex-direction:column}
+.nav a{display:flex;align-items:center;gap:.6rem;padding:.5rem .75rem;border-radius:10px;color:var(--ink);text-decoration:none;font-size:.97rem}
+.nav a:hover{background:var(--surface-2)}
+.nav a[aria-current="page"]{background:var(--emerald-soft);color:var(--emerald);font-weight:700}
+.nav-group{margin:.9rem .75rem .3rem;color:var(--muted);font-size:.85rem;font-weight:600}
+.tree{list-style:none;margin:0 0 .6rem;padding:0 .9rem 0 0;border-inline-start:2px solid var(--line);margin-inline-start:1.1rem}
+.tree a{font-size:.95rem}
+.tree .cnt{margin-inline-start:auto;color:var(--muted);font-size:.8rem}
+.nav-sep{height:1px;background:var(--line);margin:.6rem .5rem}
+.side-foot{margin-top:auto;padding:1rem .75rem 0;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+.side-foot a{color:var(--muted)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);margin-inline-end:.4rem;vertical-align:middle}
+.dot.on{background:var(--emerald-2)}.dot.demo{background:var(--gold)}
+.scrim{display:none}
+
+main{min-width:0;padding:1.25rem clamp(1rem,4vw,3rem) 0}
+.content{max-width:880px;margin-inline:auto;min-height:60vh}
+.crumbs{max-width:880px;margin:0 auto 1.25rem;font-size:.86rem;color:var(--muted)}
+.crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.15rem .4rem;align-items:center}
+.crumbs li+li::before{content:"‹";margin-inline-end:.4rem;color:var(--gold)}
+.crumbs a{color:var(--muted);text-decoration:none}.crumbs a:hover{color:var(--emerald-2);text-decoration:underline}
+.crumbs [aria-current]{color:var(--ink);font-weight:600}
+
+/* ---------- ornament ---------- */
+.orn{display:flex;align-items:center;gap:.8rem;color:var(--gold);margin:1rem 0}
+.orn::before,.orn::after{content:"";flex:1;height:1px;background:var(--gold-line)}
+.orn svg{width:20px;height:20px}
+.orn.short{max-width:260px;margin-inline:auto}
+
+/* ---------- hero ---------- */
+.hero{position:relative;text-align:center;padding:2.5rem 1rem 2rem;margin-bottom:1.5rem;overflow:hidden;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;opacity:.45;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23A8833A' stroke-opacity='.16'%3E%3Crect x='18' y='18' width='20' height='20'/%3E%3Crect x='18' y='18' width='20' height='20' transform='rotate(45 28 28)'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-image:radial-gradient(ellipse at center,transparent 35%,#000 85%);mask-image:radial-gradient(ellipse at center,transparent 35%,#000 85%)}
+.hero>*{position:relative}
+.hero-title{font-family:var(--nass);font-weight:700;color:var(--emerald);font-size:clamp(2.7rem,9vw,4.6rem);line-height:1.15}
+.hero-sub{font-family:var(--nass);font-size:clamp(1.2rem,3.5vw,1.6rem);margin:.2rem 0 0}
+.hero-part{display:inline-block;margin:0 0 .9rem;padding:.15rem 1.1rem;border:1px solid var(--gold-line);border-radius:999px;color:var(--gold);font-weight:700}
+.hero-desc{max-width:560px;margin:0 auto 1.3rem;color:var(--muted)}
+.hero-search{display:flex;gap:.5rem;max-width:520px;margin:0 auto}
+.hero-search input{flex:1;min-width:0;height:48px;border:1px solid var(--line);border-radius:12px;padding:0 1rem;background:var(--bg)}
+
+/* ---------- generic ---------- */
+.h2{font-size:1.2rem;color:var(--emerald);margin:2rem 0 .9rem;display:flex;align-items:center;gap:.5rem}
+.h2 small{color:var(--muted);font-weight:400;font-size:.85rem}
+.page-head{margin-bottom:1.2rem}
+.page-head h1{font-size:clamp(1.6rem,4.5vw,2.2rem);color:var(--emerald);font-family:var(--nass)}
+.page-head p{color:var(--muted);margin:.3rem 0 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;height:42px;padding:0 1.1rem;border-radius:10px;border:1px solid var(--emerald);background:var(--emerald);color:var(--surface);text-decoration:none;font-weight:600;cursor:pointer;white-space:nowrap}
+:root[data-theme="dark"] .btn{color:#0D1412}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#0D1412}}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--emerald);border-color:var(--line)}
+.btn.ghost:hover{background:var(--surface-2);filter:none}
+.btn.sm{height:36px;padding:0 .85rem;font-size:.9rem}
+.notice{border:1px solid var(--line);border-inline-start:4px solid var(--danger);background:var(--surface);border-radius:12px;padding:.9rem 1.1rem;margin:1rem 0}
+.notice.demo{border-inline-start-color:var(--gold);background:var(--gold-soft)}
+.notice.ok{border-inline-start-color:var(--emerald-2)}
+.notice strong{display:block}
+.empty{text-align:center;padding:2.5rem 1rem;border:1px dashed var(--line);border-radius:14px;color:var(--muted);background:var(--surface)}
+.empty b{display:block;color:var(--ink);margin-bottom:.4rem}
+.na{color:var(--muted);font-style:normal;font-size:.95rem}
+.pill{display:inline-flex;gap:.3rem;align-items:center;padding:.1rem .6rem;border-radius:999px;background:var(--surface-2);font-size:.82rem;color:var(--muted)}
+.pill b{color:var(--ink);font-weight:600}
+
+/* ---------- abwab ---------- */
+.babs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+.bab{position:relative;display:flex;flex-direction:column;gap:.35rem;padding:1.2rem 1.2rem 1rem;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);text-decoration:none;transition:border-color .3s var(--ease)}
+.bab:hover{border-color:var(--gold-line)}
+.bab-no{position:absolute;inset-inline-end:1.1rem;top:1rem;font-family:var(--nass);color:var(--gold);font-size:1.3rem}
+.bab-icon{font-size:1.7rem;line-height:1}
+.bab h3{font-family:var(--nass);font-size:1.55rem;color:var(--emerald)}
+.bab p{color:var(--muted);font-size:.9rem;margin:0;flex:1}
+.bab-meta{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0 .7rem}
+.bab .enter{align-self:flex-start;font-weight:700;color:var(--emerald-2);font-size:.92rem;border-bottom:1px solid var(--gold-line)}
+.bab.is-empty h3{color:var(--muted)}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden;margin:0}
+.stats div{padding:.9rem 1rem;border-inline-start:1px solid var(--line);border-bottom:1px solid var(--line);margin-inline-start:-1px;margin-bottom:-1px}
+.stats dt{color:var(--muted);font-size:.84rem}
+.stats dd{margin:0;font-size:1.5rem;font-weight:700;color:var(--emerald)}
+
+/* ---------- lists / cards ---------- */
+.cards{display:grid;gap:.8rem}
+.card{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:1rem 1.15rem}
+.card h3{font-size:1.15rem;color:var(--emerald)}
+.card h3 a{color:inherit;text-decoration:none}.card h3 a:hover{text-decoration:underline}
+.card .row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.6rem}
+.card .row .btn{margin-inline-start:auto}
+.card .def{color:var(--muted);margin:.35rem 0 0;font-size:.95rem}
+.sec-title{font-size:1rem;font-weight:700;color:var(--gold);margin:1.4rem 0 .6rem;display:flex;align-items:center;gap:.5rem}
+.sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* ---------- issue ---------- */
+.issue-head h1{font-family:var(--nass);font-size:clamp(1.8rem,5vw,2.5rem);color:var(--emerald)}
+.infobar{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0;padding:.75rem;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.4rem}
+.actions .btn{height:38px;font-size:.9rem}
+.actions .btn[aria-pressed="true"]{background:var(--gold-soft);border-color:var(--gold-line);color:var(--ink)}
+.blk{margin:0 0 1.2rem;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.blk>h2{font-size:1.02rem;padding:.65rem 1.1rem;border-bottom:1px solid var(--line);background:var(--surface-2);color:var(--ink);display:flex;align-items:center;gap:.5rem}
+.blk>.body{padding:1rem 1.15rem}
+.blk.source-text{border-color:var(--gold-line)}
+.blk.source-text>h2{background:var(--gold-soft)}
+.nass{font-family:var(--nass);font-size:calc(1.32rem * var(--fs,1));line-height:2.1}
+.nass p{margin:0 0 .7em}
+.blk.sharh>.body{font-size:.98rem}
+.blk.sharh>h2{background:var(--emerald-soft)}
+.ev{border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem;margin-bottom:.8rem;background:var(--bg)}
+.ev:last-child{margin-bottom:0}
+.ev-label{font-size:.88rem;font-weight:700;color:var(--gold);margin-bottom:.4rem}
+.ev.quran{background:var(--quran)}
+.ev .ayah{font-family:var(--nass);font-size:calc(1.45rem * var(--fs,1));line-height:2.1;color:var(--emerald)}
+.ev .hadith{font-family:var(--nass);font-size:calc(1.3rem * var(--fs,1));line-height:2}
+.ev .ref{font-size:.9rem;color:var(--muted);margin-top:.3rem}
+dl.fields{display:grid;grid-template-columns:auto 1fr;gap:.25rem 1rem;margin:.5rem 0 0;font-size:.93rem}
+dl.fields dt{color:var(--muted)}
+dl.fields dd{margin:0}
+.cite{display:inline-flex;align-items:center;height:26px;padding:0 .55rem;margin:0 .15rem;border:1px solid var(--gold-line);border-radius:6px;background:var(--gold-soft);color:var(--ink);font-size:.8rem;cursor:pointer;vertical-align:middle;font-family:var(--ui)}
+.cite:hover{border-color:var(--gold)}
+.cites{margin-top:.6rem;display:flex;flex-wrap:wrap;gap:.3rem;align-items:center;font-size:.85rem;color:var(--muted)}
+.src-card{padding:.8rem 0;border-bottom:1px solid var(--line)}
+.src-card:first-child{padding-top:0}.src-card:last-child{border-bottom:0;padding-bottom:0}
+.khilaf li{margin-bottom:.6rem}
+.related a{display:inline-block;margin:0 0 .4rem .4rem}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.95rem;min-width:420px}
+th,td{text-align:start;padding:.55rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:.86rem;background:var(--surface-2)}
+td.num{width:3.5rem;color:var(--gold);font-weight:700}
+
+/* ---------- search ---------- */
+.search-form{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:1rem}
+.search-main{display:flex;gap:.5rem}
+.search-main input{flex:1;min-width:0;height:46px;border:1px solid var(--line);border-radius:10px;padding:0 1rem;background:var(--bg)}
+details.adv{margin-top:.8rem}
+details.adv summary{cursor:pointer;color:var(--emerald-2);font-weight:600;font-size:.95rem}
+.filters{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.7rem;margin-top:.8rem}
+.filters label{display:flex;flex-direction:column;gap:.25rem;font-size:.85rem;color:var(--muted)}
+.filters select{height:40px;border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:0 .5rem}
+.filter-actions{display:flex;gap:.5rem;margin-top:.8rem}
+.res-count{color:var(--muted);font-size:.9rem;margin:1.1rem 0 .6rem}
+.res h3{font-family:var(--nass);font-size:1.3rem}
+.res .snip{margin:.35rem 0 0;font-size:.95rem}
+mark{background:var(--gold-soft);color:inherit;border-bottom:2px solid var(--gold-line);padding:0 .1em;border-radius:2px}
+.pager{display:flex;flex-wrap:wrap;gap:.35rem;justify-content:center;margin:1.4rem 0}
+.pager a,.pager span{min-width:38px;height:38px;display:inline-grid;place-items:center;padding:0 .6rem;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--ink);background:var(--surface);font-size:.92rem}
+.pager [aria-current]{background:var(--emerald);border-color:var(--emerald);color:var(--surface);font-weight:700}
+.pager .gap{border:0;background:none}
+.pager .off{opacity:.4;pointer-events:none}
+
+/* ---------- data page ---------- */
+.data-actions{display:flex;flex-wrap:wrap;gap:.5rem}
+textarea.json{width:100%;min-height:140px;border:1px solid var(--line);border-radius:10px;padding:.7rem;background:var(--bg);font-family:ui-monospace,Consolas,monospace;font-size:.82rem;direction:ltr;text-align:left}
+pre.code{direction:ltr;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:.8rem;overflow-x:auto;font-size:.8rem;max-height:420px}
+.warns{margin:0;padding-inline-start:1.2rem;font-size:.9rem}
+.warns li{margin-bottom:.3rem}
+.file-btn{position:relative;overflow:hidden}
+.file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+
+/* ---------- footer ---------- */
+.site-foot{max-width:880px;margin:3rem auto 0;padding:1.4rem 0 2rem;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.9rem}
+.site-foot .t{font-family:var(--nass);font-size:1.15rem;color:var(--emerald)}
+.site-foot nav{display:flex;gap:1.2rem;justify-content:center;margin-top:.5rem}
+
+/* ---------- dialog & toast ---------- */
+dialog{border:1px solid var(--line);border-radius:16px;padding:0;width:min(480px,92vw);background:var(--surface);color:var(--ink)}
+dialog::backdrop{background:rgba(8,14,12,.5)}
+.dlg-head{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1.1rem;border-bottom:1px solid var(--line);background:var(--gold-soft)}
+.dlg-head h2{font-size:1.05rem}
+.dlg-body{padding:1rem 1.15rem 1.2rem}
+.toasts{position:fixed;inset-inline:0;bottom:calc(1rem + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:.4rem;z-index:80;pointer-events:none}
+.toast{background:var(--ink);color:var(--bg);padding:.55rem 1.1rem;border-radius:999px;font-size:.92rem;box-shadow:0 6px 20px rgba(0,0,0,.18);animation:tin .35s var(--ease)}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- editor ---------- */
+.form{display:grid;gap:1rem}
+.fld{display:flex;flex-direction:column;gap:.3rem;font-size:.9rem;color:var(--muted)}
+.fld .req{color:var(--danger)}
+.fld .hint{font-size:.8rem}
+.fld input,.fld select,.fld textarea{border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:.55rem .8rem;color:var(--ink);font-size:1rem;width:100%}
+.fld input,.fld select{height:44px}
+.fld textarea{min-height:110px;resize:vertical;line-height:1.8}
+.fld textarea.nass-in{font-family:var(--nass);font-size:1.2rem;min-height:150px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+fieldset{border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem 1.2rem;margin:0;background:var(--surface);display:grid;gap:1rem;min-width:0}
+legend{padding:0 .5rem;font-weight:700;color:var(--emerald)}
+.ev-row{border:1px dashed var(--gold-line);border-radius:12px;padding:.9rem;display:grid;gap:.8rem;background:var(--bg)}
+.ev-row .rm{justify-self:end}
+.form-actions{display:flex;flex-wrap:wrap;gap:.5rem;position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + .6rem);z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.7rem;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.form-actions .danger{margin-inline-start:auto;color:var(--danger)}
+.seq{display:flex;justify-content:space-between;gap:.6rem;margin:1.6rem 0 0}
+.seq a{flex:1;max-width:49%;border:1px solid var(--line);border-radius:12px;padding:.7rem 1rem;text-decoration:none;color:var(--ink);background:var(--surface);font-size:.95rem}
+.seq a:hover{border-color:var(--gold-line)}
+.seq a small{display:block;color:var(--muted);font-size:.8rem}
+.seq .next{text-align:left;margin-inline-start:auto}
+.size-ctl{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.size-ctl button{border:0;background:transparent;height:38px;min-width:44px;cursor:pointer;font-family:var(--nass);font-size:1.05rem}
+.size-ctl button:hover{background:var(--surface-2)}
+.size-ctl button+button{border-inline-start:1px solid var(--line)}
+.cta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}
+.head-row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:flex-start;justify-content:space-between}
+.export-box textarea{min-height:180px}
+.topbar{background:color-mix(in srgb,var(--surface) 90%,transparent);-webkit-backdrop-filter:saturate(1.3) blur(10px);backdrop-filter:saturate(1.3) blur(10px)}
+.bab::after{content:"";position:absolute;inset-inline:1.2rem;top:0;height:2px;background:var(--gold-line);opacity:0;transition:opacity .3s var(--ease)}
+.bab:hover::after{opacity:1}
+
+.raw-text{min-height:240px!important;font-family:var(--nass)!important;font-size:1.05rem!important;line-height:1.9!important}
+.chk{display:flex;gap:.6rem;align-items:flex-start;font-size:.93rem;color:var(--ink);cursor:pointer}
+.chk input{width:18px;height:18px;margin-top:.35rem;accent-color:var(--emerald-2);flex:none}
+.preview-tbl{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin:.9rem 0}
+.preview-tbl th{position:sticky;top:0}
+
+/* ---------- studio ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:.35rem .9rem;cursor:pointer;font-size:.92rem;color:var(--ink)}
+.chip small{color:var(--muted)}
+.chip.on{background:var(--emerald-soft);border-color:var(--emerald-2);color:var(--emerald);font-weight:700}
+.src-list{display:grid;gap:.15rem;max-height:340px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:.4rem;background:var(--bg)}
+.src-item{display:flex;gap:.6rem;align-items:center;padding:.45rem .55rem;border-radius:8px;cursor:pointer;font-size:.95rem;color:var(--ink)}
+.src-item:hover{background:var(--surface-2)}
+.src-item input{width:18px;height:18px;accent-color:var(--emerald-2);flex:none}
+.src-item small{margin-inline-start:auto;color:var(--muted);white-space:nowrap}
+.src-sec{font-size:.8rem;color:var(--gold);font-weight:700;padding:.5rem .55rem .1rem}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.7rem}
+.mode{display:flex;gap:.7rem;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:.9rem 1rem;cursor:pointer;background:var(--bg);color:var(--ink)}
+.mode input{margin-top:.45rem;accent-color:var(--emerald-2);width:18px;height:18px;flex:none}
+.mode:has(input:checked){border-color:var(--emerald-2);background:var(--emerald-soft)}
+.mode b{display:block}.mode span{font-size:.86rem;color:var(--muted);display:block}
+.mode.is-off{opacity:.55;cursor:not-allowed}
+.gen-status{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;color:var(--muted);font-size:.92rem}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid var(--line);border-top-color:var(--emerald-2);border-radius:50%;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.pill.ai{background:var(--gold-soft);color:var(--ink)}
+
+/* ---------- deck ---------- */
+.deck-wrap{max-width:1100px;margin-inline:auto}
+.deck-bar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:.4rem}
+.deck-bar h1{font-family:var(--nass);font-size:clamp(1.4rem,4vw,2rem);color:var(--emerald);margin-inline-end:auto}
+.stage{position:relative;width:100%;aspect-ratio:16/9;container-type:size;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface);box-shadow:0 12px 40px rgba(0,0,0,.08);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.progress{height:3px;background:var(--line);border-radius:3px;margin:.7rem 0;overflow:hidden}
+.progress span{display:block;height:100%;width:0;background:var(--gold);transition:width .4s var(--ease)}
+.deck-ctl{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.deck-ctl .count{min-width:4.5rem;text-align:center;color:var(--muted);font-size:.92rem}
+.deck-ctl .spacer{flex:1}
+.present-ctl{display:none}
+.present.is-present{position:fixed;inset:0;z-index:100;background:#0B110F;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.present.is-present .stage{width:min(100vw,calc((100vh - 64px) * 16 / 9));width:min(100vw,calc((100dvh - 64px) * 16 / 9));border:0;border-radius:6px;box-shadow:none}
+.present.is-present .present-ctl{display:flex;gap:.9rem;align-items:center;color:#cfd8d3;font-size:.95rem}
+.present-ctl button{background:rgba(255,255,255,.1);border:0;color:#fff;width:44px;height:44px;border-radius:50%;cursor:pointer;display:grid;place-items:center}
+.present-ctl svg{width:22px;height:22px}
+body.presenting{overflow:hidden}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.8rem;margin-top:1rem}
+.thumb{border:2px solid transparent;border-radius:12px;padding:2px;background:none;cursor:pointer;text-align:start;color:var(--muted);font-size:.78rem}
+.thumb .stage{box-shadow:none;border-radius:9px;pointer-events:none}
+.thumb.on{border-color:var(--gold)}
+.print-deck{display:none}
+
+/* ---------- slides (تتحجّم مع الإطار) ---------- */
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:7cqh 7cqw 11cqh;background:var(--surface);color:var(--ink);overflow:hidden}
+.slide .s-title{font-family:var(--nass);font-weight:700;color:var(--emerald);font-size:6.2cqh;line-height:1.35;padding-bottom:2.2cqh;margin:0 0 3.2cqh;border-bottom:.3cqh solid var(--gold-line)}
+.s-foot{position:absolute;bottom:3.4cqh;inset-inline:7cqw;display:flex;justify-content:space-between;gap:3cqw;font-size:2.4cqh;color:var(--muted);white-space:nowrap}
+.s-foot span:first-child{overflow:hidden;text-overflow:ellipsis}
+.t-title{justify-content:center;align-items:center;text-align:center;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23A8833A' stroke-opacity='.08'%3E%3Crect x='18' y='18' width='20' height='20'/%3E%3Crect x='18' y='18' width='20' height='20' transform='rotate(45 28 28)'/%3E%3C/g%3E%3C/svg%3E");background-size:16cqh 16cqh;-webkit-mask-image:none}
+.t-orn{color:var(--gold);width:9cqh;height:9cqh;margin-bottom:3cqh;flex:none}
+.t-orn svg{width:100%;height:100%}
+.t-title h1{font-family:var(--nass);font-size:10.5cqh;color:var(--emerald);line-height:1.25;max-width:84cqw}
+.t-title p{font-size:3.9cqh;color:var(--muted);margin:2.2cqh 0 0}
+.t-title .ai-note{font-size:2.9cqh;color:var(--gold)}
+.t-section{background:#0F3D2C;color:#F4EEDD;justify-content:center}
+.t-section .t-orn{color:#D2B46C}
+.t-section h2{font-family:var(--nass);font-size:8.6cqh;line-height:1.3}
+.t-section p{font-size:3.7cqh;opacity:.85;margin:2.6cqh 0 0;max-width:80cqw;line-height:1.7}
+.t-section .s-foot{color:rgba(244,238,221,.6)}
+.pts{margin:0;padding:0 4cqw 0 0;display:flex;flex-direction:column;gap:2.4cqh;font-size:4.2cqh;line-height:1.65}
+.pts li::marker{color:var(--gold)}
+.pts.dense{font-size:3.4cqh;gap:1.5cqh}
+.q{margin:0;font-family:var(--nass);font-size:5.3cqh;line-height:1.95;flex:1;display:flex;align-items:center;min-height:0}
+.q.lg{font-size:4.4cqh}.q.xl{font-size:3.7cqh}
+.k-quran .q{color:var(--emerald);justify-content:center;text-align:center}
+.q-ref{font-size:2.9cqh;color:var(--muted);display:flex;gap:1cqw;align-items:center;justify-content:flex-end}
+.c-mini{display:inline-grid;place-items:center;min-width:3.6cqh;height:3.6cqh;padding:0 .8cqh;margin-inline-start:.8cqw;border-radius:1cqh;border:.25cqh solid var(--gold-line);background:var(--gold-soft);color:var(--ink);font-size:2.2cqh;font-family:var(--ui);cursor:pointer;vertical-align:middle;line-height:1}
+.src-ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:1.3cqh 4cqw;font-size:2.8cqh;line-height:1.5}
+.src-ol li{display:flex;gap:1cqw;align-items:baseline}
+.src-book{font-size:2.6cqh;color:var(--muted);margin-top:auto}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .menu-btn{display:inline-grid}
+  .sidebar{position:fixed;top:0;bottom:0;inset-inline-start:0;width:min(86vw,320px);height:auto;z-index:60;transform:translateX(105%);transition:transform .35s var(--ease);padding-top:calc(env(safe-area-inset-top,0px) + 1rem);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 1rem);box-shadow:0 0 40px rgba(0,0,0,.15)}
+  body.nav-open .sidebar{transform:none}
+  body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(8,14,12,.45);z-index:55}
+}
+@media (max-width:620px){
+  .top-search{display:none}
+  .search-link{display:inline-grid;margin-inline-start:auto}
+  .theme-btn .lbl{display:none}
+  .brand{font-size:1.25rem}
+  .hero{padding:2rem .9rem 1.6rem}
+  .hero-search,.search-main{flex-direction:column}
+  .hero-search .btn,.search-main .btn{width:100%}
+  .card .row .btn{margin-inline-start:0;width:100%}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- print ---------- */
+@media print{
+  :root{padding:0}
+  .topbar,.sidebar,.scrim,.actions,.crumbs,.site-foot,.toasts,.demo-ribbon,.btn,.pager,.search-form,dialog,.seq,.cta-row,.form{display:none!important}
+  .shell{display:block} main{padding:0}
+  body{background:#fff;color:#000;font-size:12pt}
+  .blk,.ev,.infobar,.card{border:1px solid #bbb;background:#fff!important;break-inside:avoid}
+  .blk>h2{background:#f2f2f2!important}
+  a{color:#000;text-decoration:none}
+  .cite{border:0;background:none;padding:0}
+  .issue-head h1,.page-head h1{color:#000}
+  body.print-deck-mode .deck-ui,body.print-deck-mode .crumbs{display:none!important}
+  body.print-deck-mode main{padding:0}
+  body.print-deck-mode .print-deck{display:block!important}
+  .print-deck .stage{width:100%;border:0;border-radius:0;box-shadow:none;break-after:page;page-break-after:always}
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     HTML
+     ================================================================ -->
+<div class="demo-ribbon" id="demoRibbon" hidden>وضع البيانات التجريبية: المحتوى المعروض لتوضيح الواجهة فقط، وليس فقهاً حقيقياً. <a href="#/data">إدارة البيانات</a></div>
+
+<header class="topbar">
+  <button class="icon-btn menu-btn" data-act="menu" aria-label="فتح القائمة" aria-controls="sidebar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+  <a class="brand" href="#/">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="14" height="14"/><rect x="5" y="5" width="14" height="14" transform="rotate(45 12 12)"/></svg>
+    <span>الفقه المنهجي</span>
+  </a>
+  <form class="top-search" data-form="quick" role="search">
+    <input type="search" name="q" placeholder="ابحث في المسائل…" aria-label="بحث سريع" autocomplete="off">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+  </form>
+  <a class="icon-btn search-link" href="#/search" aria-label="البحث">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+  </a>
+  <button class="theme-btn" data-act="theme" id="themeBtn"></button>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar" aria-label="القائمة الجانبية">
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot" id="sideFoot"></div>
+  </aside>
+  <div class="scrim" data-act="menu-close"></div>
+
+  <main id="main">
+    <nav class="crumbs" id="crumbs" aria-label="مسار التنقل"></nav>
+    <div class="content" id="view" tabindex="-1"></div>
+    <footer class="site-foot">
+      <div class="t">الفقه المنهجي على مذهب الإمام الشافعي</div>
+      <div>قسم العبادات</div>
+      <nav><a href="#/refs">المراجع</a><a href="#/about">حول الموسوعة</a></nav>
+    </footer>
+  </main>
+</div>
+
+<dialog id="citeDialog" aria-labelledby="citeTitle">
+  <div class="dlg-head">
+    <h2 id="citeTitle">بيانات المصدر</h2>
+    <button class="icon-btn" data-act="close-dialog" aria-label="إغلاق">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="dlg-body" id="citeBody"></div>
+</dialog>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<!-- ================================================================
+     DATA
+     قاعدة البيانات المضمّنة (فارغة عمداً). ضع هنا بيانات JSON الحقيقية
+     أو اربط ملف ./data/fiqh-data.json أو API عبر CONFIG أدناه.
+     ================================================================ -->
+<script type="application/json" id="fiqh-data">
+{
+  "meta": { "schema_version": "1.0", "project": "موسوعة الفقه المنهجي – قسم العبادات" },
+  "books": [],
+  "volumes": [],
+  "chapters": [],
+  "sections": [],
+  "topics": [],
+  "issues": [],
+  "evidences": [],
+  "references": []
+}
+</script>
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+'use strict';
+
+/* ======================= CONFIG ======================= */
+const CONFIG = {
+  DATA_URL: './data/fiqh-data.json', // يُجرَّب عند التشغيل المحلي/الاستضافة الخاصة
+  API_BASE: null,                    // مثال: 'https://example.com/api' (لا تضع أي مفاتيح سرية هنا)
+  PAGE_SIZE: 20,
+  STORE_PREFIX: 'fm:',
+  MAX_STORE_BYTES: 4500000
+};
+
+const BABS = [
+  { key: 'taharah', title: 'الطهارة',      icon: '🧼' },
+  { key: 'salah',   title: 'الصلاة',       icon: '🕌' },
+  { key: 'zakah',   title: 'الزكاة',       icon: '💰' },
+  { key: 'siyam',   title: 'الصيام',       icon: '🌙' },
+  { key: 'hajj',    title: 'الحج والعمرة', icon: '🕋' }
+];
+
+const MSG = {
+  NA: 'هذه المعلومة غير متوفرة في قاعدة البيانات الحالية.',
+  NA_SHORT: 'غير متوفر في قاعدة البيانات الحالية.',
+  REF_INCOMPLETE: 'بيانات المرجع غير مكتملة في قاعدة البيانات.',
+  NOT_CONNECTED: 'لم يتم ربط قاعدة البيانات بعد.',
+  DISCONNECTED: 'قاعدة البيانات غير متصلة حالياً.',
+  DEMO: '[بيانات تجريبية – سيتم استبدالها ببيانات قاعدة البيانات]',
+  ABOUT_NOTE: 'الموسوعة واجهة رقمية تعليمية تعتمد على البيانات والمصادر الموثقة الموجودة في قاعدة البيانات.'
+};
+
+/* ======================= UTILITIES ======================= */
+const log = {
+  info: (...a) => console.info('[الفقه المنهجي]', ...a),
+  warn: (...a) => console.warn('[الفقه المنهجي]', ...a),
+  error: (...a) => console.error('[الفقه المنهجي]', ...a)
+};
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const has = v => v !== undefined && v !== null && !(typeof v === 'string' && v.trim() === '') && !(Array.isArray(v) && v.length === 0);
+const arr = v => Array.isArray(v) ? v : (v == null ? [] : [v]);
+const sid = v => v == null ? '' : String(v);
+const toNum = v => { const n = parseFloat(String(v ?? '').replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))); return isNaN(n) ? Infinity : n; };
+const pad3 = n => String(n).padStart(3, '0');
+const nf = new Intl.NumberFormat('ar-EG');
+const fmt = n => nf.format(n);
+const paras = t => String(t ?? '').split(/\n{2,}/).map(p => `<p>${esc(p).replace(/\n/g, '<br>')}</p>`).join('');
+const STAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="6" y="6" width="12" height="12"/><rect x="6" y="6" width="12" height="12" transform="rotate(45 12 12)"/></svg>';
+const orn = (cls = '') => `<div class="orn ${cls}" aria-hidden="true">${STAR}</div>`;
+
+/* localStorage آمن */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(CONFIG.STORE_PREFIX + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(CONFIG.STORE_PREFIX + k, JSON.stringify(v)); return true; } catch (e) { log.warn('تعذّر الحفظ في التخزين المحلي', k); return false; } },
+  del(k) { try { localStorage.removeItem(CONFIG.STORE_PREFIX + k); } catch (e) {} }
+};
+
+/* IndexedDB لحفظ البيانات الكبيرة (مع رجوع إلى localStorage) */
+const idb = {
+  _db: null,
+  open() {
+    if (this._db) return Promise.resolve(this._db);
+    return new Promise((res, rej) => {
+      if (!('indexedDB' in window)) return rej(new Error('no-idb'));
+      const r = indexedDB.open('fiqh-manhaji', 1);
+      r.onupgradeneeded = () => r.result.createObjectStore('kv');
+      r.onsuccess = () => { this._db = r.result; res(r.result); };
+      r.onerror = () => rej(r.error);
+    });
+  },
+  async get(k) { try { const db = await this.open(); return await new Promise((res, rej) => { const q = db.transaction('kv').objectStore('kv').get(k); q.onsuccess = () => res(q.result ?? null); q.onerror = () => rej(q.error); }); } catch (e) { return null; } },
+  async set(k, v) { try { const db = await this.open(); await new Promise((res, rej) => { const t = db.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = res; t.onerror = () => rej(t.error); }); return true; } catch (e) { log.warn('IndexedDB غير متاح', e); return false; } },
+  async del(k) { try { const db = await this.open(); await new Promise(res => { const t = db.transaction('kv', 'readwrite'); t.objectStore('kv').delete(k); t.oncomplete = res; t.onerror = res; }); } catch (e) {} }
+};
+async function saveUserData(d) { if (await idb.set('data', d)) { store.del('data'); return true; } return store.set('data', d); }
+async function loadUserData() { const v = await idb.get('data'); if (hasAnyData(v)) return v; const l = store.get('data', null); return hasAnyData(l) ? l : null; }
+async function clearUserData() { await idb.del('data'); store.del('data'); }
+
+/* ======================= ARABIC NORMALIZATION (للبحث فقط) ======================= */
+const DIAC = /[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/;
+function normChar(ch) {
+  if (DIAC.test(ch)) return '';
+  switch (ch) {
+    case 'أ': case 'إ': case 'آ': case 'ٱ': return 'ا';
+    case 'ى': return 'ي';
+    case 'ة': return 'ه';
+    case 'ؤ': return 'و';
+    case 'ئ': return 'ي';
+  }
+  return ch.toLowerCase();
+}
+function norm(s) { let o = ''; const t = String(s ?? ''); for (let i = 0; i < t.length; i++) o += normChar(t[i]); return o.replace(/\s+/g, ' ').trim(); }
+function normMap(text) { let n = '', map = []; for (let i = 0; i < text.length; i++) { const c = normChar(text[i]); for (let k = 0; k < c.length; k++) { n += c[k]; map.push(i); } } return { n, map }; }
+function queryTerms(q) {
+  return norm(q).split(' ').filter(Boolean).map(t => { const v = [t]; if (t.startsWith('ال') && t.length > 4) v.push(t.slice(2)); return v; });
+}
+function highlight(text, terms) {
+  text = String(text ?? '');
+  const flat = terms.flat().filter(Boolean).sort((a, b) => b.length - a.length);
+  if (!flat.length) return esc(text);
+  const { n, map } = normMap(text);
+  let ranges = [];
+  for (const t of flat) { let p = n.indexOf(t); while (p !== -1) { let s = map[p], e = map[p + t.length - 1] + 1; while (e < text.length && normChar(text[e]) === '') e++; ranges.push([s, e]); p = n.indexOf(t, p + t.length); } }
+  if (!ranges.length) return esc(text);
+  ranges.sort((a, b) => a[0] - b[0]);
+  const merged = [ranges[0]];
+  for (const r of ranges.slice(1)) { const l = merged[merged.length - 1]; if (r[0] <= l[1]) l[1] = Math.max(l[1], r[1]); else merged.push(r); }
+  let out = '', pos = 0;
+  for (const [s, e] of merged) { out += esc(text.slice(pos, s)) + '<mark>' + esc(text.slice(s, e)) + '</mark>'; pos = e; }
+  return out + esc(text.slice(pos));
+}
+function snippet(text, terms, len = 170) {
+  text = String(text ?? ''); if (!text) return '';
+  const { n, map } = normMap(text); let pos = -1;
+  for (const t of terms.flat()) { const p = n.indexOf(t); if (p !== -1 && (pos === -1 || p < pos)) pos = p; }
+  const start = pos > -1 ? Math.max(0, map[pos] - 50) : 0;
+  const s = text.slice(start, start + len);
+  return (start > 0 ? '… ' : '') + highlight(s, terms) + (start + len < text.length ? ' …' : '');
+}
+
+/* ======================= DATA LAYER ======================= */
+const COLS = [['books', 'book_id'], ['volumes', 'volume_id'], ['chapters', 'chapter_id'], ['sections', 'section_id'], ['topics', 'topic_id'], ['issues', 'issue_id'], ['evidences', 'evidence_id'], ['references', 'reference_id']];
+const COL_AR = { books: 'الكتب', volumes: 'الأجزاء', chapters: 'الأبواب', sections: 'الفصول', topics: 'الموضوعات', issues: 'المسائل', evidences: 'الأدلة', references: 'المراجع' };
+const DB = { raw: null, mode: 'none', idx: {}, warnings: [], rows: [] };
+
+function emptyData() { const d = { meta: {} }; COLS.forEach(([c]) => d[c] = []); return d; }
+function hasAnyData(o) { return !!o && COLS.some(([c]) => Array.isArray(o[c]) && o[c].length); }
+
+function setData(obj, mode) {
+  const d = emptyData(), pre = [];
+  if (obj && typeof obj === 'object') {
+    d.meta = obj.meta && typeof obj.meta === 'object' ? obj.meta : {};
+    COLS.forEach(([c]) => {
+      const src = Array.isArray(obj[c]) ? obj[c] : [];
+      d[c] = src.filter((o, i) => { const ok = o && typeof o === 'object'; if (!ok) pre.push(`تحذير: عنصر غير صالح في ${c} (الموضع ${i + 1}).`); return ok; });
+    });
+  }
+  DB.raw = d;
+  DB.mode = hasAnyData(d) ? mode : 'none';
+  buildIndexes();
+  DB.warnings = pre.concat(validate());
+  buildSearchRows();
+  DB.warnings.forEach(w => log.warn(w));
+  log.info('حالة البيانات:', DB.mode, counts());
+}
+
+function group(list, key) { const m = new Map(); list.forEach(o => { const k = sid(o[key]); if (!k) return; if (!m.has(k)) m.set(k, []); m.get(k).push(o); }); return m; }
+const byOrder = (a, b) => toNum(a.order) - toNum(b.order) || 0;
+
+function buildIndexes() {
+  const d = DB.raw, I = {};
+  COLS.forEach(([c, k]) => { I[c] = new Map(); d[c].forEach(o => { if (has(o[k]) && !I[c].has(sid(o[k]))) I[c].set(sid(o[k]), o); }); });
+  I.babChapter = new Map(); I.chapterBab = new Map();
+  BABS.forEach(b => { const ch = d.chapters.find(c => c.key === b.key || norm(c.title) === norm(b.title)); if (ch && has(ch.chapter_id)) { I.babChapter.set(b.key, ch); I.chapterBab.set(sid(ch.chapter_id), b.key); } });
+  I.sectionsByChapter = group(d.sections, 'chapter_id');
+  I.issuesByTopic = group(d.issues, 'topic_id');
+  DB.idx = I;
+  I.topicsByChapter = new Map();
+  d.topics.forEach(t => { const cid = topicChapterId(t); if (!cid) return; if (!I.topicsByChapter.has(cid)) I.topicsByChapter.set(cid, []); I.topicsByChapter.get(cid).push(t); });
+  [I.sectionsByChapter, I.issuesByTopic, I.topicsByChapter].forEach(m => m.forEach(l => l.sort(byOrder)));
+}
+function topicChapterId(t) { if (has(t.chapter_id)) return sid(t.chapter_id); const s = DB.idx.sections.get(sid(t.section_id)); return s ? sid(s.chapter_id) : ''; }
+
+function issueCtx(is) {
+  const I = DB.idx;
+  const topic = I.topics.get(sid(is.topic_id)) || null;
+  const section = I.sections.get(sid(has(is.section_id) ? is.section_id : topic?.section_id)) || null;
+  const chapter = I.chapters.get(sid(has(is.chapter_id) ? is.chapter_id : (topic ? topicChapterId(topic) : section?.chapter_id))) || null;
+  const refs = arr(is.reference_ids).map(id => I.references.get(sid(id))).filter(Boolean);
+  const r0 = refs[0];
+  const volume = I.volumes.get(sid(has(is.volume_id) ? is.volume_id : r0?.volume_id)) || null;
+  const page = has(is.page) ? is.page : r0?.page;
+  const book = I.books.get(sid(has(is.book_id) ? is.book_id : (r0?.book_id ?? volume?.book_id))) || null;
+  const babKey = chapter ? I.chapterBab.get(sid(chapter.chapter_id)) || null : null;
+  return { topic, section, chapter, refs, volume, page, book, babKey };
+}
+
+/* ---------- Data Validation ---------- */
+function validate() {
+  const d = DB.raw, I = DB.idx, W = [];
+  const one = { books: 'الكتاب', volumes: 'الجزء', chapters: 'الباب', sections: 'الفصل', topics: 'الموضوع', issues: 'المسألة', evidences: 'الدليل', references: 'المرجع' };
+  COLS.forEach(([c, k]) => {
+    const seen = new Set();
+    d[c].forEach((o, i) => {
+      if (!has(o[k])) { W.push(`تحذير: ${one[c]} في الموضع ${i + 1} بلا معرّف (${k}).`); return; }
+      const id = sid(o[k]);
+      if (seen.has(id)) W.push(`تحذير: معرّف مكرر في ${COL_AR[c]}: ${id}.`);
+      seen.add(id);
+      if (['books', 'chapters', 'sections', 'topics', 'issues'].includes(c) && !has(o.title)) W.push(`تحذير: ${one[c]} رقم ${id} بلا عنوان.`);
+    });
+  });
+  d.chapters.forEach(ch => { if (has(ch.chapter_id) && !I.chapterBab.has(sid(ch.chapter_id))) W.push(`تنبيه: الباب ${ch.chapter_id} («${ch.title ?? ''}») خارج أبواب العبادات الخمسة ولن يظهر في الواجهة.`); });
+  d.volumes.forEach(v => { if (has(v.book_id) && !I.books.has(sid(v.book_id))) W.push(`تحذير: الجزء ${v.volume_id} يشير إلى كتاب غير موجود (${v.book_id}).`); });
+  d.sections.forEach(s => {
+    if (!has(s.chapter_id)) W.push(`تحذير: الفصل ${s.section_id} غير مرتبط بباب.`);
+    else if (!I.chapters.has(sid(s.chapter_id))) W.push(`تحذير: الفصل ${s.section_id} يشير إلى باب غير موجود (${s.chapter_id}).`);
+  });
+  d.topics.forEach(t => {
+    if (has(t.section_id) && !I.sections.has(sid(t.section_id))) W.push(`تحذير: الموضوع ${t.topic_id} يشير إلى فصل غير موجود (${t.section_id}).`);
+    const cid = topicChapterId(t);
+    if (!cid) W.push(`تحذير: الموضوع ${t.topic_id} غير مرتبط بباب.`);
+    else if (!I.chapters.has(cid)) W.push(`تحذير: الموضوع ${t.topic_id} يشير إلى باب غير موجود (${cid}).`);
+    arr(t.reference_ids).forEach(r => { if (!I.references.has(sid(r))) W.push(`تحذير: الموضوع ${t.topic_id} يشير إلى مصدر غير موجود (${r}).`); });
+    arr(t.evidence_ids).forEach(e => { if (!I.evidences.has(sid(e))) W.push(`تحذير: الموضوع ${t.topic_id} يشير إلى دليل غير موجود (${e}).`); });
+  });
+  const dup = new Map();
+  d.issues.forEach(is => {
+    const id = is.issue_id;
+    if (!has(is.topic_id)) W.push(`تحذير: المسألة رقم ${id} غير مرتبطة بموضوع.`);
+    else if (!I.topics.has(sid(is.topic_id))) W.push(`تحذير: المسألة رقم ${id} تشير إلى موضوع غير موجود (${is.topic_id}).`);
+    if (!arr(is.reference_ids).length) W.push(`تحذير: المسألة رقم ${id} بلا مصدر.`);
+    arr(is.reference_ids).forEach(r => { if (!I.references.has(sid(r))) W.push(`تحذير: المسألة رقم ${id} تشير إلى مصدر غير موجود (${r}).`); });
+    arr(is.evidence_ids).forEach(e => { if (!I.evidences.has(sid(e))) W.push(`تحذير: المسألة رقم ${id} تشير إلى دليل غير موجود (${e}).`); });
+    arr(is.related_issue_ids).forEach(r => { if (!I.issues.has(sid(r))) W.push(`تحذير: المسألة رقم ${id} تشير إلى مسألة مرتبطة غير موجودة (${r}).`); });
+    arr(is.khilaf).forEach(k => { if (k && has(k.reference_id) && !I.references.has(sid(k.reference_id))) W.push(`تحذير: قول في خلاف المسألة ${id} يشير إلى مصدر غير موجود (${k.reference_id}).`); });
+    const key = sid(is.topic_id) + '|' + norm(is.title);
+    if (has(is.title)) { if (dup.has(key)) W.push(`تنبيه: احتمال تكرار: المسألتان ${dup.get(key)} و${id} بالعنوان نفسه في الموضوع نفسه.`); else dup.set(key, id); }
+  });
+  d.references.forEach(r => {
+    if (!has(r.book_id)) W.push(`تنبيه: المرجع ${r.reference_id} بلا كتاب (book_id).`);
+    else if (!I.books.has(sid(r.book_id))) W.push(`تحذير: المرجع ${r.reference_id} يشير إلى كتاب غير موجود (${r.book_id}).`);
+    if (has(r.volume_id) && !I.volumes.has(sid(r.volume_id))) W.push(`تحذير: المرجع ${r.reference_id} يشير إلى جزء غير موجود (${r.volume_id}).`);
+  });
+  d.evidences.forEach(e => {
+    if (!has(e.text)) W.push(`تحذير: الدليل ${e.evidence_id} بلا نص.`);
+    if (has(e.reference_id) && !I.references.has(sid(e.reference_id))) W.push(`تحذير: الدليل ${e.evidence_id} يشير إلى مصدر غير موجود (${e.reference_id}).`);
+  });
+  return W;
+}
+
+/* ---------- Search index ---------- */
+function volLabel(v) { if (!v) return ''; return has(v.number) ? `جـ ${v.number}` : (has(v.title) ? String(v.title) : ''); }
+function buildSearchRows() {
+  DB.rows = DB.raw.issues.filter(is => has(is.issue_id)).map((is, i) => {
+    const c = issueCtx(is);
+    const authors = c.book ? arr(c.book.authors) : [];
+    const f = [
+      [is.title, 10], [arr(is.keywords).join(' '), 6], [c.topic?.title, 5], [is.ruling, 4],
+      [c.section?.title, 3], [c.chapter?.title, 3], [is.original_text, 2],
+      [authors.join(' '), 1], [c.book?.title, 1], [volLabel(c.volume), 1], [has(c.page) ? String(c.page) : '', 1]
+    ].map(([t, w]) => [norm(t), w]);
+    const evTypes = new Set(arr(is.evidence_ids).map(e => DB.idx.evidences.get(sid(e))?.type).filter(Boolean));
+    return { is, c, f, evTypes, authors, order: i };
+  });
+}
+const babIdx = key => { const i = BABS.findIndex(b => b.key === key); return i < 0 ? 99 : i; };
+
+function runSearch(q, F) {
+  const terms = queryTerms(q);
+  let rows = DB.rows.filter(r => {
+    if (F.bab && r.c.babKey !== F.bab) return false;
+    if (F.vol && sid(r.c.volume?.volume_id) !== F.vol) return false;
+    if (F.sec && sid(r.c.section?.section_id) !== F.sec) return false;
+    if (F.topic && sid(r.c.topic?.topic_id) !== F.topic) return false;
+    if (F.author && !r.authors.includes(F.author)) return false;
+    if (F.book && sid(r.c.book?.book_id) !== F.book) return false;
+    if (F.type) { if (F.type === 'khilaf') { if (!arr(r.is.khilaf).length) return false; } else if (!r.evTypes.has(F.type)) return false; }
+    return true;
+  });
+  if (!terms.length) return { terms, rows: rows.slice().sort((a, b) => babIdx(a.c.babKey) - babIdx(b.c.babKey) || a.order - b.order) };
+  const out = [];
+  rows.forEach(r => {
+    let score = 0;
+    for (const variants of terms) {
+      let s = 0;
+      for (const [txt, w] of r.f) {
+        if (!txt) continue;
+        for (const v of variants) { if (txt.includes(v)) { s += w * (txt === v ? 3 : (txt.startsWith(v) || txt.includes(' ' + v)) ? 1.5 : 1); break; } }
+      }
+      if (!s) return;
+      score += s;
+    }
+    out.push(Object.assign({}, r, { score }));
+  });
+  out.sort((a, b) => b.score - a.score || babIdx(a.c.babKey) - babIdx(b.c.babKey) || (toNum(a.c.volume?.number) - toNum(b.c.volume?.number)) || (toNum(a.c.page) - toNum(b.c.page)) || a.order - b.order);
+  return { terms, rows: out };
+}
+
+/* ---------- API SERVICE (الواجهة مستقلة عن طريقة التخزين) ----------
+   عند وجود Backend: استبدل أجسام الدوال بطلبات fetch(`${CONFIG.API_BASE}/...`)
+   مع إبقاء الأسماء نفسها. */
+const Api = {
+  getBooks: () => DB.raw.books,
+  getVolumes: () => DB.raw.volumes,
+  getChapters: () => DB.raw.chapters,
+  getSections: () => DB.raw.sections,
+  getTopics: () => DB.raw.topics,
+  getIssues: () => DB.raw.issues,
+  getEvidences: () => DB.raw.evidences,
+  getReferences: () => DB.raw.references,
+  getIssueById: id => DB.idx.issues.get(sid(id)) || null,
+  getTopicById: id => DB.idx.topics.get(sid(id)) || null,
+  searchIssues: (q, filters = {}) => runSearch(q, filters)
+};
+window.FiqhApi = Api; // للمطور: يمكن استدعاؤها من Console
+
+async function tryRemote() {
+  const url = CONFIG.API_BASE ? CONFIG.API_BASE.replace(/\/$/, '') + '/data' : CONFIG.DATA_URL;
+  if (!url || location.protocol === 'file:') return null;
+  try {
+    const r = await fetch(url, { cache: 'no-store' });
+    if (!r.ok) return null;
+    const j = await r.json();
+    return hasAnyData(j) ? j : null;
+  } catch (e) { log.info('لم يُعثر على مصدر بيانات خارجي:', url); return null; }
+}
+
+function counts() {
+  const d = DB.raw;
+  return { chapters: DB.idx.babChapter.size, topics: d.topics.length, issues: d.issues.length, evidences: d.evidences.length, references: d.references.length, volumes: d.volumes.length, books: d.books.length };
+}
+function babCounts(key) {
+  const ch = DB.idx.babChapter.get(key);
+  if (!ch) return { topics: 0, issues: 0 };
+  return { topics: (DB.idx.topicsByChapter.get(sid(ch.chapter_id)) || []).length, issues: DB.rows.filter(r => r.c.babKey === key).length };
+}
+
+/* ======================= DEMO DATA (واضحة أنها تجريبية) ======================= */
+function makeDemo() {
+  const P = MSG.DEMO, d = emptyData();
+  d.meta = { demo: true, note: P };
+  d.books.push({ book_id: 'demo-b1', title: '[مصدر تجريبي – يُستبدل ببيانات الكتاب]', authors: ['[مؤلف تجريبي]'] });
+  d.volumes.push({ volume_id: 'demo-v1', book_id: 'demo-b1', number: '[تجريبي]' });
+  let rn = 0, en = 0, inn = 0;
+  BABS.forEach((b, bi) => {
+    const cid = 'demo-c' + (bi + 1), sec = 'demo-s' + (bi + 1);
+    d.chapters.push({ chapter_id: cid, key: b.key, title: b.title, description: '[وصف تجريبي للباب] ' + P, order: bi + 1 });
+    d.sections.push({ section_id: sec, chapter_id: cid, title: '[فصل تجريبي]', order: 1 });
+    const nT = bi < 2 ? 2 : 1;
+    for (let t = 1; t <= nT; t++) {
+      const tid = `demo-t${bi + 1}-${t}`, rid = 'demo-r' + (++rn);
+      d.references.push({ reference_id: rid, book_id: 'demo-b1', volume_id: 'demo-v1', chapter_title: b.title, section_title: '[فصل تجريبي]', page: '[تجريبي]' });
+      const topic = { topic_id: tid, chapter_id: cid, section_id: sec, title: `[موضوع تجريبي ${t} – ${b.title}]`, definition: '[تعريف تجريبي] ' + P, order: t, reference_ids: [rid] };
+      if (bi === 0 && t === 1) topic.arkan = [{ text: '[بند تجريبي أول]', explanation: P, reference_id: rid }, { text: '[بند تجريبي ثانٍ]', explanation: P, reference_id: rid }];
+      d.topics.push(topic);
+      const nI = bi < 2 ? 2 : 1;
+      for (let k = 1; k <= nI; k++) {
+        const iid = 'demo-i' + (++inn), eq = 'demo-e' + (++en), eh = 'demo-e' + (++en);
+        d.evidences.push({ evidence_id: eq, type: 'quran', text: '[نص آية تجريبي – يُستبدل من قاعدة البيانات]', surah: '[السورة]', ayah: '[الآية]', reference_id: rid });
+        d.evidences.push({ evidence_id: eh, type: 'hadith', text: '[نص حديث تجريبي – يُستبدل من قاعدة البيانات]', narrator: '[الراوي]', collection: '[المصدر]', reference_id: rid });
+        const issue = {
+          issue_id: iid, topic_id: tid, title: `[مسألة تجريبية ${inn}]`,
+          original_text: `${P}\nنص تجريبي لعرض شكل «النص الأصلي» في باب ${b.title}، وليس نقلاً عن أي كتاب.`,
+          ruling: '[حكم تجريبي] ' + P, keywords: ['تجريبي', b.title],
+          evidence_ids: [eq, eh], reference_ids: [rid], volume_id: 'demo-v1', page: '[تجريبي]', order: k
+        };
+        if (k === 1) issue.explanation = '[شرح تجريبي] ' + P;
+        d.issues.push(issue);
+      }
+    }
+  });
+  d.issues[0].related_issue_ids = ['demo-i2', 'demo-i3'];
+  d.issues[0].notes = '[ملاحظة تجريبية] ' + P;
+  d.issues[0].khilaf = [{ qawl: '[قول تجريبي أول]', attributed_to: '[نسبة تجريبية]', reference_id: 'demo-r1' }, { qawl: '[قول تجريبي ثانٍ – بلا نسبة لعرض حالة النقص]' }];
+  d.issues[0].terms = [{ term: '[مصطلح تجريبي]', simple: '[شرح مبسط تجريبي]' }];
+  d.references.push({ reference_id: 'demo-r-inc', book_id: 'demo-b1' });
+  d.issues[1].reference_ids.push('demo-r-inc');
+  return d;
+}
+
+const SCHEMA_EXAMPLE = {
+  meta: { schema_version: '1.0', primary_book_id: 'b1' },
+  books: [{ book_id: 'b1', title: '...', authors: ['...'], publisher: '...', edition: '...', year: '...', source_url: '...' }],
+  volumes: [{ volume_id: 'v1', book_id: 'b1', number: 1, title: '...' }],
+  chapters: [{ chapter_id: 'c1', key: 'taharah | salah | zakah | siyam | hajj', title: '...', description: '...', order: 1 }],
+  sections: [{ section_id: 's1', chapter_id: 'c1', title: '...', order: 1 }],
+  topics: [{ topic_id: 't1', chapter_id: 'c1', section_id: 's1', title: '...', definition: '...', ruling: '...', order: 1,
+    conditions: [{ text: '...', explanation: '...', reference_id: 'r1' }], arkan: [], sunan: [], makruhat: [], mubtilat: [],
+    evidence_ids: [], reference_ids: ['r1'] }],
+  issues: [{ issue_id: 'i1', topic_id: 't1', title: '...', original_text: '...', ruling: '...', explanation: '...', notes: '...',
+    keywords: ['...'], evidence_ids: ['e1'], reference_ids: ['r1'], related_issue_ids: [], volume_id: 'v1', page: '...', order: 1,
+    khilaf: [{ qawl: '...', attributed_to: '...', reference_id: 'r1' }], terms: [{ term: '...', simple: '...' }] }],
+  evidences: [{ evidence_id: 'e1', type: 'quran | hadith | other', text: '...', surah: '...', ayah: '...',
+    narrator: '...', collection: '...', kitab: '...', bab: '...', hadith_number: '...', reference_id: 'r1' }],
+  references: [{ reference_id: 'r1', book_id: 'b1', volume_id: 'v1', chapter_title: '...', section_title: '...', page: '...',
+    url: '...', pdf_url: '...', page_image_url: '...', source_type: 'book' }]
+};
+
+/* ======================= UI HELPERS ======================= */
+function setView(html) { $('#view').innerHTML = html; }
+function crumbs(items) {
+  $('#crumbs').innerHTML = '<ol>' + items.map((it, i) => {
+    const last = i === items.length - 1;
+    if (last) return `<li><span aria-current="page">${esc(it.label)}</span></li>`;
+    return it.href ? `<li><a href="${it.href}">${esc(it.label)}</a></li>` : `<li><span>${esc(it.label)}</span></li>`;
+  }).join('') + '</ol>';
+}
+const HOME = { label: 'الرئيسية', href: '#/' };
+const IBADAT = { label: 'العبادات', href: '#/' };
+function babCrumb(key) { const b = BABS.find(x => x.key === key); return b ? { label: b.title, href: '#/bab/' + b.key } : null; }
+
+function toast(msg) {
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+  $('#toasts').appendChild(t); setTimeout(() => t.remove(), 2400);
+}
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); return true; } catch (e) {
+    try { const ta = document.createElement('textarea'); ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); return ok; } catch (e2) { return false; }
+  }
+}
+function connectionNotice() {
+  if (DB.mode === 'none') return `<div class="notice"><strong>${MSG.NOT_CONNECTED}</strong>لن تُعرض أي أحكام أو نصوص إلى أن تُضاف بيانات حقيقية من مصدر تملك حق استخدامه.
+    <div class="cta-row"><a class="btn sm" href="#/edit">➕ إضافة أول مسألة</a><a class="btn ghost sm" href="#/data">استيراد ملف JSON</a></div></div>`;
+  if (DB.mode === 'demo') return `<div class="notice demo"><strong>بيانات تجريبية</strong>المحتوى الظاهر عناصر نائبة لتوضيح الواجهة فقط. <a href="#/data">استبدالها ببيانات حقيقية</a></div>`;
+  return '';
+}
+function emptyState(title, body = '') { return `<div class="empty"><b>${esc(title)}</b>${body}</div>`; }
+function noDataBody() { return DB.mode === 'none' ? `${MSG.NOT_CONNECTED} <a href="#/data">ربط البيانات</a>` : ''; }
+
+let refNumbers = new Map();
+function refNo(rid) {
+  if (!refNumbers.size) DB.raw.references.forEach((r, i) => refNumbers.set(sid(r.reference_id), pad3(i + 1)));
+  return refNumbers.get(sid(rid)) || '—';
+}
+function citeChip(rid) {
+  if (!has(rid)) return '';
+  const ok = DB.idx.references.has(sid(rid));
+  return ok ? `<button class="cite" data-act="cite" data-ref="${esc(rid)}">[المصدر ${refNo(rid)}]</button>` : '';
+}
+function refFields(r) {
+  const I = DB.idx, book = I.books.get(sid(r.book_id)), vol = I.volumes.get(sid(r.volume_id));
+  const f = [];
+  if (book) {
+    if (has(book.title)) f.push(['الكتاب', esc(book.title)]);
+    if (has(book.authors)) f.push(['المؤلف', esc(arr(book.authors).join('، '))]);
+    if (has(book.publisher)) f.push(['الناشر', esc(book.publisher)]);
+    if (has(book.edition)) f.push(['الطبعة', esc(book.edition)]);
+    if (has(book.year)) f.push(['سنة النشر', esc(book.year)]);
+  }
+  if (vol && has(vol.number)) f.push(['الجزء', esc(vol.number)]);
+  else if (vol && has(vol.title)) f.push(['الجزء', esc(vol.title)]);
+  if (has(r.chapter_title)) f.push(['الباب', esc(r.chapter_title)]);
+  if (has(r.section_title)) f.push(['الفصل', esc(r.section_title)]);
+  if (has(r.page)) f.push(['الصفحة', esc(r.page)]);
+  f.push(['معرّف المصدر', esc(r.reference_id)]);
+  const links = [['url', 'رابط المصدر'], ['pdf_url', 'ملف PDF'], ['page_image_url', 'صورة الصفحة']].filter(([k]) => has(r[k]) && /^https?:\/\//i.test(r[k]));
+  links.forEach(([k, l]) => f.push([l, `<a href="${esc(r[k])}" target="_blank" rel="noopener">عرض المصدر الأصلي</a>`]));
+  const incomplete = !book || !has(r.page) || !vol;
+  return `<dl class="fields">${f.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>` + (incomplete ? `<p class="na" style="margin-top:.6rem">${MSG.REF_INCOMPLETE}</p>` : '');
+}
+function refPlain(r) {
+  const I = DB.idx, book = I.books.get(sid(r.book_id)), vol = I.volumes.get(sid(r.volume_id));
+  return [book?.title, book && has(book.authors) ? arr(book.authors).join('، ') : '', volLabel(vol), has(r.page) ? `صـ ${r.page}` : ''].filter(has).join('، ');
+}
+
+/* ======================= VIEWS ======================= */
+let currentNav = 'home';
+
+function viewHome() {
+  currentNav = 'home'; crumbs([{ label: 'الرئيسية' }]);
+  const C = counts();
+  const cards = BABS.map((b, i) => {
+    const ch = DB.idx.babChapter.get(b.key), n = babCounts(b.key);
+    const desc = ch && has(ch.description) ? esc(ch.description) : (n.topics ? MSG.NA : 'لم تُضف بيانات هذا الباب بعد.');
+    return `<a class="bab ${n.topics ? '' : 'is-empty'}" href="#/bab/${b.key}">
+      <span class="bab-no" aria-hidden="true">${fmt(i + 1)}</span>
+      <span class="bab-icon" aria-hidden="true">${b.icon}</span>
+      <h3>${b.title}</h3><p>${desc}</p>
+      <div class="bab-meta"><span class="pill">الموضوعات: <b>${fmt(n.topics)}</b></span><span class="pill">المسائل: <b>${fmt(n.issues)}</b></span></div>
+      <span class="enter">دخول القسم</span></a>`;
+  }).join('');
+  const stats = [['إجمالي الأبواب', C.chapters], ['إجمالي الموضوعات', C.topics], ['إجمالي المسائل', C.issues], ['إجمالي الأدلة', C.evidences], ['إجمالي المراجع', C.references], ['إجمالي الأجزاء', C.volumes], ['إجمالي المصادر', C.books]]
+    .map(([l, v]) => `<div><dt>${l}</dt><dd>${fmt(v)}</dd></div>`).join('');
+  const recent = store.get('recent', []).filter(r => (r.k === 'issue' ? DB.idx.issues : DB.idx.topics).has(r.id)).slice(0, 5);
+  setView(`
+    <section class="hero">
+      <h1 class="hero-title">الفقه المنهجي</h1>
+      <p class="hero-sub">على مذهب الإمام الشافعي</p>
+      ${orn('short')}
+      <p class="hero-part">قسم العبادات</p>
+      <p class="hero-desc">موسوعة رقمية تعليمية لفقه العبادات على مذهب الإمام الشافعي، تعتمد على مصادر فقهية موثقة وقابلة للبحث والاستعراض.</p>
+      <form class="hero-search" data-form="quick" role="search">
+        <input type="search" name="q" placeholder="ابحث عن مسألة أو موضوع…" aria-label="بحث">
+        <button class="btn" type="submit">بحث</button>
+      </form>
+    </section>
+    ${connectionNotice()}
+    <h2 class="h2">أبواب العبادات</h2>
+    <div class="babs">${cards}</div>
+    <h2 class="h2">لوحة الإحصاءات <small>محسوبة من البيانات</small></h2>
+    <dl class="stats">${stats}</dl>
+    ${recent.length ? `<h2 class="h2">آخر ما قرأت</h2><div class="cards">${recent.map(r => `<div class="card"><h3><a href="#/${r.k}/${encodeURIComponent(r.id)}">${esc(r.t)}</a></h3></div>`).join('')}</div>` : ''}
+  `);
+}
+
+function topicCard(t) {
+  const issues = DB.idx.issuesByTopic.get(sid(t.topic_id)) || [];
+  let book = null;
+  const rid = arr(t.reference_ids)[0] ?? issues.map(i => arr(i.reference_ids)[0]).find(has);
+  if (has(rid)) { const r = DB.idx.references.get(sid(rid)); if (r) book = DB.idx.books.get(sid(r.book_id)); }
+  const def = has(t.definition) ? String(t.definition) : '';
+  return `<div class="card">
+    <h3><a href="#/topic/${encodeURIComponent(t.topic_id)}">${esc(t.title)}</a></h3>
+    ${def ? `<p class="def">${esc(def.length > 160 ? def.slice(0, 160) + '…' : def)}</p>` : ''}
+    <div class="row"><span class="pill">المسائل: <b>${fmt(issues.length)}</b></span>${book ? `<span class="pill">المصدر: <b>${esc(book.title)}</b></span>` : ''}
+    <a class="btn sm" href="#/topic/${encodeURIComponent(t.topic_id)}">عرض الموضوع</a></div></div>`;
+}
+
+function viewBab(key) {
+  const b = BABS.find(x => x.key === key);
+  if (!b) return viewNotFound();
+  currentNav = 'bab:' + key;
+  crumbs([HOME, IBADAT, { label: b.title }]);
+  const ch = DB.idx.babChapter.get(key), n = babCounts(key);
+  let body;
+  if (!ch || !n.topics) body = emptyState('لا توجد موضوعات لهذا الباب في قاعدة البيانات الحالية.', noDataBody());
+  else {
+    const topics = DB.idx.topicsByChapter.get(sid(ch.chapter_id)) || [];
+    const secs = DB.idx.sectionsByChapter.get(sid(ch.chapter_id)) || [];
+    const used = new Set();
+    body = secs.map(s => {
+      const ts = topics.filter(t => sid(t.section_id) === sid(s.section_id));
+      ts.forEach(t => used.add(t));
+      return ts.length ? `<h3 class="sec-title">${esc(s.title)}</h3><div class="cards">${ts.map(topicCard).join('')}</div>` : '';
+    }).join('');
+    const rest = topics.filter(t => !used.has(t));
+    if (rest.length) body += (secs.length ? '<h3 class="sec-title">موضوعات أخرى</h3>' : '') + `<div class="cards">${rest.map(topicCard).join('')}</div>`;
+  }
+  setView(`
+    <header class="page-head head-row"><div><h1>${b.icon} ${b.title}</h1>
+      <p>${ch && has(ch.description) ? esc(ch.description) : (ch ? MSG.NA : '')}</p></div>
+      <div class="cta-row" style="margin:0">${n.issues ? `<a class="btn sm" href="#/studio?bab=${b.key}">🎞️ عرض شرائح</a>` : ''}${canEdit() ? `<a class="btn ghost sm" href="#/edit?bab=${b.key}">➕ إضافة مسألة</a>` : ''}</div></header>
+    ${connectionNotice()}
+    <div class="infobar"><span class="pill">الموضوعات: <b>${fmt(n.topics)}</b></span><span class="pill">المسائل: <b>${fmt(n.issues)}</b></span></div>
+    <h2 class="h2">فهرس الموضوعات</h2>
+    ${body}`);
+}
+
+const TOPIC_LISTS = [['conditions', 'الشروط', 'الشرط'], ['arkan', 'الأركان', 'الركن'], ['sunan', 'السنن', 'السنة'], ['makruhat', 'المكروهات', 'المكروه'], ['mubtilat', 'المبطلات', 'المبطل']];
+function listTable(items, colName) {
+  const rows = arr(items).map(it => typeof it === 'string' ? { text: it } : (it || {})).filter(it => has(it.text));
+  if (!rows.length) return '';
+  const hasExp = rows.some(r => has(r.explanation)), hasRef = rows.some(r => has(r.reference_id));
+  return `<div class="tbl-wrap"><table><thead><tr><th>الرقم</th><th>${colName}</th>${hasExp ? '<th>البيان</th>' : ''}${hasRef ? '<th>المصدر</th>' : ''}</tr></thead><tbody>
+    ${rows.map((r, i) => `<tr><td class="num">${fmt(i + 1)}</td><td>${esc(r.text)}</td>${hasExp ? `<td>${has(r.explanation) ? esc(r.explanation) : ''}</td>` : ''}${hasRef ? `<td>${citeChip(r.reference_id)}</td>` : ''}</tr>`).join('')}
+  </tbody></table></div>`;
+}
+function blk(title, inner, cls = '') { return `<section class="blk ${cls}"><h2>${title}</h2><div class="body">${inner}</div></section>`; }
+
+function viewTopic(id) {
+  const t = Api.getTopicById(id);
+  if (!t) return viewNotFound('الموضوع');
+  const cid = topicChapterId(t), key = DB.idx.chapterBab.get(cid), sec = DB.idx.sections.get(sid(t.section_id));
+  currentNav = key ? 'bab:' + key : '';
+  crumbs([HOME, IBADAT, babCrumb(key), sec ? { label: sec.title } : null, { label: t.title }].filter(Boolean));
+  recordRecent('topic', t.topic_id, t.title);
+  const issues = DB.idx.issuesByTopic.get(sid(t.topic_id)) || [];
+  const addQ = new URLSearchParams({ bab: key || '', topic: t.title || '' }); if (sec) addQ.set('section', sec.title || '');
+  let html = `<header class="page-head head-row"><h1>${esc(t.title)}</h1><div class="cta-row" style="margin:0">${key && issues.length ? `<a class="btn sm" href="#/studio?bab=${key}&topic=${encodeURIComponent(t.topic_id)}">🎞️ عرض شرائح</a>` : ''}${canEdit() && key ? `<a class="btn ghost sm" href="#/edit?${addQ}">➕ إضافة مسألة هنا</a>` : ''}</div></header>${connectionNotice()}`;
+  if (has(t.definition)) html += blk('التعريف', paras(t.definition));
+  if (has(t.ruling)) html += blk('الحكم', paras(t.ruling));
+  const evs = arr(t.evidence_ids).map(e => DB.idx.evidences.get(sid(e))).filter(Boolean);
+  if (evs.length) html += blk('الأدلة', evs.map(evidenceCard).join(''));
+  TOPIC_LISTS.forEach(([k, label, col]) => { const tb = listTable(t[k], col); if (tb) html += blk(label, tb); });
+  if (issues.length) html += `<h2 class="h2">المسائل المتعلقة</h2><div class="cards">${issues.map(is => `<div class="card"><h3><a href="#/issue/${encodeURIComponent(is.issue_id)}">${esc(is.title)}</a></h3><div class="row">${has(is.page) ? `<span class="pill">صـ ${esc(is.page)}</span>` : ''}<a class="btn sm" href="#/issue/${encodeURIComponent(is.issue_id)}">عرض المسألة</a></div></div>`).join('')}</div>`;
+  const rids = new Set(arr(t.reference_ids).map(sid));
+  issues.forEach(is => arr(is.reference_ids).forEach(r => rids.add(sid(r))));
+  TOPIC_LISTS.forEach(([k]) => arr(t[k]).forEach(it => it && has(it.reference_id) && rids.add(sid(it.reference_id))));
+  const refs = [...rids].map(r => DB.idx.references.get(r)).filter(Boolean);
+  if (refs.length) html += `<h2 class="h2">المصادر والمراجع</h2>` + blk('📚 المصادر', refs.map(r => `<div class="src-card">${citeChip(r.reference_id)}${refFields(r)}</div>`).join(''));
+  if (!has(t.definition) && !has(t.ruling) && !evs.length && !issues.length) html += emptyState('لا توجد بيانات تفصيلية لهذا الموضوع في قاعدة البيانات الحالية.');
+  setView(html);
+}
+
+function evidenceCard(e) {
+  const chip = citeChip(e.reference_id);
+  if (e.type === 'quran') {
+    const ref = has(e.surah) && has(e.ayah) ? `[${esc(e.surah)}: ${esc(e.ayah)}]` : has(e.surah) ? `[${esc(e.surah)}]` : `<span class="na">${MSG.REF_INCOMPLETE}</span>`;
+    return `<div class="ev quran"><div class="ev-label">📖 الدليل من القرآن الكريم</div><div class="ayah">﴿${esc(e.text)}﴾</div><div class="ref">${ref} ${chip}</div></div>`;
+  }
+  if (e.type === 'hadith') {
+    const f = [['الراوي', e.narrator], ['المصدر', e.collection], ['الكتاب', e.kitab], ['الباب', e.bab], ['رقم الحديث', e.hadith_number]].filter(([, v]) => has(v));
+    return `<div class="ev"><div class="ev-label">📜 الدليل من السنة</div><div class="hadith">${esc(e.text)}</div>
+      ${f.length ? `<dl class="fields">${f.map(([a, b]) => `<dt>${a}</dt><dd>${esc(b)}</dd>`).join('')}</dl>` : ''}
+      ${!has(e.collection) ? `<p class="na" style="margin:.4rem 0 0">${MSG.REF_INCOMPLETE}</p>` : ''}${chip ? `<div class="cites">${chip}</div>` : ''}</div>`;
+  }
+  return `<div class="ev"><div class="ev-label">الدليل</div><div>${paras(e.text)}</div>${chip ? `<div class="cites">${chip}</div>` : ''}</div>`;
+}
+
+function viewIssue(id) {
+  const is = Api.getIssueById(id);
+  if (!is) return viewNotFound('المسألة');
+  const c = issueCtx(is);
+  currentNav = c.babKey ? 'bab:' + c.babKey : '';
+  crumbs([HOME, IBADAT, babCrumb(c.babKey), c.section ? { label: c.section.title } : null,
+    c.topic ? { label: c.topic.title, href: '#/topic/' + encodeURIComponent(c.topic.topic_id) } : null, { label: is.title }].filter(Boolean));
+  recordRecent('issue', is.issue_id, is.title);
+  const favs = store.get('favs', []), isFav = favs.includes(sid(is.issue_id));
+  const sibs = c.topic ? (DB.idx.issuesByTopic.get(sid(c.topic.topic_id)) || []) : [];
+  const pos = sibs.indexOf(is), prevI = pos > 0 ? sibs[pos - 1] : null, nextI = pos > -1 && pos < sibs.length - 1 ? sibs[pos + 1] : null;
+  const info = [['الترتيب', sibs.length > 1 && pos > -1 ? `المسألة ${fmt(pos + 1)} من ${fmt(sibs.length)}` : null], ['الباب', c.chapter?.title], ['الفصل', c.section?.title], ['الموضوع', c.topic?.title], ['الجزء', c.volume ? (has(c.volume.number) ? `جـ ${c.volume.number}` : c.volume.title) : null], ['الصفحة', has(c.page) ? `صـ ${c.page}` : null], ['المصدر', c.book?.title]]
+    .filter(([, v]) => has(v)).map(([l, v]) => `<span class="pill">${l}: <b>${esc(v)}</b></span>`).join('');
+  const chips = c.refs.map(r => citeChip(r.reference_id)).join('');
+  const evs = arr(is.evidence_ids).map(e => DB.idx.evidences.get(sid(e))).filter(Boolean);
+  let html = `<article class="issue">
+    <header class="issue-head"><h1>${esc(is.title)}</h1>${info ? `<div class="infobar">${info}</div>` : ''}
+      <div class="actions">
+        <button class="btn ghost" data-act="fav" data-id="${esc(is.issue_id)}" aria-pressed="${isFav}">${isFav ? '⭐ في المفضلة' : '⭐ إضافة إلى المفضلة'}</button>
+        <button class="btn ghost" data-act="copy" data-id="${esc(is.issue_id)}">📋 نسخ</button>
+        <button class="btn ghost" data-act="print">🖨️ طباعة</button>
+        <button class="btn ghost" data-act="share" data-title="${esc(is.title)}">🔗 مشاركة</button>
+        ${canEdit() ? `<a class="btn ghost" href="#/edit/${encodeURIComponent(is.issue_id)}">✏️ تعديل</a>` : ''}
+        <span class="size-ctl" role="group" aria-label="حجم خط النص"><button data-act="fs-down" aria-label="تصغير الخط">أ−</button><button data-act="fs-up" aria-label="تكبير الخط">أ+</button></span>
+      </div></header>
+    ${connectionNotice()}`;
+  html += blk('📖 النص الأصلي', has(is.original_text) ? `<div class="nass">${paras(is.original_text)}</div>${chips ? `<div class="cites">${chips}</div>` : ''}` : `<p class="na">${MSG.NA}</p>`, 'source-text');
+  html += blk('⚖️ الحكم', has(is.ruling) ? paras(is.ruling) : `<p class="na">${MSG.NA}</p>`);
+  html += blk('الأدلة', evs.length ? evs.map(evidenceCard).join('') : `<p class="na">${MSG.NA}</p>`);
+  if (has(is.explanation)) html += blk('💡 شرح وتوضيح', paras(is.explanation), 'sharh');
+  const terms = arr(is.terms).filter(t => t && has(t.term));
+  if (terms.length) html += blk('المصطلحات', `<div class="tbl-wrap"><table><thead><tr><th>المصطلح الفقهي</th><th>شرح مبسط</th></tr></thead><tbody>${terms.map(t => `<tr><td>${esc(t.term)}</td><td>${has(t.simple) ? esc(t.simple) : ''}</td></tr>`).join('')}</tbody></table></div>`);
+  if (has(is.notes)) html += blk('ملاحظات', paras(is.notes));
+  const kh = arr(is.khilaf).filter(k => k && has(k.qawl));
+  if (kh.length) html += blk('الخلاف الفقهي', `<ul class="khilaf">${kh.map(k => `<li>${esc(k.qawl)}<div class="ref na">${has(k.attributed_to) ? 'النسبة: ' + esc(k.attributed_to) : 'النسبة غير متوفرة في قاعدة البيانات الحالية.'} ${citeChip(k.reference_id)}</div></li>`).join('')}</ul>`);
+  html += blk('📚 المصدر', c.refs.length ? c.refs.map(r => `<div class="src-card">${citeChip(r.reference_id)}${refFields(r)}</div>`).join('') : `<p class="na">${MSG.NA_SHORT}</p>`);
+  const rel = arr(is.related_issue_ids).map(r => DB.idx.issues.get(sid(r))).filter(Boolean);
+  if (rel.length) html += blk('انظر أيضاً', `<div class="related">${rel.map(r => `<a class="btn ghost sm" href="#/issue/${encodeURIComponent(r.issue_id)}">${esc(r.title)}</a>`).join('')}</div>`);
+  if (prevI || nextI) html += `<nav class="seq" aria-label="التنقل بين المسائل">${prevI ? `<a href="#/issue/${encodeURIComponent(prevI.issue_id)}"><small>المسألة السابقة</small>${esc(prevI.title)}</a>` : ''}${nextI ? `<a class="next" href="#/issue/${encodeURIComponent(nextI.issue_id)}"><small>المسألة التالية</small>${esc(nextI.title)}</a>` : ''}</nav>`;
+  setView(html + '</article>');
+}
+
+function issuePlain(is) {
+  const c = issueCtx(is), L = [is.title, ''];
+  L.push('النص: ' + (has(is.original_text) ? is.original_text : MSG.NA));
+  L.push('الحكم: ' + (has(is.ruling) ? is.ruling : MSG.NA));
+  const evs = arr(is.evidence_ids).map(e => DB.idx.evidences.get(sid(e))).filter(Boolean);
+  L.push('الدليل:' + (evs.length ? '' : ' ' + MSG.NA));
+  evs.forEach(e => {
+    let s = '- ' + e.text;
+    if (e.type === 'quran' && has(e.surah)) s += ` [${e.surah}${has(e.ayah) ? ': ' + e.ayah : ''}]`;
+    if (e.type === 'hadith') s += ' (' + [e.narrator, e.collection, has(e.hadith_number) ? 'رقم ' + e.hadith_number : ''].filter(has).join('، ') + ')';
+    L.push(s);
+  });
+  L.push('المصدر: ' + (c.refs.length ? c.refs.map(refPlain).join(' | ') : MSG.NA_SHORT));
+  return L.join('\n');
+}
+
+/* ---------- Search page ---------- */
+function opt(v, l, sel) { return `<option value="${esc(v)}"${sel === sid(v) ? ' selected' : ''}>${esc(l)}</option>`; }
+function filterOptions(F) {
+  const d = DB.raw, I = DB.idx;
+  const babO = '<option value="">كل الأبواب</option>' + BABS.map(b => opt(b.key, b.title, F.bab)).join('');
+  const volO = '<option value="">كل الأجزاء</option>' + d.volumes.filter(v => has(v.volume_id)).map(v => opt(v.volume_id, volLabel(v) || v.volume_id, F.vol)).join('');
+  const chId = F.bab && I.babChapter.get(F.bab) ? sid(I.babChapter.get(F.bab).chapter_id) : null;
+  const secO = '<option value="">كل الفصول</option>' + d.sections.filter(s => has(s.section_id) && I.chapterBab.has(sid(s.chapter_id)) && (!chId || sid(s.chapter_id) === chId)).map(s => opt(s.section_id, s.title, F.sec)).join('');
+  const topO = '<option value="">كل الموضوعات</option>' + d.topics.filter(t => has(t.topic_id) && (!chId || topicChapterId(t) === chId) && (!F.sec || sid(t.section_id) === F.sec)).map(t => opt(t.topic_id, t.title, F.topic)).join('');
+  const authors = [...new Set(d.books.flatMap(b => arr(b.authors)).filter(has))];
+  const autO = '<option value="">كل المؤلفين</option>' + authors.map(a => opt(a, a, F.author)).join('');
+  const bookO = '<option value="">كل المصادر</option>' + d.books.filter(b => has(b.book_id)).map(b => opt(b.book_id, b.title || b.book_id, F.book)).join('');
+  const typeO = [['', 'كل الأنواع'], ['quran', 'مسائل فيها دليل من القرآن'], ['hadith', 'مسائل فيها دليل من السنة'], ['khilaf', 'مسائل فيها خلاف فقهي']].map(([v, l]) => opt(v, l, F.type)).join('');
+  return { babO, volO, secO, topO, autO, bookO, typeO };
+}
+function pager(total, page, base) {
+  const pages = Math.ceil(total / CONFIG.PAGE_SIZE); if (pages <= 1) return '';
+  const link = p => { const q = new URLSearchParams(base); q.set('p', p); return '#/search?' + q.toString(); };
+  const nums = new Set([1, pages, page - 1, page, page + 1].filter(p => p >= 1 && p <= pages));
+  const list = [...nums].sort((a, b) => a - b);
+  let out = `<a class="${page === 1 ? 'off' : ''}" href="${link(page - 1)}">السابق</a>`, prev = 0;
+  list.forEach(p => { if (p - prev > 1) out += '<span class="gap">…</span>'; out += p === page ? `<span aria-current="page">${fmt(p)}</span>` : `<a href="${link(p)}">${fmt(p)}</a>`; prev = p; });
+  out += `<a class="${page === pages ? 'off' : ''}" href="${link(page + 1)}">التالي</a>`;
+  return `<nav class="pager" aria-label="الصفحات">${out}</nav>`;
+}
+function viewSearch(params) {
+  currentNav = 'search'; crumbs([HOME, { label: 'البحث' }]);
+  const F = {}; ['bab', 'vol', 'sec', 'topic', 'author', 'book', 'type'].forEach(k => F[k] = params.get(k) || '');
+  const q = params.get('q') || '', page = Math.max(1, parseInt(params.get('p') || '1', 10) || 1);
+  const O = filterOptions(F), anyF = Object.values(F).some(Boolean);
+  let results = '';
+  if (DB.mode === 'none') results = emptyState(MSG.DISCONNECTED, `البحث يعمل على البيانات بعد ربطها. <a href="#/data">ربط البيانات</a>`);
+  else if (!q && !anyF) results = emptyState('اكتب كلمة للبحث، أو اختر باباً من البحث المتقدم.', 'مثال: الوضوء');
+  else {
+    const { terms, rows } = Api.searchIssues(q, F);
+    const total = rows.length, start = (page - 1) * CONFIG.PAGE_SIZE, slice = rows.slice(start, start + CONFIG.PAGE_SIZE);
+    const base = {}; if (q) base.q = q; Object.entries(F).forEach(([k, v]) => v && (base[k] = v));
+    if (!total) results = emptyState('لا توجد نتائج مطابقة في قاعدة البيانات الحالية.', 'جرّب كلمة أقصر أو امسح الفلاتر.');
+    else results = `<p class="res-count">عرض ${fmt(start + 1)}–${fmt(start + slice.length)} من ${fmt(total)} نتيجة</p><div class="cards">` +
+      slice.map(r => {
+        const is = r.is, c = r.c;
+        const meta = [['الباب', c.chapter?.title], ['الفصل', c.section?.title], ['الجزء', c.volume ? volLabel(c.volume) : null], ['الصفحة', has(c.page) ? `صـ ${c.page}` : null], ['المصدر', c.book?.title]]
+          .filter(([, v]) => has(v)).map(([l, v]) => `<span class="pill">${l}: <b>${esc(v)}</b></span>`).join('');
+        const sn = snippet(is.original_text || is.ruling || '', terms);
+        return `<article class="card res"><h3><a href="#/issue/${encodeURIComponent(is.issue_id)}">${highlight(is.title, terms)}</a></h3>
+          ${sn ? `<p class="snip">${sn}</p>` : ''}<div class="row">${meta}<a class="btn sm" href="#/issue/${encodeURIComponent(is.issue_id)}">عرض المسألة</a></div></article>`;
+      }).join('') + '</div>' + pager(total, page, base);
+  }
+  setView(`
+    <header class="page-head"><h1>البحث</h1><p>يبحث في العنوان والنص والحكم والموضوع والباب والفصل والكلمات المفتاحية والمؤلف والمصدر والجزء والصفحة، مع مراعاة الهمزات والتاء المربوطة والألف المقصورة والتشكيل.</p></header>
+    <form class="search-form" data-form="adv" role="search">
+      <div class="search-main"><input type="search" name="q" value="${esc(q)}" placeholder="مثال: الوضوء" aria-label="كلمة البحث"><button class="btn" type="submit">بحث</button></div>
+      <details class="adv" ${anyF ? 'open' : ''}><summary>البحث المتقدم</summary>
+        <div class="filters">
+          <label>الباب<select name="bab" data-dep>${O.babO}</select></label>
+          <label>الجزء<select name="vol">${O.volO}</select></label>
+          <label>الفصل<select name="sec" data-dep>${O.secO}</select></label>
+          <label>الموضوع<select name="topic">${O.topO}</select></label>
+          <label>المؤلف<select name="author">${O.autO}</select></label>
+          <label>المصدر<select name="book">${O.bookO}</select></label>
+          <label>نوع المحتوى<select name="type">${O.typeO}</select></label>
+        </div>
+        <div class="filter-actions"><button class="btn sm" type="submit">بحث</button><button class="btn ghost sm" type="button" data-act="clear-filters">مسح الفلاتر</button></div>
+      </details>
+    </form>
+    ${results}`);
+}
+
+/* ---------- References ---------- */
+function viewRefs() {
+  currentNav = 'refs'; crumbs([HOME, { label: 'المراجع والمصادر' }]);
+  const d = DB.raw, used = new Map();
+  const bump = rid => { const r = DB.idx.references.get(sid(rid)); if (r && has(r.book_id)) used.set(sid(r.book_id), (used.get(sid(r.book_id)) || 0) + 1); };
+  d.issues.forEach(is => arr(is.reference_ids).forEach(bump));
+  d.topics.forEach(t => arr(t.reference_ids).forEach(bump));
+  d.evidences.forEach(e => has(e.reference_id) && bump(e.reference_id));
+  const books = d.books.filter(b => used.has(sid(b.book_id)));
+  const primaryId = sid(d.meta.primary_book_id) || (books[0] ? sid(books[0].book_id) : '');
+  const bookCard = b => {
+    const f = [['المؤلف', has(b.authors) ? arr(b.authors).join('، ') : null], ['الناشر', b.publisher], ['الطبعة', b.edition], ['سنة النشر', b.year]].filter(([, v]) => has(v));
+    const vols = d.volumes.filter(v => sid(v.book_id) === sid(b.book_id)).length;
+    return `<div class="card"><h3>${esc(b.title)}</h3>${f.length ? `<dl class="fields">${f.map(([a, v]) => `<dt>${a}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : ''}
+      <div class="row"><span class="pill">مرات الإحالة: <b>${fmt(used.get(sid(b.book_id)))}</b></span>${vols ? `<span class="pill">الأجزاء: <b>${fmt(vols)}</b></span>` : ''}
+      ${has(b.source_url) && /^https?:\/\//i.test(b.source_url) ? `<a class="btn ghost sm" href="${esc(b.source_url)}" target="_blank" rel="noopener">عرض المصدر الأصلي</a>` : ''}</div></div>`;
+  };
+  let html = `<header class="page-head"><h1>المراجع والمصادر</h1><p>تُعرض هنا المصادر المستخدمة فعلياً في البيانات فقط.</p></header>${connectionNotice()}`;
+  if (!books.length) html += emptyState('لا توجد مصادر مستخدمة في قاعدة البيانات الحالية.', noDataBody());
+  else {
+    const prim = books.find(b => sid(b.book_id) === primaryId), others = books.filter(b => b !== prim);
+    if (prim) html += `<h2 class="h2">المصدر الأساسي</h2><div class="cards">${bookCard(prim)}</div>`;
+    if (others.length) html += `<h2 class="h2">مصادر أخرى</h2><div class="cards">${others.map(bookCard).join('')}</div>`;
+    html += `<h2 class="h2">فهرس الإحالات <small>${fmt(d.references.length)}</small></h2>` + blk('📚 الإحالات', d.references.map(r => `<div class="src-card">${citeChip(r.reference_id)}${refFields(r)}</div>`).join(''));
+  }
+  setView(html);
+}
+
+/* ---------- Favorites / Recent ---------- */
+function viewFavs() {
+  currentNav = 'favs'; crumbs([HOME, { label: 'المفضلة' }]);
+  const favs = store.get('favs', []);
+  const body = favs.length ? `<div class="cards">${favs.map(id => {
+    const is = DB.idx.issues.get(id);
+    if (!is) return `<div class="card"><h3>مسألة محفوظة (${esc(id)})</h3><p class="def">غير موجودة في البيانات الحالية.</p><div class="row"><button class="btn ghost sm" data-act="unfav" data-id="${esc(id)}">إزالة</button></div></div>`;
+    const c = issueCtx(is);
+    return `<div class="card"><h3><a href="#/issue/${encodeURIComponent(id)}">${esc(is.title)}</a></h3><div class="row">${c.chapter ? `<span class="pill">الباب: <b>${esc(c.chapter.title)}</b></span>` : ''}${c.topic ? `<span class="pill">الموضوع: <b>${esc(c.topic.title)}</b></span>` : ''}<button class="btn ghost sm" data-act="unfav" data-id="${esc(id)}">إزالة</button></div></div>`;
+  }).join('')}</div>` : emptyState('لم تحفظ أي مسألة بعد.', 'افتح مسألة ثم اضغط «⭐ إضافة إلى المفضلة».');
+  setView(`<header class="page-head"><h1>المفضلة</h1></header>${body}`);
+}
+function recordRecent(k, id, title) {
+  let r = store.get('recent', []).filter(x => !(x.k === k && x.id === sid(id)));
+  r.unshift({ k, id: sid(id), t: String(title ?? '') }); store.set('recent', r.slice(0, 15));
+}
+function viewRecent() {
+  currentNav = 'recent'; crumbs([HOME, { label: 'آخر الموضوعات' }]);
+  const r = store.get('recent', []).filter(x => (x.k === 'issue' ? DB.idx.issues : DB.idx.topics).has(x.id));
+  setView(`<header class="page-head"><h1>آخر ما قرأت</h1></header>` + (r.length ? `<div class="cards">${r.map(x => `<div class="card"><h3><a href="#/${x.k}/${encodeURIComponent(x.id)}">${esc(x.t)}</a></h3><div class="row"><span class="pill">${x.k === 'issue' ? 'مسألة' : 'موضوع'}</span></div></div>`).join('')}</div>
+    <p style="margin-top:1rem"><button class="btn ghost sm" data-act="clear-recent">مسح السجل</button></p>` : emptyState('لا يوجد سجل قراءة بعد.', 'تظهر هنا الموضوعات والمسائل التي تفتحها.')));
+}
+
+/* ---------- About ---------- */
+function viewAbout() {
+  currentNav = 'about'; crumbs([HOME, { label: 'حول الموسوعة' }]);
+  const prim = DB.raw.books.find(b => sid(b.book_id) === sid(DB.raw.meta.primary_book_id)) || DB.raw.books.find(b => norm(b.title).includes(norm('الفقه المنهجي')));
+  const bib = prim ? [['الناشر', prim.publisher], ['الطبعة', prim.edition], ['سنة النشر', prim.year]].filter(([, v]) => has(v)) : [];
+  setView(`<header class="page-head"><h1>حول الموسوعة</h1></header>
+    ${blk('اسم المشروع', '<p>موسوعة الفقه المنهجي – قسم العبادات</p>')}
+    ${blk('هدف المشروع', '<p>موسوعة رقمية تعليمية لفقه العبادات على مذهب الإمام الشافعي، تسترجع المعلومات الموجودة في قاعدة البيانات وتنظمها وتعرضها وتربطها وتتيح البحث فيها وتوثّقها، دون إضافة محتوى فقهي من خارج المصدر.</p>')}
+    ${blk('نطاق المشروع', `<p>قسم العبادات فقط، في خمسة أبواب: ${BABS.map(b => b.title).join('، ')}.</p>`)}
+    ${blk('المصدر الأساسي', `<p class="nass" style="font-size:1.25rem">الفقه المنهجي على مذهب الإمام الشافعي</p><p>للمؤلفين: مصطفى سعيد الخِن، ومصطفى مصطفى البُغا، وعلي الشَّرْبجي.</p>
+      ${bib.length ? `<dl class="fields">${bib.map(([a, v]) => `<dt>${a}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : `<p class="na">بيانات الطبعة والنشر تُعرض بحسب ما في قاعدة البيانات، وهي غير متوفرة حالياً.</p>`}`)}
+    <div class="notice ok"><strong>تنبيه</strong>${MSG.ABOUT_NOTE}</div>`);
+}
+
+/* ---------- Data management (للمطور) ---------- */
+function viewData() {
+  currentNav = 'data'; crumbs([HOME, { label: 'إدارة البيانات' }]);
+  const C = counts();
+  const status = { none: MSG.NOT_CONNECTED, demo: 'بيانات تجريبية (للتوضيح فقط).', embedded: 'متصلة: بيانات مضمّنة في الملف.', remote: 'متصلة: ' + (CONFIG.API_BASE || CONFIG.DATA_URL), imported: 'متصلة: ملف JSON مستورد ومحفوظ في هذا المتصفح.' }[DB.mode];
+  const W = DB.warnings;
+  setView(`<header class="page-head"><h1>إدارة البيانات</h1><p>هذه الصفحة مخصصة للمطور ولمن يُعدّ قاعدة البيانات.</p></header>
+    <div class="notice ${DB.mode === 'none' ? '' : DB.mode === 'demo' ? 'demo' : 'ok'}"><strong>الحالة</strong>${esc(status)}</div>
+    <div class="infobar">${Object.entries({ الأبواب: C.chapters, الموضوعات: C.topics, المسائل: C.issues, الأدلة: C.evidences, المراجع: C.references, الأجزاء: C.volumes, المصادر: C.books }).map(([l, v]) => `<span class="pill">${l}: <b>${fmt(v)}</b></span>`).join('')}</div>
+    ${blk('ربط البيانات', `
+      <p>ارفع ملف JSON بالبنية الموضحة أدناه، أو الصقه نصاً. يُحفظ في هذا المتصفح فقط ولا يُرسل إلى أي خادم.</p>
+      <div class="data-actions">
+        <label class="btn file-btn">رفع ملف JSON<input type="file" accept=".json,application/json" data-act="file"></label>
+        <button class="btn ghost" data-act="load-demo">عرض بيانات تجريبية</button>
+        <a class="btn ghost" href="#/edit">➕ إضافة مسألة</a>
+        ${DB.mode !== 'none' && DB.mode !== 'demo' ? '<button class="btn ghost" data-act="export">تصدير JSON</button>' : ''}
+        ${DB.mode !== 'none' ? '<button class="btn ghost" data-act="disconnect">فصل البيانات</button>' : ''}
+      </div>
+      <div class="export-box" id="exportBox" hidden><p style="margin:1rem 0 .4rem">نسخة البيانات الكاملة (احفظها في ملف fiqh-data.json):</p><textarea class="json" readonly></textarea></div>
+      <p style="margin:1rem 0 .4rem">أو الصق JSON هنا:</p>
+      <textarea class="json" id="jsonPaste" spellcheck="false" placeholder='{"books":[], "issues":[], ...}'></textarea>
+      <p style="margin-top:.5rem"><button class="btn sm" data-act="load-paste">تحميل من النص</button></p>`)}
+    ${blk('📥 استيراد نص الكتاب (TXT / EPUB)', canEdit() ? importFormHtml() : '<p class="na">اخرج من الوضع التجريبي أولاً لاستيراد بياناتك.</p>')}
+    ${blk('تقرير التحقق من البيانات', W.length ? `<p>${fmt(W.length)} ملاحظة (تُسجَّل أيضاً في Console):</p><ul class="warns">${W.slice(0, 200).map(w => `<li>${esc(w)}</li>`).join('')}</ul>${W.length > 200 ? '<p class="na">عُرضت أول ٢٠٠ ملاحظة فقط.</p>' : ''}` : '<p>لم تُكتشف مشكلات في البيانات الحالية.</p>')}
+    ${blk('بنية البيانات (Data Schema)', `
+      <p>كل عنصر له معرّف فريد، والعلاقات: book_id ← volume_id ← chapter_id ← section_id ← topic_id ← issue_id ← reference_id. الحقول الاختيارية تُخفى في الواجهة إن لم توجد. يُربط الباب بأحد الأبواب الخمسة عبر الحقل key أو العنوان.</p>
+      <pre class="code" id="schemaCode">${esc(JSON.stringify(SCHEMA_EXAMPLE, null, 2))}</pre>
+      <p style="margin-top:.5rem"><button class="btn ghost sm" data-act="copy-schema">📋 نسخ القالب</button></p>`)}
+    ${blk('طبقة API', `<p>الواجهة لا تقرأ البيانات إلا عبر <code>FiqhApi</code>: getBooks، getVolumes، getChapters، getSections، getTopics، getIssues، getEvidences، getReferences، getIssueById، searchIssues. عند الانتقال إلى Backend تُستبدل هذه الدوال فقط. لا تضع أي اسم مستخدم أو كلمة مرور أو مفتاح سري في هذا الملف.</p>`)}
+  `);
+}
+
+/* ======================= TEXT / EPUB IMPORTER =======================
+   يقسّم نصاً يقدّمه المستخدم إلى فصول وموضوعات ومسائل. لا يضيف أي محتوى. */
+let pendingImport = null;
+const BAB_WORDS = { taharah: ['طهار'], salah: ['صلا'], zakah: ['زكا'], siyam: ['صيام', 'صوم'], hajj: ['حج', 'عمره'] };
+const digits = s => String(s).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+function detectBab(nl) {
+  if (!nl.startsWith('كتاب')) return undefined;
+  for (const [k, ws] of Object.entries(BAB_WORDS)) if (ws.some(w => nl.includes(w))) return k;
+  return null;
+}
+function extractPage(line, o) {
+  const pats = [
+    [/[\[\(]?\s*(?:جـ|ج|الجزء)\s*[:.]?\s*([0-9٠-٩]+)\s*[،,\-–\/]?\s*(?:صـ|ص|الصفحة)\s*[:.]?\s*([0-9٠-٩]+)\s*[\]\)]?/, 'vp'],
+    o.slashMarks ? [/\(\s*([0-9٠-٩]{1,2})\s*\/\s*([0-9٠-٩]{1,4})\s*\)/, 'vp'] : null,
+    [/(?:^|[\s\[\(])(?:صـ|ص|الصفحة)\s*[:.]?\s*([0-9٠-٩]{1,4})\s*[\]\)]?/, 'p']
+  ].filter(Boolean);
+  for (const [re, kind] of pats) {
+    const m = line.match(re); if (!m) continue;
+    const rest = line.replace(m[0], ' ').trim();
+    if (o.markerOwnLine && rest.replace(/[\s\[\]\(\)\-–_*.:،,]/g, '') !== '') continue;
+    return kind === 'vp' ? { vol: digits(m[1]), page: digits(m[2]), rest } : { page: digits(m[1]), rest };
+  }
+  return null;
+}
+function parseBookText(text, o) {
+  const lines = text.replace(/\r\n?/g, '\n').split('\n');
+  const pref = s => String(s || '').split(/[،,]/).map(x => norm(x)).filter(Boolean);
+  const M = { sec: pref(o.secMarks), topic: pref(o.topicMarks), issue: pref(o.issueMarks) };
+  const isHead = (nl, list) => list.some(m => nl === m || nl.startsWith(m + ' ') || nl.startsWith(m + ':') || nl.startsWith(m + '-') || nl.startsWith(m + '('));
+  const babTitle = k => BABS.find(b => b.key === k)?.title || '';
+  const R = { items: [], skipped: 0, pages: 0 };
+  let bab = o.bab || null, babHead = '', sec = '', topic = '', cur = null, page = null, vol = o.volume || '', inNotes = false, pending = [];
+  const flush = () => {
+    if (cur) { cur.text = cur.lines.join('\n').replace(/\n{3,}/g, '\n\n').trim(); delete cur.lines; if (cur.text || cur.explicit) R.items.push(cur); }
+    cur = null;
+  };
+  const start = (title, explicit) => {
+    flush();
+    const fallback = topic || sec || babTitle(bab);
+    cur = { bab, babHead, section: sec, topic: topic || sec || babTitle(bab), title: title || fallback, lines: [], page, volume: vol, explicit };
+    if (page == null) pending.push(cur);
+  };
+  for (const raw of lines) {
+    let line = raw.trim();
+    if (o.dropNotes && /^[_\-ـ]{6,}$/.test(line)) { inNotes = true; continue; }
+    const pm = line ? extractPage(line, o) : null;
+    if (pm) {
+      R.pages++;
+      if (pm.vol) { vol = pm.vol; if (cur && cur.page == null) cur.volume = vol; }
+      if (pm.page != null) {
+        if (o.pageAt === 'end') { pending.forEach(it => { if (it.page == null) it.page = pm.page; }); pending = []; page = String(+pm.page + 1); }
+        else page = pm.page;
+        inNotes = false;
+      }
+      line = pm.rest;
+      if (!line) continue;
+    }
+    if (inNotes) continue;
+    if (!line) { if (cur) cur.lines.push(''); continue; }
+    const md = /^(#{1,4})\s*(.+)$/.exec(line);
+    const headText = (md ? md[2] : line).trim();
+    const nl = norm(headText.replace(/^[\[\(«"*]+|[\]\)»"*.:،]+$/g, ''));
+    const short = headText.length <= o.maxHead;
+    if (o.autoBab && (md || short)) {
+      const k = detectBab(nl);
+      if (k || (k === null && md)) { flush(); bab = k; babHead = k ? headText : ''; sec = ''; topic = ''; continue; }
+    }
+    let level = null;
+    if (md) level = md[1].length === 1 ? 'sec' : md[1].length === 2 ? 'topic' : 'issue';
+    else if (short) level = isHead(nl, M.sec) ? 'sec' : isHead(nl, M.topic) ? 'topic' : isHead(nl, M.issue) ? 'issue' : null;
+    if (level === 'sec') { flush(); sec = headText; topic = ''; continue; }
+    if (level === 'topic') { flush(); topic = headText; continue; }
+    if (!bab) { R.skipped++; continue; }
+    if (level === 'issue') { start(headText, true); continue; }
+    if (!cur) { if (!o.autoIssue) { R.skipped++; continue; } start('', false); }
+    cur.lines.push(line);
+  }
+  flush();
+  if (o.ayat) R.items.forEach(it => {
+    it.ev = [];
+    const re = /﴿([^﴾]{2,}?)﴾\s*(?:[\[\(]\s*([^\]\):0-9٠-٩]{2,25}?)\s*:\s*([0-9٠-٩]+(?:\s*[-–]\s*[0-9٠-٩]+)?)\s*[\]\)])?/g;
+    let m;
+    while ((m = re.exec(it.text))) it.ev.push({ text: m[1].trim(), surah: m[2] ? m[2].trim() : undefined, ayah: m[3] ? digits(m[3]).replace(/\s/g, '') : undefined });
+  });
+  return R;
+}
+
+function htmlToText(html, mdHeads) {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const BLOCK = /^(P|DIV|LI|TR|BLOCKQUOTE|SECTION|ARTICLE|H[1-6]|BR|HR|TABLE|UL|OL)$/;
+  let out = '';
+  const walk = n => {
+    if (n.nodeType === 3) { out += n.nodeValue.replace(/\s+/g, ' '); return; }
+    if (n.nodeType !== 1) return;
+    const tag = n.tagName.toUpperCase();
+    if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'HEAD') return;
+    const block = BLOCK.test(tag), h = /^H([1-4])$/.exec(tag);
+    if (block) out += '\n';
+    if (h && mdHeads) out += '#'.repeat(+h[1]) + ' ';
+    if (tag === 'HR') out += '__________\n';
+    n.childNodes.forEach(walk);
+    if (block) out += '\n';
+  };
+  walk(doc.body || doc.documentElement);
+  return out.replace(/[ \t]+\n/g, '\n').replace(/\n[ \t]+/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+function zipPath(base, href) { const st = []; (base + href).split('/').forEach(p => { if (p === '..') st.pop(); else if (p && p !== '.') st.push(p); }); return st.join('/'); }
+async function epubToText(file, mdHeads) {
+  if (!window.JSZip) throw new Error('JSZip');
+  const zip = await JSZip.loadAsync(file);
+  const xml = s => new DOMParser().parseFromString(s, 'application/xml');
+  const cont = await zip.file('META-INF/container.xml')?.async('string');
+  if (!cont) throw new Error('ليس ملف EPUB صالحاً');
+  const opfPath = xml(cont).getElementsByTagNameNS('*', 'rootfile')[0]?.getAttribute('full-path');
+  const opfFile = opfPath && zip.file(opfPath); if (!opfFile) throw new Error('ملف OPF مفقود');
+  const opf = xml(await opfFile.async('string'));
+  const base = opfPath.includes('/') ? opfPath.slice(0, opfPath.lastIndexOf('/') + 1) : '';
+  const man = {}; [...opf.getElementsByTagNameNS('*', 'item')].forEach(i => man[i.getAttribute('id')] = i.getAttribute('href'));
+  const out = [];
+  for (const ref of opf.getElementsByTagNameNS('*', 'itemref')) {
+    const href = man[ref.getAttribute('idref')]; if (!href) continue;
+    let path = href.split('#')[0]; try { path = decodeURIComponent(path); } catch (e) {}
+    const f = zip.file(zipPath(base, path)); if (!f) continue;
+    out.push(htmlToText(await f.async('string'), mdHeads));
+  }
+  return out.join('\n\n');
+}
+
+function importFormHtml() {
+  const b0 = DB.raw.books.find(b => sid(b.book_id) === sid(DB.raw.meta.primary_book_id)) || DB.raw.books[0];
+  const chk = (n, l, on) => `<label class="chk"><input type="checkbox" name="${n}"${on ? ' checked' : ''}><span>${l}</span></label>`;
+  return `<form class="form" id="importForm" data-form="import" novalidate>
+    <p style="margin:0">الصق النص أو ارفع ملفاً من نسختك. يُقسَّم تلقائياً إلى فصول وموضوعات ومسائل، ثم تراجع المعاينة قبل الحفظ. لا يُضاف أي نص غير ما تقدّمه.</p>
+    <div class="data-actions" style="align-items:center"><label class="btn ghost file-btn">📄 رفع ملف TXT / EPUB<input type="file" accept=".txt,.epub,text/plain,application/epub+zip" data-act="textfile"></label><span class="na" id="rawInfo"></span></div>
+    <label class="fld">النص<textarea name="raw" class="raw-text" spellcheck="false" placeholder="# كتاب الطهارة&#10;## باب المياه&#10;### مسألة: …&#10;نص المسألة…&#10;[ص 25]"></textarea></label>
+    <div class="grid2">
+      <label class="fld">الباب الافتراضي<select name="ibab"><option value="">— بحسب العناوين فقط —</option>${BABS.map(b => `<option value="${b.key}">${b.icon} ${b.title}</option>`).join('')}</select><span class="hint">يُستخدم إن لم يحتوِ النص على «كتاب الطهارة…».</span></label>
+      <label class="fld">طريقة الحفظ<select name="imode"><option value="add">إضافة إلى البيانات الحالية</option><option value="replace">استبدال كل البيانات الحالية</option></select></label>
+    </div>
+    <details class="adv"><summary>إعدادات التقسيم والصفحات</summary>
+      <div class="form" style="margin-top:.9rem">
+        ${chk('autoBab', 'اكتشاف الباب من عناوين «كتاب الطهارة / كتاب الصلاة…» وتجاوز ما هو خارج العبادات', true)}
+        <div class="grid2">
+          <label class="fld">علامات الفصل<input name="secMarks" value="باب، الباب"></label>
+          <label class="fld">علامات الموضوع<input name="topicMarks" value="فصل، الفصل، المبحث"></label>
+          <label class="fld">علامات المسألة<input name="issueMarks" value="مسألة، المطلب، فرع"></label>
+          <label class="fld">أقصى طول لسطر العنوان<input name="maxHead" type="number" min="10" value="70"></label>
+        </div>
+        <p class="na" style="margin:0">يمكنك أيضاً تحديد البنية بنفسك: # للفصل، ## للموضوع، ### للمسألة.</p>
+        <div class="grid2">
+          <label class="fld">موضع علامة الصفحة<select name="pageAt"><option value="start">في بداية الصفحة</option><option value="end">في نهاية الصفحة</option></select></label>
+          <label class="fld">الجزء الافتراضي<input name="ivol" inputmode="numeric" placeholder="اختياري"></label>
+        </div>
+        ${chk('ownLine', 'قبول علامات الصفحات فقط إذا كانت في سطر مستقل (أدق)', true)}
+        ${chk('slash', 'اعتبار (ج/ص) بين قوسين مثل (1/25) علامة صفحة', false)}
+        ${chk('notes', 'حذف الحواشي (ما بعد سطر ______ حتى علامة الصفحة التالية)', false)}
+        ${chk('ayat', 'استخراج الآيات بين ﴿ ﴾ كأدلة (مع السورة والآية إن وُجدت بعدها)', true)}
+        ${chk('autoIssue', 'إنشاء مسألة باسم الموضوع للنص الذي لا يسبقه عنوان مسألة', true)}
+        ${chk('mdHeads', 'تحويل عناوين EPUB إلى # و## و###', true)}
+        <div class="grid2">
+          <label class="fld">الكتاب<input name="ibook" value="${esc(b0?.title ?? DEFAULT_BOOK)}"></label>
+          <label class="fld">المؤلفون<input name="iauthors" value="${esc(b0 ? arr(b0.authors).join('، ') : DEFAULT_AUTHORS)}"></label>
+        </div>
+      </div>
+    </details>
+    <div class="cta-row" style="margin:0"><button class="btn" type="submit">معاينة التقسيم</button></div>
+  </form>
+  <div id="importPreview"></div>`;
+}
+function readImportOpts(f) {
+  const g = n => f.elements[n];
+  return {
+    bab: g('ibab').value, replace: g('imode').value === 'replace', autoBab: g('autoBab').checked,
+    secMarks: g('secMarks').value, topicMarks: g('topicMarks').value, issueMarks: g('issueMarks').value,
+    maxHead: Math.max(10, +g('maxHead').value || 70), pageAt: g('pageAt').value, volume: digits(g('ivol').value.trim()),
+    markerOwnLine: g('ownLine').checked, slashMarks: g('slash').checked, dropNotes: g('notes').checked,
+    ayat: g('ayat').checked, autoIssue: g('autoIssue').checked, book: g('ibook').value.trim(), authors: g('iauthors').value
+  };
+}
+function renderImportPreview(R, o) {
+  const items = R.items.filter(i => i.bab);
+  const uniq = f => new Set(items.map(f)).size;
+  const withPage = items.filter(i => has(i.page)).length, ev = items.reduce((s, i) => s + (i.ev?.length || 0), 0);
+  const W = [];
+  if (!items.length) W.push('لم تُستخرج أي مسألة. اختر «الباب الافتراضي»، أو أضف عناوين مثل «كتاب الطهارة» أو علامات # في النص.');
+  if (R.skipped) W.push(`تم تجاوز ${fmt(R.skipped)} سطراً لأنها خارج أبواب العبادات أو قبل تحديد الباب.`);
+  if (items.length && withPage < items.length) W.push(`${fmt(items.length - withPage)} مسألة بلا رقم صفحة، ولن يُخترع لها رقم.`);
+  const long = items.filter(i => i.text.length > 6000).length;
+  if (long) W.push(`${fmt(long)} مسألة نصها طويل جداً؛ أضف علامات مسائل أدق إن أردت تقسيماً أصغر.`);
+  const pills = [['الأبواب', uniq(i => i.bab)], ['الفصول', uniq(i => i.bab + '|' + i.section)], ['الموضوعات', uniq(i => i.bab + '|' + i.section + '|' + i.topic)], ['المسائل', items.length], ['علامات صفحات', R.pages], ['آيات مستخرجة', ev]]
+    .map(([l, v]) => `<span class="pill">${l}: <b>${fmt(v)}</b></span>`).join('');
+  const rows = items.slice(0, 300).map((i, n) => `<tr><td class="num">${fmt(n + 1)}</td><td>${esc(BABS.find(b => b.key === i.bab)?.title)}</td><td>${esc(i.section)}</td><td>${esc(i.topic)}</td><td>${esc(i.title)}</td><td>${has(i.page) ? esc(i.page) : ''}</td><td>${fmt(i.text.length)}</td></tr>`).join('');
+  const box = $('#importPreview');
+  box.innerHTML = `<div class="notice ok" style="margin-top:1.2rem"><strong>نتيجة التقسيم — لم يُحفظ شيء بعد</strong><div class="cta-row" style="margin-top:.5rem">${pills}</div></div>
+    ${W.length ? `<ul class="warns">${W.map(w => `<li>${esc(w)}</li>`).join('')}</ul>` : ''}
+    ${items.length ? `<div class="tbl-wrap preview-tbl"><table><thead><tr><th>#</th><th>الباب</th><th>الفصل</th><th>الموضوع</th><th>المسألة</th><th>صـ</th><th>الأحرف</th></tr></thead><tbody>${rows}</tbody></table></div>
+      ${items.length > 300 ? '<p class="na">عُرضت أول ٣٠٠ مسألة فقط.</p>' : ''}
+      <div class="cta-row"><button type="button" class="btn" data-act="commit-import">${o.replace ? 'استبدال البيانات وحفظ' : 'حفظ'} ${fmt(items.length)} مسألة</button><button type="button" class="btn ghost" data-act="cancel-import">إلغاء</button></div>` : ''}`;
+  box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function commitImport() {
+  if (!pendingImport) return;
+  const { R, o } = pendingImport;
+  if (o.replace && DB.mode !== 'none' && !confirm('سيُستبدل كل ما في الموسوعة الآن بهذا الاستيراد. متابعة؟')) return;
+  const d = o.replace ? emptyData() : JSON.parse(JSON.stringify(DB.raw));
+  const same = (a, b) => norm(a) === norm(b);
+  const chap = new Map(), secM = new Map(), topM = new Map(), volM = new Map(), cnt = new Map();
+  d.chapters.forEach(c => { const k = c.key || BABS.find(b => same(b.title, c.title))?.key; if (k && !chap.has(k)) chap.set(k, c); });
+  d.sections.forEach(s => secM.set(sid(s.chapter_id) + '|' + norm(s.title), s));
+  d.topics.forEach(t => { const cid = has(t.chapter_id) ? sid(t.chapter_id) : sid(d.sections.find(s => sid(s.section_id) === sid(t.section_id))?.chapter_id); topM.set(cid + '|' + sid(t.section_id) + '|' + norm(t.title), t); });
+  d.issues.forEach(i => cnt.set(sid(i.topic_id), (cnt.get(sid(i.topic_id)) || 0) + 1));
+  let bk = null;
+  if (o.book) {
+    bk = d.books.find(b => same(b.title, o.book));
+    if (!bk) { bk = { book_id: nid('b'), title: o.book }; d.books.push(bk); }
+    const au = String(o.authors || '').split(/[،,]/).map(x => x.trim()).filter(Boolean);
+    if (au.length) bk.authors = au;
+    if (!has(d.meta.primary_book_id)) d.meta.primary_book_id = bk.book_id;
+  }
+  d.volumes.forEach(v => volM.set(sid(v.book_id) + '|' + sid(v.number), v));
+  let added = 0;
+  R.items.forEach(it => {
+    const bab = BABS.find(b => b.key === it.bab); if (!bab) return;
+    let ch = chap.get(bab.key);
+    if (!ch) { ch = { chapter_id: nid('c'), key: bab.key, title: bab.title, order: babIdx(bab.key) + 1 }; d.chapters.push(ch); chap.set(bab.key, ch); }
+    const cid = sid(ch.chapter_id);
+    let sec = null;
+    if (has(it.section)) {
+      const k = cid + '|' + norm(it.section); sec = secM.get(k);
+      if (!sec) { sec = { section_id: nid('s'), chapter_id: ch.chapter_id, title: it.section, order: d.sections.length + 1 }; d.sections.push(sec); secM.set(k, sec); }
+    }
+    const tk = cid + '|' + sid(sec?.section_id) + '|' + norm(it.topic);
+    let tp = topM.get(tk);
+    if (!tp) { tp = { topic_id: nid('t'), chapter_id: ch.chapter_id, title: it.topic, order: d.topics.length + 1 }; if (sec) tp.section_id = sec.section_id; d.topics.push(tp); topM.set(tk, tp); }
+    let vol = null;
+    if (bk && has(it.volume)) {
+      const vk = sid(bk.book_id) + '|' + sid(it.volume); vol = volM.get(vk);
+      if (!vol) { vol = { volume_id: nid('v'), book_id: bk.book_id, number: /^\d+$/.test(it.volume) ? Number(it.volume) : it.volume }; d.volumes.push(vol); volM.set(vk, vol); }
+    }
+    const n = (cnt.get(sid(tp.topic_id)) || 0) + 1; cnt.set(sid(tp.topic_id), n);
+    const is = { issue_id: nid('i'), topic_id: tp.topic_id, title: it.title, order: n };
+    setOpt(is, 'original_text', it.text);
+    if (bk) {
+      const ref = { reference_id: nid('r'), book_id: bk.book_id, source_type: 'book' };
+      setOpt(ref, 'volume_id', vol?.volume_id); setOpt(ref, 'chapter_title', it.babHead); setOpt(ref, 'section_title', it.section); setOpt(ref, 'page', it.page);
+      d.references.push(ref); is.reference_ids = [ref.reference_id];
+    }
+    if (it.ev?.length) is.evidence_ids = it.ev.map(e => { const ev = { evidence_id: nid('e'), type: 'quran', text: e.text }; setOpt(ev, 'surah', e.surah); setOpt(ev, 'ayah', e.ayah); d.evidences.push(ev); return ev.evidence_id; });
+    d.issues.push(is); added++;
+  });
+  pendingImport = null;
+  commitData(d);
+  toast(`تم استيراد ${fmt(added)} مسألة`);
+  location.hash = '#/';
+}
+
+/* ---------- Content editor (يحفظ في بيانات المستخدم فقط) ---------- */
+const canEdit = () => DB.mode !== 'demo';
+const DEFAULT_BOOK = 'الفقه المنهجي على مذهب الإمام الشافعي';
+const DEFAULT_AUTHORS = 'مصطفى سعيد الخِن، مصطفى مصطفى البُغا، علي الشَّرْبجي';
+let idSeq = 0;
+const nid = p => `${p}-${Date.now().toString(36)}${(idSeq++).toString(36)}`;
+function setOpt(o, k, v) { if (has(v)) o[k] = v; else delete o[k]; }
+
+function evRowHtml(e = {}) {
+  const t = e.type || 'quran';
+  return `<div class="ev-row" data-ev>
+    <label class="fld">نوع الدليل<select name="ev_type">${[['quran', 'آية قرآنية'], ['hadith', 'حديث'], ['other', 'دليل آخر']].map(([v, l]) => `<option value="${v}"${t === v ? ' selected' : ''}>${l}</option>`).join('')}</select></label>
+    <label class="fld">نص الدليل<textarea name="ev_text" class="nass-in" style="min-height:90px">${esc(e.text)}</textarea></label>
+    <div class="grid2">
+      <label class="fld" data-for="quran">السورة<input name="ev_surah" value="${esc(e.surah)}"></label>
+      <label class="fld" data-for="quran">رقم الآية<input name="ev_ayah" value="${esc(e.ayah)}" inputmode="numeric"></label>
+      <label class="fld" data-for="hadith">الراوي<input name="ev_narrator" value="${esc(e.narrator)}"></label>
+      <label class="fld" data-for="hadith">مصدر الحديث<input name="ev_collection" value="${esc(e.collection)}"></label>
+      <label class="fld" data-for="hadith">رقم الحديث<input name="ev_number" value="${esc(e.hadith_number)}"></label>
+    </div>
+    <button type="button" class="btn ghost sm rm" data-act="rm-ev">حذف الدليل</button></div>`;
+}
+function syncEv(row) { const t = row.querySelector('[name=ev_type]').value; row.querySelectorAll('[data-for]').forEach(l => l.hidden = l.dataset.for !== t); }
+
+function viewEdit(id, params) {
+  currentNav = 'edit';
+  const is = id ? Api.getIssueById(id) : null;
+  if (id && !is) return viewNotFound('المسألة');
+  crumbs([HOME, { label: is ? 'تعديل مسألة' : 'إضافة مسألة' }]);
+  const head = `<header class="page-head"><h1>${is ? 'تعديل مسألة' : 'إضافة مسألة'}</h1><p>أدخل المحتوى كما هو في مصدر تملك حق استخدامه. الحقول الفارغة لا تظهر في الموسوعة.</p></header>`;
+  if (!canEdit()) { setView(head + `<div class="notice demo"><strong>أنت في الوضع التجريبي</strong>الإضافة تعمل على بياناتك الحقيقية فقط.<div class="cta-row"><button class="btn sm" data-act="disconnect">الخروج من الوضع التجريبي</button></div></div>`); return; }
+  const c = is ? issueCtx(is) : {};
+  const P = k => params?.get(k) || '';
+  const bab = c.babKey || P('bab');
+  const b0 = DB.raw.books.find(b => sid(b.book_id) === sid(DB.raw.meta.primary_book_id)) || DB.raw.books[0];
+  const bookT = c.book?.title ?? b0?.title ?? DEFAULT_BOOK;
+  const authors = c.book ? arr(c.book.authors).join('، ') : (b0 ? arr(b0.authors).join('، ') : DEFAULT_AUTHORS);
+  const r0 = c.refs?.[0];
+  const evs = is ? arr(is.evidence_ids).map(e => DB.idx.evidences.get(sid(e))).filter(Boolean) : [];
+  const dl = (idn, list) => `<datalist id="${idn}">${[...new Set(list.filter(has))].map(v => `<option value="${esc(v)}">`).join('')}</datalist>`;
+  const val = v => esc(v ?? '');
+  setView(head + `
+  <form class="form" data-form="edit" data-id="${is ? esc(is.issue_id) : ''}" novalidate>
+    <fieldset><legend>الموقع في الكتاب</legend>
+      <div class="grid2">
+        <label class="fld">الباب <span class="req">*</span><select name="bab" required><option value="">اختر الباب</option>${BABS.map(x => `<option value="${x.key}"${bab === x.key ? ' selected' : ''}>${x.icon} ${x.title}</option>`).join('')}</select></label>
+        <label class="fld">الفصل<input name="section" list="dlSec" value="${val(c.section?.title ?? P('section'))}" placeholder="اختياري"></label>
+      </div>
+      <label class="fld">الموضوع <span class="req">*</span><input name="topic" list="dlTopic" value="${val(c.topic?.title ?? P('topic'))}" required></label>
+      <label class="fld">تعريف الموضوع<textarea name="topic_def" style="min-height:70px" placeholder="اختياري – يُحفظ مع الموضوع">${val(c.topic?.definition)}</textarea></label>
+      ${dl('dlSec', DB.raw.sections.map(s => s.title))}${dl('dlTopic', DB.raw.topics.map(t => t.title))}
+    </fieldset>
+    <fieldset><legend>المسألة</legend>
+      <label class="fld">عنوان المسألة <span class="req">*</span><input name="title" value="${val(is?.title)}" required></label>
+      <label class="fld">📖 النص الأصلي<textarea name="original_text" class="nass-in">${val(is?.original_text)}</textarea><span class="hint">النص كما في المصدر، دون شرح أو تلخيص.</span></label>
+      <label class="fld">⚖️ الحكم<textarea name="ruling" style="min-height:80px">${val(is?.ruling)}</textarea></label>
+      <label class="fld">💡 شرح وتوضيح<textarea name="explanation">${val(is?.explanation)}</textarea><span class="hint">يُعرض منفصلاً عن النص الأصلي.</span></label>
+      <label class="fld">ملاحظات<textarea name="notes" style="min-height:70px">${val(is?.notes)}</textarea></label>
+      <label class="fld">الكلمات المفتاحية<input name="keywords" value="${val(arr(is?.keywords).join('، '))}" placeholder="افصل بينها بفاصلة"></label>
+    </fieldset>
+    <fieldset><legend>الأدلة</legend>
+      <div id="evList" style="display:grid;gap:.8rem">${evs.map(evRowHtml).join('')}</div>
+      <button type="button" class="btn ghost sm" data-act="add-ev" style="justify-self:start">➕ إضافة دليل</button>
+    </fieldset>
+    <fieldset><legend>📚 المصدر</legend>
+      <label class="fld">الكتاب<input name="book" list="dlBook" value="${val(bookT)}"></label>
+      <label class="fld">المؤلفون<input name="authors" value="${val(authors)}" placeholder="افصل بينهم بفاصلة"></label>
+      <div class="grid2">
+        <label class="fld">الجزء<input name="volume" value="${val(c.volume?.number ?? c.volume?.title)}" inputmode="numeric"></label>
+        <label class="fld">الصفحة<input name="page" value="${val(c.page)}" inputmode="numeric"></label>
+      </div>
+      <label class="fld">رابط المصدر<input name="url" type="url" dir="ltr" value="${val(r0?.url)}" placeholder="https://… (اختياري)"></label>
+      ${dl('dlBook', DB.raw.books.map(b => b.title).concat([DEFAULT_BOOK]))}
+    </fieldset>
+    <div class="form-actions">
+      <button class="btn" type="submit">${is ? 'حفظ التعديلات' : 'حفظ المسألة'}</button>
+      <a class="btn ghost" href="${is ? '#/issue/' + encodeURIComponent(is.issue_id) : '#/'}">إلغاء</a>
+      ${is ? `<button type="button" class="btn ghost danger" data-act="del-issue" data-id="${esc(is.issue_id)}">حذف المسألة</button>` : ''}
+    </div>
+  </form>`);
+  document.querySelectorAll('[data-ev]').forEach(syncEv);
+}
+
+function commitData(d) {
+  store.del('mode');
+  setData(d, 'imported');
+  refNumbers = new Map();
+  renderSidebar();
+  saveUserData(d).then(ok => { if (!ok) toast('تعذّر الحفظ الدائم في المتصفح؛ صدّر البيانات من «إدارة البيانات»'); });
+}
+
+function saveIssue(form) {
+  const g = n => (form.elements[n]?.value || '').trim();
+  const babKey = g('bab'), title = g('title'), topicT = g('topic');
+  if (!babKey || !title || !topicT) { toast('أكمل الحقول المطلوبة: الباب والموضوع والعنوان'); return; }
+  const d = JSON.parse(JSON.stringify(DB.raw)), same = (a, b) => norm(a) === norm(b), editId = form.dataset.id;
+  const bab = BABS.find(b => b.key === babKey);
+  let ch = d.chapters.find(c => c.key === babKey || same(c.title, bab.title));
+  if (!ch) { ch = { chapter_id: nid('c'), key: babKey, title: bab.title, order: babIdx(babKey) + 1 }; d.chapters.push(ch); }
+  const chId = sid(ch.chapter_id);
+  const tChap = t => has(t.chapter_id) ? sid(t.chapter_id) : sid(d.sections.find(s => sid(s.section_id) === sid(t.section_id))?.chapter_id);
+  let sec = null; const secT = g('section');
+  if (secT) {
+    sec = d.sections.find(s => sid(s.chapter_id) === chId && same(s.title, secT));
+    if (!sec) { sec = { section_id: nid('s'), chapter_id: ch.chapter_id, title: secT, order: d.sections.filter(s => sid(s.chapter_id) === chId).length + 1 }; d.sections.push(sec); }
+  }
+  let tp = d.topics.find(t => tChap(t) === chId && same(t.title, topicT));
+  if (!tp) { tp = { topic_id: nid('t'), chapter_id: ch.chapter_id, title: topicT, order: d.topics.filter(t => tChap(t) === chId).length + 1 }; d.topics.push(tp); }
+  if (sec) tp.section_id = sec.section_id;
+  if (g('topic_def')) tp.definition = g('topic_def');
+
+  let bk = null; const bookT = g('book');
+  if (bookT) {
+    bk = d.books.find(b => same(b.title, bookT));
+    if (!bk) { bk = { book_id: nid('b'), title: bookT }; d.books.push(bk); }
+    if (!has(d.meta.primary_book_id)) d.meta.primary_book_id = bk.book_id;
+    const au = g('authors').split(/[،,]/).map(x => x.trim()).filter(Boolean);
+    if (au.length) bk.authors = au;
+  }
+  let vol = null; const volT = g('volume');
+  if (volT && bk) {
+    vol = d.volumes.find(v => sid(v.book_id) === sid(bk.book_id) && (sid(v.number) === volT || sid(v.title) === volT));
+    if (!vol) { vol = { volume_id: nid('v'), book_id: bk.book_id, number: /^\d+$/.test(volT) ? Number(volT) : volT }; d.volumes.push(vol); }
+  }
+
+  let is = editId ? d.issues.find(i => sid(i.issue_id) === editId) : null;
+  const isNew = !is;
+  if (isNew) { is = { issue_id: nid('i'), order: d.issues.filter(i => sid(i.topic_id) === sid(tp.topic_id)).length + 1 }; d.issues.push(is); }
+  is.topic_id = tp.topic_id; delete is.section_id; delete is.chapter_id;
+  is.title = title;
+  ['original_text', 'ruling', 'explanation', 'notes'].forEach(k => setOpt(is, k, g(k)));
+  setOpt(is, 'keywords', g('keywords').split(/[،,]/).map(x => x.trim()).filter(Boolean));
+
+  if (bk) {
+    delete is.page; delete is.volume_id; delete is.book_id;
+    const firstId = sid(arr(is.reference_ids)[0]);
+    let ref = firstId ? d.references.find(r => sid(r.reference_id) === firstId) : null;
+    const shared = ref && d.issues.some(o => o !== is && arr(o.reference_ids).map(sid).includes(firstId));
+    if (!ref || shared) {
+      ref = { reference_id: nid('r') }; d.references.push(ref);
+      const rest = arr(is.reference_ids).filter(r => !(shared && sid(r) === firstId));
+      is.reference_ids = [ref.reference_id].concat(rest);
+    }
+    ref.book_id = bk.book_id; ref.source_type = 'book'; ref.chapter_title = bab.title;
+    setOpt(ref, 'volume_id', vol?.volume_id); setOpt(ref, 'section_title', sec?.title);
+    setOpt(ref, 'page', g('page')); setOpt(ref, 'url', g('url'));
+  }
+
+  const old = arr(is.evidence_ids).map(sid), usedElse = new Set();
+  d.issues.forEach(o => { if (o !== is) arr(o.evidence_ids).forEach(e => usedElse.add(sid(e))); });
+  d.topics.forEach(t => arr(t.evidence_ids).forEach(e => usedElse.add(sid(e))));
+  d.evidences = d.evidences.filter(e => !(old.includes(sid(e.evidence_id)) && !usedElse.has(sid(e.evidence_id))));
+  is.evidence_ids = [];
+  form.querySelectorAll('[data-ev]').forEach(row => {
+    const q = n => (row.querySelector(`[name=${n}]`)?.value || '').trim();
+    const text = q('ev_text'); if (!text) return;
+    const type = q('ev_type'), e = { evidence_id: nid('e'), type, text };
+    if (type === 'quran') { setOpt(e, 'surah', q('ev_surah')); setOpt(e, 'ayah', q('ev_ayah')); }
+    if (type === 'hadith') { setOpt(e, 'narrator', q('ev_narrator')); setOpt(e, 'collection', q('ev_collection')); setOpt(e, 'hadith_number', q('ev_number')); }
+    d.evidences.push(e); is.evidence_ids.push(e.evidence_id);
+  });
+  if (!is.evidence_ids.length) delete is.evidence_ids;
+
+  commitData(d);
+  toast(isNew ? 'تم حفظ المسألة' : 'تم حفظ التعديلات');
+  location.hash = '#/issue/' + encodeURIComponent(is.issue_id);
+}
+
+function deleteIssue(id) {
+  if (!confirm('حذف هذه المسألة نهائياً من بياناتك؟')) return;
+  const d = JSON.parse(JSON.stringify(DB.raw));
+  const is = d.issues.find(i => sid(i.issue_id) === sid(id)); if (!is) return;
+  d.issues = d.issues.filter(i => i !== is);
+  const usedE = new Set(), usedR = new Set();
+  d.issues.forEach(o => { arr(o.evidence_ids).forEach(e => usedE.add(sid(e))); arr(o.reference_ids).forEach(r => usedR.add(sid(r))); arr(o.khilaf).forEach(k => k && usedR.add(sid(k.reference_id))); });
+  d.topics.forEach(t => { arr(t.evidence_ids).forEach(e => usedE.add(sid(e))); arr(t.reference_ids).forEach(r => usedR.add(sid(r))); });
+  d.evidences.forEach(e => has(e.reference_id) && usedR.add(sid(e.reference_id)));
+  d.evidences = d.evidences.filter(e => !arr(is.evidence_ids).map(sid).includes(sid(e.evidence_id)) || usedE.has(sid(e.evidence_id)));
+  d.references = d.references.filter(r => !arr(is.reference_ids).map(sid).includes(sid(r.reference_id)) || usedR.has(sid(r.reference_id)));
+  const tp = d.topics.find(t => sid(t.topic_id) === sid(is.topic_id));
+  const topicLeft = tp && (d.issues.some(i => sid(i.topic_id) === sid(tp.topic_id)) || has(tp.definition) || has(tp.ruling) || TOPIC_LISTS.some(([k]) => has(tp[k])));
+  if (tp && !topicLeft) {
+    d.topics = d.topics.filter(t => t !== tp);
+    if (has(tp.section_id) && !d.topics.some(t => sid(t.section_id) === sid(tp.section_id))) d.sections = d.sections.filter(s => sid(s.section_id) !== sid(tp.section_id));
+  }
+  store.set('favs', store.get('favs', []).filter(f => f !== sid(id)));
+  commitData(d);
+  toast('تم حذف المسألة');
+  location.hash = topicLeft ? '#/topic/' + encodeURIComponent(tp.topic_id) : '#/';
+}
+
+function viewNotFound(kind) {
+  currentNav = ''; crumbs([HOME, { label: 'غير موجود' }]);
+  setView(emptyState(`${kind ? kind + ': ' : ''}لم يُعثر على هذا العنصر في قاعدة البيانات الحالية.`, '<a href="#/">العودة إلى الرئيسية</a>'));
+}
+
+/* ======================= STUDIO: عروض الشرائح ======================= */
+const CAP = { sample: null, downloads: null };
+let DECKS = [];
+let genCtl = null;
+const studioSel = { bab: '', topics: new Set(), mode: 'extract', n: '10', style: 'شرح تعليمي مبسّط لطالب علم', extra: '', title: '' };
+async function loadDecks() { const v = await idb.get('decks'); DECKS = Array.isArray(v) ? v : store.get('decks', []); }
+async function saveDecks() { if (!(await idb.set('decks', DECKS))) store.set('decks', DECKS); }
+function lightCaps() {
+  document.querySelectorAll('[data-cap]').forEach(el => {
+    const ok = !!CAP[el.dataset.cap];
+    if (el.dataset.capMode === 'disable') {
+      el.classList.toggle('is-off', !ok);
+      const inp = el.querySelector('input'); if (inp) { inp.disabled = !ok; if (!ok && inp.checked) { inp.checked = false; const ex = document.querySelector('input[name=mode][value=extract]'); if (ex) { ex.checked = true; studioSel.mode = 'extract'; syncAiOpts(); } } }
+      const msg = el.querySelector('.cap-off'); if (msg) msg.hidden = ok;
+    } else el.hidden = !ok;
+  });
+}
+const CHEV_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>';
+const CHEV_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>';
+const XICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+
+function babTopicsOrdered(key) {
+  const ch = DB.idx.babChapter.get(key); if (!ch) return [];
+  const topics = DB.idx.topicsByChapter.get(sid(ch.chapter_id)) || [];
+  const secs = DB.idx.sectionsByChapter.get(sid(ch.chapter_id)) || [];
+  const out = [], used = new Set();
+  secs.forEach(s => topics.filter(t => sid(t.section_id) === sid(s.section_id)).forEach(t => { used.add(t); out.push({ t, sec: s.title }); }));
+  topics.filter(t => !used.has(t)).forEach(t => out.push({ t, sec: '' }));
+  return out;
+}
+function studioTopics() { return babTopicsOrdered(studioSel.bab).map(x => x.t).filter(t => studioSel.topics.has(sid(t.topic_id))); }
+function studioIssues() { return studioTopics().flatMap(t => DB.idx.issuesByTopic.get(sid(t.topic_id)) || []); }
+function studioDefaultTitle() {
+  const ts = studioTopics();
+  if (ts.length === 1) return String(ts[0].title || '');
+  return BABS.find(b => b.key === studioSel.bab)?.title || 'عرض';
+}
+function syncAiOpts() { document.querySelectorAll('[data-ai-only]').forEach(el => el.hidden = studioSel.mode !== 'ai'); }
+function updateStudioSummary() {
+  const ts = studioTopics(), is = studioIssues();
+  const el = $('#stSum'); if (el) el.textContent = `المحدد: ${fmt(ts.length)} موضوعاً، ${fmt(is.length)} مسألة`;
+  const ti = $('#studioForm')?.elements.dtitle; if (ti && !studioSel.title) ti.placeholder = studioDefaultTitle();
+}
+
+function viewStudio(params) {
+  currentNav = 'studio'; crumbs([HOME, { label: 'استوديو العروض' }]);
+  if (params && params.get('bab') && BABS.some(b => b.key === params.get('bab'))) {
+    studioSel.bab = params.get('bab');
+    const tp = params.get('topic');
+    studioSel.topics = new Set(tp ? [tp] : babTopicsOrdered(studioSel.bab).map(x => sid(x.t.topic_id)));
+    studioSel.title = '';
+    history.replaceState(null, '', '#/studio');
+  }
+  if (!studioSel.bab) { studioSel.bab = (BABS.find(b => babCounts(b.key).issues) || BABS[0]).key; studioSel.topics = new Set(babTopicsOrdered(studioSel.bab).map(x => sid(x.t.topic_id))); }
+  const list = babTopicsOrdered(studioSel.bab);
+  let lastSec = null;
+  const items = list.map(({ t, sec }) => {
+    const n = (DB.idx.issuesByTopic.get(sid(t.topic_id)) || []).length;
+    const head = sec !== lastSec && sec ? `<div class="src-sec">${esc(sec)}</div>` : ''; lastSec = sec;
+    return `${head}<label class="src-item"><input type="checkbox" name="st-topic" value="${esc(t.topic_id)}"${studioSel.topics.has(sid(t.topic_id)) ? ' checked' : ''}><span>${esc(t.title)}</span><small>${fmt(n)} مسألة</small></label>`;
+  }).join('');
+  const decks = DECKS.length ? `<div class="cards">${DECKS.map(d => `<div class="card"><h3><a href="#/deck/${encodeURIComponent(d.id)}">${esc(d.title)}</a></h3>
+      <div class="row">${d.mode === 'ai' ? '<span class="pill ai">✨ ملخص ذكي</span>' : '<span class="pill">📖 مستخرج</span>'}<span class="pill">الشرائح: <b>${fmt(d.slides.length)}</b></span><span class="pill">${esc(new Date(d.created).toLocaleDateString('ar-EG'))}</span>
+      <a class="btn sm" href="#/deck/${encodeURIComponent(d.id)}">فتح العرض</a></div></div>`).join('')}</div>` : emptyState('لم تُنشئ أي عرض بعد.', 'اختر المصادر في الأعلى ثم «إنشاء العرض».');
+  setView(`<header class="page-head"><h1>🎞️ استوديو العروض</h1><p>اختر مصادرك من الموسوعة، ثم أنشئ عرض شرائح يعتمد عليها وحدها، وكل شريحة محالة إلى مسألتها.</p></header>
+    ${connectionNotice()}
+    ${DB.mode === 'none' ? '' : `<form class="form" id="studioForm" data-form="studio" novalidate>
+      <fieldset><legend>١. المصادر</legend>
+        <div class="chips">${BABS.map(b => `<button type="button" class="chip${b.key === studioSel.bab ? ' on' : ''}" data-act="st-bab" data-key="${b.key}">${b.icon} ${b.title} <small>${fmt(babCounts(b.key).issues)}</small></button>`).join('')}</div>
+        ${list.length ? `<div class="src-list">${items}</div>
+          <div class="cta-row" style="margin:0;align-items:center"><button type="button" class="btn ghost sm" data-act="st-all">تحديد الكل</button><button type="button" class="btn ghost sm" data-act="st-none">إلغاء التحديد</button><span class="na" id="stSum"></span></div>`
+          : `<p class="na">لا توجد موضوعات في هذا الباب بعد.</p>`}
+      </fieldset>
+      <fieldset><legend>٢. نوع العرض</legend>
+        <div class="modes">
+          <label class="mode"><input type="radio" name="mode" value="extract"${studioSel.mode === 'extract' ? ' checked' : ''}><div><b>📖 مستخرج من النص</b><span>شرائح من نصوص المسائل وأحكامها وأدلتها كما هي، دون أي توليد.</span></div></label>
+          <label class="mode" data-cap="sample" data-cap-mode="disable"><input type="radio" name="mode" value="ai"${studioSel.mode === 'ai' ? ' checked' : ''}><div><b>✨ ملخص ذكي بالإحالات</b><span>يصوغ Claude شرائح من المصادر المحددة فقط، وتُحذف كل نقطة لا تُحال إلى مسألة. يطلب موافقتك ويُحسب من استخدامك.</span><span class="cap-off" style="color:var(--danger)">غير متاح في هذه النافذة.</span></div></label>
+        </div>
+        <div class="grid2" data-ai-only>
+          <label class="fld">عدد الشرائح تقريباً<select name="n">${['6', '10', '15', '20'].map(v => `<option${studioSel.n === v ? ' selected' : ''}>${v}</option>`).join('')}</select></label>
+          <label class="fld">الأسلوب<select name="style">${['شرح تعليمي مبسّط لطالب علم', 'مراجعة سريعة قبل الامتحان', 'درس في مسجد لعامة الناس', 'تلخيص أكاديمي مركّز'].map(v => `<option${studioSel.style === v ? ' selected' : ''}>${v}</option>`).join('')}</select></label>
+        </div>
+        <label class="fld" data-ai-only>توجيه إضافي (اختياري)<input name="extra" value="${esc(studioSel.extra)}" placeholder="مثال: ركّز على الفروق بين الأركان والسنن"></label>
+        <label class="fld">عنوان العرض<input name="dtitle" value="${esc(studioSel.title)}" placeholder="${esc(studioDefaultTitle())}"></label>
+      </fieldset>
+      <div class="cta-row" style="margin:0;align-items:center"><button class="btn" type="submit" id="genBtn">🎞️ إنشاء العرض</button><div class="gen-status" id="genStatus" hidden></div></div>
+    </form>`}
+    <h2 class="h2">عروضي</h2>${decks}`);
+  syncAiOpts(); updateStudioSummary();
+}
+
+function excerpt(t, n) {
+  t = String(t ?? '').replace(/[ \t]+/g, ' ').replace(/\n{2,}/g, '\n').trim();
+  if (t.length <= n) return t;
+  const cut = t.slice(0, n);
+  const i = Math.max(cut.lastIndexOf('.'), cut.lastIndexOf('،'), cut.lastIndexOf('؛'), cut.lastIndexOf(' '));
+  return cut.slice(0, i > n * 0.6 ? i : n).trim() + ' …';
+}
+function evRef(e) {
+  if (e.type === 'quran') return has(e.surah) && has(e.ayah) ? `[${e.surah}: ${e.ayah}]` : has(e.surah) ? `[${e.surah}]` : '';
+  if (e.type === 'hadith') return [e.narrator, e.collection, has(e.hadith_number) ? 'رقم ' + e.hadith_number : ''].filter(has).join('، ');
+  return '';
+}
+const SUBTITLE = 'الفقه المنهجي على مذهب الإمام الشافعي – قسم العبادات';
+function buildExtractDeck(title, topics) {
+  const slides = [{ type: 'title', title, subtitle: SUBTITLE }], ids = [];
+  let count = 0;
+  for (const t of topics) {
+    const iss = DB.idx.issuesByTopic.get(sid(t.topic_id)) || [];
+    if (!iss.length && !has(t.definition)) continue;
+    slides.push({ type: 'section', title: String(t.title), subtitle: has(t.definition) ? excerpt(t.definition, 200) : '' });
+    for (const is of iss) {
+      if (count >= 60) break;
+      count++;
+      const id = sid(is.issue_id); ids.push(id);
+      if (has(is.original_text)) slides.push({ type: 'quote', kind: 'nass', title: String(is.title), text: excerpt(is.original_text, 430), cite: [id] });
+      if (has(is.ruling)) slides.push({ type: 'points', title: 'الحكم: ' + is.title, points: [{ text: excerpt(is.ruling, 320), cite: [id] }] });
+      arr(is.evidence_ids).map(e => DB.idx.evidences.get(sid(e))).filter(Boolean).slice(0, 2).forEach(e =>
+        slides.push({ type: 'quote', kind: e.type === 'quran' ? 'quran' : e.type === 'hadith' ? 'hadith' : 'nass', title: 'الدليل: ' + is.title, text: excerpt(e.text, 360), ref: evRef(e), cite: [id] }));
+      if (!has(is.original_text) && !has(is.ruling)) slides.push({ type: 'points', title: String(is.title), points: [{ text: MSG.NA, cite: [] }] });
+    }
+  }
+  slides.push({ type: 'sources', title: 'المصادر', items: ids });
+  return { slides, sources: ids, stats: count >= 60 ? { capped: true } : null };
+}
+
+async function buildAiDeck(title, topics, o, onLen, signal) {
+  const issues = topics.flatMap(t => DB.idx.issuesByTopic.get(sid(t.topic_id)) || []).filter(is => has(is.original_text) || has(is.ruling));
+  if (!issues.length) throw { code: 'no_sources' };
+  const full = new Map();
+  const blocks = issues.map(is => {
+    const evs = arr(is.evidence_ids).map(e => DB.idx.evidences.get(sid(e))).filter(Boolean);
+    const body = [has(is.original_text) ? 'النص: ' + is.original_text : '', has(is.ruling) ? 'الحكم: ' + is.ruling : '',
+      ...evs.map(e => (e.type === 'quran' ? 'آية: ' : e.type === 'hadith' ? 'حديث: ' : 'دليل: ') + e.text + (evRef(e) ? ' ' + evRef(e) : ''))].filter(Boolean).join('\n');
+    full.set(sid(is.issue_id), body);
+    return { is, body };
+  });
+  const BUDGET = 70000, per = Math.max(700, Math.floor(BUDGET / blocks.length));
+  let used = 0, cut = 0; const parts = [];
+  for (const { is, body } of blocks) {
+    let b = body; if (b.length > per) { b = b.slice(0, per) + ' …'; cut++; }
+    if (used + b.length > 100000) break;
+    used += b.length;
+    const c = issueCtx(is);
+    parts.push(`<source id="${is.issue_id}" title="${String(is.title).replace(/"/g, "'")}" topic="${String(c.topic?.title || '').replace(/"/g, "'")}">\n${b}\n</source>`);
+  }
+  const prompt = `أنت تُعدّ عرض شرائح تعليمياً باللغة العربية من مصادر فقهية في العبادات على مذهب الإمام الشافعي.
+
+قواعد إلزامية:
+1. اعتمد فقط على النصوص الواردة بين وسوم <source>. لا تضف أي حكم أو دليل أو آية أو حديث أو قول أو رقم صفحة أو اسم عالم أو مذهب غير موجود فيها.
+2. كل نقطة تحمل في "cite" معرّفات المصادر (قيمة id) التي أُخذت منها، ومن هذه القائمة فقط.
+3. شريحة "quote" تنقل نصاً حرفياً من المصدر دون أي تغيير (300 حرف على الأكثر).
+4. إن لم تكفِ المصادر لعدد الشرائح المطلوب فقلّل الشرائح ولا تملأ الفراغ.
+5. احتفظ بالمصطلحات الفقهية كما وردت. اكتب كل نقطة في سطر أو سطرين، ولا تزد على 5 نقاط في الشريحة.
+6. الأسلوب: ${o.style}.
+${o.extra ? '7. توجيه المستخدم (ضمن القواعد أعلاه): ' + o.extra.slice(0, 300) + '\n' : ''}
+المطلوب: نحو ${o.n} شريحة لعرض بعنوان «${title}». لا تضف شريحة العنوان ولا شريحة المصادر؛ تُضافان تلقائياً.
+
+أعد JSON فقط بهذا الشكل:
+{"slides":[
+ {"type":"section","title":"..."},
+ {"type":"points","title":"...","points":[{"text":"...","cite":["ID"]}],"note":"ملاحظة قصيرة للمقدّم (اختياري)"},
+ {"type":"quote","title":"...","text":"نص حرفي من المصدر","cite":["ID"]}
+]}
+
+المصادر:
+${parts.join('\n\n')}`;
+  const raw = await CAP.sample.json(prompt, { signal, cache: false, onText: ({ text }) => onLen(text.length) });
+  const idSet = new Set(parts.map(p => /id="([^"]+)"/.exec(p)[1]));
+  const v = validateAiSlides(raw, idSet, full);
+  v.stats.cut = cut; v.stats.omitted = blocks.length - parts.length;
+  return v;
+}
+function validateAiSlides(raw, idSet, full) {
+  const out = [], stats = { dropped: 0, quoteFixed: 0 };
+  const slides = Array.isArray(raw) ? raw : (raw && Array.isArray(raw.slides) ? raw.slides : []);
+  const okCite = c => [...new Set(arr(c).map(String).filter(id => idSet.has(id)))];
+  for (const s of slides) {
+    if (!s || typeof s !== 'object') continue;
+    const title = String(s.title || '').trim().slice(0, 140);
+    const note = has(s.note) ? String(s.note).slice(0, 600) : undefined;
+    if (s.type === 'section') { if (title) out.push({ type: 'section', title }); continue; }
+    if (s.type === 'quote') {
+      const cite = okCite(s.cite), text = String(s.text || '').trim().slice(0, 500);
+      if (!text || !cite.length) { stats.dropped++; continue; }
+      const pieces = text.replace(/^[«"“]+|[»"”]+$/g, '').split(/…|\.\.\./).map(x => norm(x).trim()).filter(x => x.length > 8);
+      const verbatim = pieces.length && cite.some(id => { const src = norm(full.get(id)); return pieces.every(p => src.includes(p)); });
+      if (verbatim) out.push({ type: 'quote', kind: 'nass', title, text: text.replace(/^[«"“]+|[»"”]+$/g, ''), cite, note });
+      else { stats.quoteFixed++; out.push({ type: 'points', title, points: [{ text, cite }], note }); }
+      continue;
+    }
+    const pts = arr(s.points).map(p => ({ text: String((p && p.text) || '').trim().slice(0, 400), cite: okCite(p && p.cite) })).filter(p => p.text);
+    const good = pts.filter(p => p.cite.length);
+    stats.dropped += pts.length - good.length;
+    if (good.length) out.push({ type: 'points', title: title || 'نقاط', points: good.slice(0, 6), note });
+  }
+  return { slides: out, stats };
+}
+
+async function studioGenerate(form) {
+  const ts = studioTopics(), is = studioIssues();
+  if (!is.length) { toast('لا توجد مسائل في المصادر المحددة'); return; }
+  const title = form.elements.dtitle.value.trim() || studioDefaultTitle();
+  const mode = form.elements.mode.value;
+  let result;
+  if (mode === 'extract') result = buildExtractDeck(title, ts);
+  else {
+    if (!CAP.sample) { toast('الملخص الذكي غير متاح هنا'); return; }
+    const st = $('#genStatus'), btn = $('#genBtn');
+    st.hidden = false; st.innerHTML = '<span class="spin"></span><span class="msg">يقرأ Claude المصادر…</span><button type="button" class="btn ghost sm" data-act="st-stop">إيقاف</button>';
+    btn.disabled = true; genCtl = new AbortController();
+    try {
+      const v = await buildAiDeck(title, ts, { n: form.elements.n.value, style: form.elements.style.value, extra: form.elements.extra.value.trim() },
+        len => { const m = st.querySelector('.msg'); if (m) m.textContent = `يكتب الشرائح… (${fmt(len)} حرفاً)`; }, genCtl.signal);
+      if (v.slides.filter(s => s.type !== 'section').length < 1) { st.textContent = 'لم تُنتج شرائح موثّقة كافية من هذه المصادر. جرّب مصادر أكثر أو النوع «مستخرج من النص».'; return; }
+      const cited = []; v.slides.forEach(s => (s.points ? s.points.flatMap(p => p.cite) : arr(s.cite)).forEach(id => { if (!cited.includes(id)) cited.push(id); }));
+      result = { slides: [{ type: 'title', title, subtitle: SUBTITLE }, ...v.slides, { type: 'sources', title: 'المصادر', items: cited }], sources: cited, stats: v.stats };
+    } catch (e) {
+      const msg = { cancelled: 'تم الإيقاف.', not_granted: 'لم يُسمح باستخدام Claude في هذه الصفحة.', sampling_disabled: 'Claude غير متاح لهذا الحساب.', rate_limited: 'طلبات كثيرة الآن؛ حاول بعد قليل.', invalid_json: 'تعذّر فهم الرد؛ أعد المحاولة أو قلّل عدد الشرائح.', prompt_too_large: 'المصادر كبيرة جداً؛ اختر موضوعات أقل.', no_sources: 'المسائل المحددة بلا نصوص.', refused: 'رُفض الطلب.', session_expired: 'سجّل الدخول من جديد.' }[e?.code] || 'تعذّر إنشاء العرض؛ حاول مرة أخرى.';
+      st.textContent = msg;
+      if (['not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed'].includes(e?.code)) { CAP.sample = null; lightCaps(); }
+      if (e && e.code && e.code !== 'cancelled') log.warn('sample', e.code, e.message);
+      return;
+    } finally { btn.disabled = false; genCtl = null; }
+  }
+  const deck = { id: nid('d'), title, mode, created: Date.now(), sources: result.sources, slides: result.slides, stats: result.stats || null };
+  DECKS.unshift(deck); await saveDecks();
+  toast('تم إنشاء العرض');
+  location.hash = '#/deck/' + encodeURIComponent(deck.id);
+}
+
+/* ---------- عرض الشرائح ---------- */
+let deckState = { id: null, i: 0, notes: false, grid: false };
+const curDeck = () => DECKS.find(d => d.id === deckState.id);
+function citeMini(deck, id) {
+  const n = deck.sources.indexOf(sid(id));
+  return `<button class="c-mini" data-act="dk-cite" data-id="${esc(id)}" aria-label="المصدر ${n + 1}">${fmt(n + 1)}</button>`;
+}
+function slideHtml(deck, s, k) {
+  const N = deck.slides.length;
+  const foot = `<div class="s-foot"><span>${esc(deck.title)}</span><span>${deck.mode === 'ai' ? '✨ ملخص آلي   ' : ''}${fmt(k + 1)} / ${fmt(N)}</span></div>`;
+  const cites = c => arr(c).length ? `<span>${arr(c).map(id => citeMini(deck, id)).join('')}</span>` : '';
+  switch (s.type) {
+    case 'title': return `<div class="slide t-title"><div class="t-orn" aria-hidden="true">${STAR}</div><h1>${esc(s.title)}</h1>${has(s.subtitle) ? `<p>${esc(s.subtitle)}</p>` : ''}${deck.mode === 'ai' ? '<p class="ai-note">ملخص آلي محال إلى مسائل الموسوعة</p>' : ''}</div>`;
+    case 'section': return `<div class="slide t-section"><div class="t-orn" aria-hidden="true">${STAR}</div><h2>${esc(s.title)}</h2>${has(s.subtitle) ? `<p>${esc(s.subtitle)}</p>` : ''}${foot}</div>`;
+    case 'quote': {
+      const len = String(s.text).length, sz = len > 380 ? 'xl' : len > 230 ? 'lg' : '';
+      const [o, c] = s.kind === 'quran' ? ['﴿', '﴾'] : ['«', '»'];
+      return `<div class="slide t-quote k-${s.kind || 'nass'}"><h3 class="s-title">${esc(s.title)}</h3><blockquote class="q ${sz}"><span>${o}${esc(s.text)}${c}</span></blockquote><div class="q-ref">${has(s.ref) ? esc(s.ref) : ''}${cites(s.cite)}</div>${foot}</div>`;
+    }
+    case 'points': {
+      const dense = s.points.length > 4 || s.points.some(p => p.text.length > 150);
+      return `<div class="slide t-points"><h3 class="s-title">${esc(s.title)}</h3><ul class="pts${dense ? ' dense' : ''}">${s.points.map(p => `<li>${esc(p.text)}${cites(p.cite)}</li>`).join('')}</ul>${foot}</div>`;
+    }
+    case 'sources': {
+      const books = new Set();
+      const li = arr(s.items).slice(0, 16).map(id => {
+        const is = DB.idx.issues.get(sid(id));
+        if (!is) return `<li>${citeMini(deck, id)}<span class="na">مسألة غير موجودة في البيانات الحالية</span></li>`;
+        const c = issueCtx(is); if (c.book) books.add(c.book.title);
+        return `<li>${citeMini(deck, id)}<span>${esc(is.title)}${c.volume ? ' ' + esc(volLabel(c.volume)) : ''}${has(c.page) ? ' صـ ' + esc(c.page) : ''}</span></li>`;
+      }).join('');
+      const more = arr(s.items).length > 16 ? `<li><span class="na">و${fmt(arr(s.items).length - 16)} مصدراً آخر</span></li>` : '';
+      return `<div class="slide t-sources"><h3 class="s-title">${esc(s.title)}</h3><ul class="src-ol">${li}${more}</ul>${books.size ? `<p class="src-book">${esc([...books].join('، '))}</p>` : ''}${foot}</div>`;
+    }
+  }
+  return '<div class="slide"></div>';
+}
+function viewDeck(id) {
+  const deck = DECKS.find(d => d.id === id);
+  if (!deck) return viewNotFound('العرض');
+  currentNav = 'studio';
+  crumbs([HOME, { label: 'استوديو العروض', href: '#/studio' }, { label: deck.title }]);
+  if (deckState.id !== id) deckState = { id, i: 0, notes: false, grid: false };
+  const st = deck.stats || {};
+  const warn = [];
+  if (st.dropped) warn.push(`حُذفت ${fmt(st.dropped)} نقطة لأنها بلا إحالة صحيحة.`);
+  if (st.quoteFixed) warn.push(`${fmt(st.quoteFixed)} اقتباس لم يطابق النص حرفياً فعُرض نقطةً ملخّصة.`);
+  if (st.cut) warn.push(`اختُصرت نصوص ${fmt(st.cut)} مسألة طويلة قبل إرسالها.`);
+  if (st.omitted) warn.push(`لم تُرسل ${fmt(st.omitted)} مسألة لتجاوز الحجم المسموح.`);
+  if (st.capped) warn.push('اقتصر العرض على أول ٦٠ مسألة.');
+  setView(`<div class="deck-wrap"><div class="deck-ui">
+    <div class="deck-bar"><h1>${esc(deck.title)}</h1>${deck.mode === 'ai' ? '<span class="pill ai">✨ ملخص ذكي بالإحالات</span>' : '<span class="pill">📖 مستخرج من النص</span>'}</div>
+    ${deck.mode === 'ai' ? `<p class="na" style="margin:0 0 .6rem">صاغه Claude من المصادر المحددة فقط. الأرقام الذهبية تحيل إلى المسائل؛ راجِع كل نقطة مع نصها قبل الاعتماد عليها.${warn.length ? ' ' + esc(warn.join(' ')) : ''}</p>` : (warn.length ? `<p class="na">${esc(warn.join(' '))}</p>` : '')}
+    <div class="present" id="present">
+      <div class="stage" id="stage"></div>
+      <div class="present-ctl"><button data-act="dk-prev" aria-label="السابق">${CHEV_R}</button><span id="dkCount2"></span><button data-act="dk-next" aria-label="التالي">${CHEV_L}</button><button data-act="dk-exit" aria-label="إنهاء العرض">${XICON}</button></div>
+    </div>
+    <div class="progress"><span id="dkProg"></span></div>
+    <div class="deck-ctl">
+      <button class="btn ghost sm" data-act="dk-prev">السابق</button><span class="count" id="dkCount"></span><button class="btn ghost sm" data-act="dk-next">التالي</button>
+      <span class="spacer"></span>
+      <button class="btn sm" data-act="dk-present">▶️ عرض</button>
+      <button class="btn ghost sm" data-act="dk-grid">🗂️ كل الشرائح</button>
+      <button class="btn ghost sm" data-act="dk-notes">📝 ملاحظات</button>
+      <button class="btn ghost sm" data-act="dk-print">🖨️ PDF</button>
+      <button class="btn ghost sm" data-act="dk-html" data-cap="downloads">⬇️ HTML</button>
+      <button class="btn ghost sm danger" data-act="dk-del" style="color:var(--danger)">🗑️ حذف</button>
+    </div>
+    <div class="notice ok" id="dkNotes" hidden></div>
+    <div class="thumbs" id="dkGrid" hidden></div>
+  </div>
+  <div class="print-deck">${deck.slides.map((s, k) => `<div class="stage">${slideHtml(deck, s, k)}</div>`).join('')}</div></div>`);
+  showSlide();
+}
+function showSlide() {
+  const deck = curDeck(); if (!deck || !$('#stage')) return;
+  const n = deck.slides.length;
+  deckState.i = Math.max(0, Math.min(n - 1, deckState.i));
+  $('#stage').innerHTML = slideHtml(deck, deck.slides[deckState.i], deckState.i);
+  const label = `${fmt(deckState.i + 1)} / ${fmt(n)}`;
+  $('#dkCount').textContent = label; $('#dkCount2').textContent = label;
+  $('#dkProg').style.width = ((deckState.i + 1) / n * 100) + '%';
+  const note = deck.slides[deckState.i].note, nb = $('#dkNotes');
+  nb.hidden = !deckState.notes;
+  nb.innerHTML = `<strong>ملاحظات المقدّم</strong>${has(note) ? esc(note) : '<span class="na">لا توجد ملاحظات لهذه الشريحة.</span>'}`;
+  const g = $('#dkGrid'); g.hidden = !deckState.grid;
+  if (deckState.grid) g.innerHTML = deck.slides.map((s, k) => `<button class="thumb${k === deckState.i ? ' on' : ''}" data-act="dk-go" data-i="${k}"><div class="stage">${slideHtml(deck, s, k)}</div>${fmt(k + 1)}</button>`).join('');
+}
+function deckGo(d) { deckState.i += d; showSlide(); }
+function enterPresent() {
+  const p = $('#present'); if (!p) return;
+  p.classList.add('is-present'); document.body.classList.add('presenting');
+  if (p.requestFullscreen) p.requestFullscreen().catch(() => {});
+}
+function exitPresent() {
+  $('#present')?.classList.remove('is-present'); document.body.classList.remove('presenting');
+  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+}
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) { $('#present')?.classList.remove('is-present'); document.body.classList.remove('presenting'); } });
+function openIssueCite(id) {
+  const is = DB.idx.issues.get(sid(id));
+  $('#citeTitle').textContent = 'مصدر الشريحة';
+  if (!is) $('#citeBody').innerHTML = '<p class="na">هذه المسألة غير موجودة في البيانات الحالية.</p>';
+  else {
+    const c = issueCtx(is);
+    const f = [['المسألة', is.title], ['الباب', c.chapter?.title], ['الموضوع', c.topic?.title], ['الجزء', c.volume ? volLabel(c.volume) : null], ['الصفحة', has(c.page) ? c.page : null], ['المصدر', c.book?.title]].filter(([, v]) => has(v));
+    $('#citeBody').innerHTML = `<dl class="fields">${f.map(([a, b]) => `<dt>${a}</dt><dd>${esc(b)}</dd>`).join('')}</dl>
+      ${has(is.original_text) ? `<p class="nass" style="font-size:1.1rem;margin-top:.8rem">${esc(excerpt(is.original_text, 320))}</p>` : ''}
+      <p style="margin-top:.8rem"><a class="btn sm" href="#/issue/${encodeURIComponent(is.issue_id)}" data-act="close-dialog">فتح المسألة</a></p>`;
+  }
+  const dlg = $('#citeDialog'); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+}
+function deckStandaloneHtml(deck) {
+  const css = document.querySelector('head style').textContent;
+  const slides = deck.slides.map((s, k) => `<section class="stage sa"${k ? ' hidden' : ''}>${slideHtml(deck, s, k)}</section>`).join('');
+  return `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(deck.title)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>${css}
+:root{padding:0}body{display:grid;place-items:center;min-height:100vh;margin:0;background:#0B110F}.sa{width:min(100vw,calc(100vh * 16 / 9));border:0;border-radius:0}.c-mini{pointer-events:none}
+@media print{body{background:#fff;display:block}.sa{display:block!important;width:100%;break-after:page}@page{size:A4 landscape;margin:0}}</style></head>
+<body>${slides}<script>let i=0;const s=[...document.querySelectorAll('.sa')];const go=n=>{i=Math.max(0,Math.min(s.length-1,n));s.forEach((e,k)=>e.hidden=k!==i)};addEventListener('keydown',e=>{if(['ArrowLeft','PageDown',' '].includes(e.key))go(i+1);if(['ArrowRight','PageUp'].includes(e.key))go(i-1)});addEventListener('click',e=>go(e.clientX<innerWidth/2?i+1:i-1));<\/script></body></html>`;
+}
+async function saveFile(filename, data) {
+  if (!CAP.downloads) return false;
+  try { await CAP.downloads.save({ filename, data }); toast('تم الحفظ'); return true; }
+  catch (e) { if (e?.code !== 'declined') toast('تعذّر حفظ الملف'); return e?.code === 'declined'; }
+}
+
+/* أحداث الاستوديو والعرض */
+document.addEventListener('click', async e => {
+  const el = e.target.closest('[data-act]');
+  if (!el) {
+    const stage = e.target.closest('#stage');
+    if (stage && !e.target.closest('button')) { const r = stage.getBoundingClientRect(); deckGo(e.clientX < r.left + r.width / 2 ? 1 : -1); }
+    return;
+  }
+  const act = el.dataset.act;
+  if (act === 'st-bab') { studioSel.bab = el.dataset.key; studioSel.topics = new Set(babTopicsOrdered(studioSel.bab).map(x => sid(x.t.topic_id))); studioSel.title = ''; viewStudio(null); lightCaps(); }
+  else if (act === 'st-all' || act === 'st-none') {
+    studioSel.topics = act === 'st-all' ? new Set(babTopicsOrdered(studioSel.bab).map(x => sid(x.t.topic_id))) : new Set();
+    document.querySelectorAll('input[name=st-topic]').forEach(i => i.checked = act === 'st-all'); updateStudioSummary();
+  }
+  else if (act === 'st-stop') genCtl?.abort();
+  else if (act === 'dk-next') deckGo(1);
+  else if (act === 'dk-prev') deckGo(-1);
+  else if (act === 'dk-go') { deckState.i = +el.dataset.i; deckState.grid = false; showSlide(); $('#stage').scrollIntoView({ block: 'center' }); }
+  else if (act === 'dk-present') enterPresent();
+  else if (act === 'dk-exit') exitPresent();
+  else if (act === 'dk-notes') { deckState.notes = !deckState.notes; showSlide(); }
+  else if (act === 'dk-grid') { deckState.grid = !deckState.grid; showSlide(); }
+  else if (act === 'dk-cite') { exitPresent(); openIssueCite(el.dataset.id); }
+  else if (act === 'dk-print') {
+    const pg = document.createElement('style'); pg.id = 'pgLandscape'; pg.textContent = '@page{size:A4 landscape;margin:0}';
+    document.head.appendChild(pg); document.body.classList.add('print-deck-mode');
+    const done = () => { pg.remove(); document.body.classList.remove('print-deck-mode'); window.removeEventListener('afterprint', done); };
+    window.addEventListener('afterprint', done); window.print(); setTimeout(done, 1500);
+  }
+  else if (act === 'dk-html') { const d = curDeck(); if (d) saveFile((d.title || 'عرض').replace(/[\\/:*?"<>|]/g, ' ').slice(0, 80) + '.html', deckStandaloneHtml(d)); }
+  else if (act === 'dk-del') {
+    if (!confirm('حذف هذا العرض؟')) return;
+    DECKS = DECKS.filter(d => d.id !== deckState.id); await saveDecks(); toast('تم حذف العرض'); location.hash = '#/studio';
+  }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.name === 'st-topic') { if (t.checked) studioSel.topics.add(t.value); else studioSel.topics.delete(t.value); updateStudioSummary(); }
+  else if (t.name === 'mode' && t.closest('#studioForm')) { studioSel.mode = t.value; syncAiOpts(); }
+  else if (['n', 'style'].includes(t.name) && t.closest('#studioForm')) studioSel[t.name] = t.value;
+});
+document.addEventListener('input', e => {
+  const t = e.target; if (!t.closest || !t.closest('#studioForm')) return;
+  if (t.name === 'dtitle') studioSel.title = t.value;
+  if (t.name === 'extra') studioSel.extra = t.value;
+});
+document.addEventListener('keydown', e => {
+  if (!location.hash.startsWith('#/deck/') || (e.target.closest && e.target.closest('input,textarea,select,dialog'))) return;
+  if (['ArrowLeft', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); deckGo(1); }
+  else if (['ArrowRight', 'PageUp'].includes(e.key)) { e.preventDefault(); deckGo(-1); }
+  else if (e.key === 'Home') { deckState.i = 0; showSlide(); }
+  else if (e.key === 'End') { deckState.i = 1e9; showSlide(); }
+  else if (e.key === 'f' || e.key === 'F') enterPresent();
+  else if (e.key === 'Escape') exitPresent();
+});
+let touchX = null;
+document.addEventListener('touchstart', e => { if (e.target.closest && e.target.closest('#present')) touchX = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend', e => {
+  if (touchX == null) return; const dx = e.changedTouches[0].clientX - touchX; touchX = null;
+  if (Math.abs(dx) > 45) { deckGo(dx > 0 ? 1 : -1); e.preventDefault?.(); }
+});
+(async () => {
+  try {
+    if (window.claude && typeof window.claude.use === 'function') {
+      const [s, d] = await Promise.all([window.claude.use('sample'), window.claude.use('downloads')]);
+      CAP.sample = s; CAP.downloads = d; lightCaps();
+    }
+  } catch (e) { log.info('القدرات غير متاحة'); }
+})();
+
+/* ======================= SIDEBAR / THEME ======================= */
+function renderSidebar() {
+  $('#nav').innerHTML = `
+    <a href="#/" data-nav="home">الرئيسية</a>
+    <p class="nav-group">العبادات</p>
+    <ul class="tree">${BABS.map(b => `<li><a href="#/bab/${b.key}" data-nav="bab:${b.key}"><span aria-hidden="true">${b.icon}</span>${b.title}<span class="cnt">${fmt(babCounts(b.key).issues)}</span></a></li>`).join('')}</ul>
+    <div class="nav-sep"></div>
+    <a href="#/search" data-nav="search">البحث</a>
+    <a href="#/studio" data-nav="studio">🎞️ استوديو العروض</a>
+    <a href="#/edit" data-nav="edit">➕ إضافة مسألة</a>
+    <a href="#/refs" data-nav="refs">المراجع</a>
+    <a href="#/favs" data-nav="favs">المفضلة</a>
+    <a href="#/recent" data-nav="recent">آخر الموضوعات</a>
+    <a href="#/about" data-nav="about">حول الموسوعة</a>`;
+  const dot = DB.mode === 'none' ? '' : DB.mode === 'demo' ? 'demo' : 'on';
+  const label = DB.mode === 'none' ? 'قاعدة البيانات غير متصلة' : DB.mode === 'demo' ? 'بيانات تجريبية' : 'قاعدة البيانات متصلة';
+  $('#sideFoot').innerHTML = `<div><span class="dot ${dot}"></span>${label}</div><a href="#/data" data-nav="data">إدارة البيانات</a>`;
+  $('#demoRibbon').hidden = DB.mode !== 'demo';
+}
+function markNav() {
+  document.querySelectorAll('#sidebar [data-nav]').forEach(a => {
+    if (a.dataset.nav === currentNav) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+  });
+}
+function currentTheme() { return document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
+function applyTheme(t) {
+  if (t) document.documentElement.dataset.theme = t;
+  $('#themeBtn').innerHTML = currentTheme() === 'dark' ? '☀️ <span class="lbl">الوضع النهاري</span>' : '🌙 <span class="lbl">الوضع الليلي</span>';
+  $('#themeBtn').setAttribute('aria-label', currentTheme() === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي');
+}
+
+/* ======================= ROUTER ======================= */
+function parseHash() {
+  const h = location.hash.replace(/^#\/?/, '');
+  const [path, qs] = h.split('?');
+  return { parts: path.split('/').filter(Boolean).map(p => { try { return decodeURIComponent(p); } catch (e) { return p; } }), params: new URLSearchParams(qs || '') };
+}
+function render() {
+  const { parts, params } = parseHash();
+  document.body.classList.remove('nav-open', 'presenting');
+  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  const [r, a] = parts;
+  try {
+    switch (r) {
+      case undefined: viewHome(); break;
+      case 'bab': viewBab(a); break;
+      case 'topic': viewTopic(a); break;
+      case 'issue': viewIssue(a); break;
+      case 'search': viewSearch(params); break;
+      case 'refs': viewRefs(); break;
+      case 'favs': viewFavs(); break;
+      case 'recent': viewRecent(); break;
+      case 'about': viewAbout(); break;
+      case 'data': viewData(); break;
+      case 'edit': viewEdit(a, params); break;
+      case 'studio': viewStudio(params); break;
+      case 'deck': viewDeck(a); break;
+      default: viewNotFound();
+    }
+  } catch (e) { log.error(e); setView(emptyState('تعذّر عرض هذه الصفحة.', '<a href="#/">العودة إلى الرئيسية</a>')); }
+  markNav();
+  lightCaps();
+  window.scrollTo(0, 0);
+}
+function refresh() { refNumbers = new Map(); renderSidebar(); render(); }
+
+/* ======================= EVENTS ======================= */
+document.addEventListener('click', async e => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const act = el.dataset.act;
+  if (act === 'file' || act === 'textfile') return;
+  if (act === 'menu') { document.body.classList.toggle('nav-open'); return; }
+  if (act === 'menu-close') { document.body.classList.remove('nav-open'); return; }
+  if (act === 'theme') { const n = currentTheme() === 'dark' ? 'light' : 'dark'; store.set('theme', n); applyTheme(n); return; }
+  if (act === 'cite') {
+    const r = DB.idx.references.get(el.dataset.ref); if (!r) return;
+    $('#citeTitle').textContent = `بيانات المصدر ${refNo(r.reference_id)}`;
+    $('#citeBody').innerHTML = refFields(r);
+    const dlg = $('#citeDialog'); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); return;
+  }
+  if (act === 'close-dialog') { const dlg = $('#citeDialog'); dlg.close ? dlg.close() : dlg.removeAttribute('open'); return; }
+  if (act === 'fav' || act === 'unfav') {
+    const id = el.dataset.id; let favs = store.get('favs', []);
+    if (favs.includes(id)) { favs = favs.filter(x => x !== id); toast('تمت إزالة المسألة من المفضلة'); }
+    else { favs.push(id); toast('تمت الإضافة إلى المفضلة'); }
+    store.set('favs', favs);
+    if (act === 'unfav') viewFavs(); else { const on = favs.includes(id); el.setAttribute('aria-pressed', on); el.textContent = on ? '⭐ في المفضلة' : '⭐ إضافة إلى المفضلة'; }
+    return;
+  }
+  if (act === 'copy') { const is = Api.getIssueById(el.dataset.id); if (is) toast(await copyText(issuePlain(is)) ? 'تم نسخ النص' : 'تعذّر النسخ'); return; }
+  if (act === 'print') { window.print(); return; }
+  if (act === 'share') {
+    const url = location.href, title = el.dataset.title || document.title;
+    if (navigator.share) { try { await navigator.share({ title, url }); return; } catch (err) { if (err && err.name === 'AbortError') return; } }
+    toast(await copyText(url) ? 'تم نسخ الرابط' : 'تعذّر نسخ الرابط'); return;
+  }
+  if (act === 'clear-filters') { location.hash = '#/search'; return; }
+  if (act === 'clear-recent') { store.del('recent'); viewRecent(); return; }
+  if (act === 'load-demo') { store.set('mode', 'demo'); setData(makeDemo(), 'demo'); toast('تم تحميل البيانات التجريبية'); refresh(); return; }
+  if (act === 'disconnect') {
+    if (DB.mode === 'demo') {
+      store.del('mode'); const saved = await loadUserData();
+      setData(hasAnyData(saved) ? saved : EMBEDDED, hasAnyData(saved) ? 'imported' : 'embedded');
+      toast('تم الخروج من الوضع التجريبي'); refresh(); return;
+    }
+    if (!confirm('سيُحذف ما حُفظ من بيانات في هذا المتصفح. هل صدّرت نسخة منها؟')) return;
+    await clearUserData(); store.del('mode'); setData(EMBEDDED, 'embedded'); toast('تم فصل البيانات'); refresh(); return;
+  }
+  if (act === 'fs-up' || act === 'fs-down') {
+    const v = Math.min(1.6, Math.max(0.85, +(store.get('fs', 1) + (act === 'fs-up' ? 0.1 : -0.1)).toFixed(2)));
+    store.set('fs', v); document.documentElement.style.setProperty('--fs', v); return;
+  }
+  if (act === 'add-ev') { $('#evList').insertAdjacentHTML('beforeend', evRowHtml()); const rows = document.querySelectorAll('[data-ev]'); const row = rows[rows.length - 1]; syncEv(row); row.querySelector('textarea').focus(); return; }
+  if (act === 'rm-ev') { el.closest('[data-ev]').remove(); return; }
+  if (act === 'commit-import') { commitImport(); return; }
+  if (act === 'cancel-import') { pendingImport = null; $('#importPreview').innerHTML = ''; return; }
+  if (act === 'del-issue') { deleteIssue(el.dataset.id); return; }
+  if (act === 'export') {
+    const json = JSON.stringify(DB.raw, null, 2), box = $('#exportBox');
+    box.hidden = false; box.querySelector('textarea').value = json;
+    if (await saveFile('fiqh-data.json', json)) return;
+    toast(await copyText(json) ? 'تم نسخ البيانات (JSON)' : 'انسخ البيانات من المربع'); return;
+  }
+  if (act === 'load-paste') { importJson($('#jsonPaste').value); return; }
+  if (act === 'copy-schema') { toast(await copyText(JSON.stringify(SCHEMA_EXAMPLE, null, 2)) ? 'تم نسخ القالب' : 'تعذّر النسخ'); return; }
+});
+$('#citeDialog').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+
+function importJson(text) {
+  let obj;
+  try { obj = JSON.parse(text); } catch (e) { toast('الملف ليس JSON صالحاً'); log.error('JSON غير صالح', e); return; }
+  if (!hasAnyData(obj)) { toast('لم يُعثر على أي مجموعة بيانات معروفة في الملف'); return; }
+  setData(obj, 'imported');
+  store.del('mode');
+  saveUserData(obj).then(ok => toast(ok ? 'تم تحميل البيانات وحفظها في هذا المتصفح' : 'تم تحميل البيانات لهذه الجلسة فقط'));
+  refresh();
+}
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.matches('input[type=file][data-act=file]') && t.files[0]) {
+    const fr = new FileReader(); fr.onload = () => importJson(fr.result); fr.onerror = () => toast('تعذّرت قراءة الملف'); fr.readAsText(t.files[0], 'utf-8'); return;
+  }
+  if (t.matches('input[type=file][data-act=textfile]') && t.files[0]) {
+    const file = t.files[0], form = $('#importForm'), info = $('#rawInfo');
+    info.textContent = 'جارٍ القراءة…';
+    (async () => {
+      try {
+        const isEpub = /\.epub$/i.test(file.name) || file.type === 'application/epub+zip';
+        const text = isEpub ? await epubToText(file, form.elements.mdHeads.checked) : await file.text();
+        form.elements.raw.value = text;
+        info.textContent = `${file.name}: ${fmt(text.length)} حرفاً`;
+        toast('تمت قراءة الملف');
+      } catch (err) {
+        log.error(err); info.textContent = '';
+        toast(err.message === 'JSZip' ? 'تعذّر تحميل قارئ EPUB؛ تحقق من الاتصال' : 'تعذّرت قراءة الملف: ' + err.message);
+      }
+      t.value = '';
+    })();
+    return;
+  }
+  if (t.matches('[name=ev_type]')) { syncEv(t.closest('[data-ev]')); return; }
+  if (t.matches('[data-form=adv] select[data-dep]')) {
+    const form = t.form, F = {};
+    ['bab', 'vol', 'sec', 'topic', 'author', 'book', 'type'].forEach(k => F[k] = form.elements[k].value);
+    if (t.name === 'bab') { F.sec = ''; F.topic = ''; } else F.topic = '';
+    const O = filterOptions(F);
+    form.elements.sec.innerHTML = O.secO; form.elements.topic.innerHTML = O.topO;
+  }
+});
+document.addEventListener('submit', e => {
+  const form = e.target.closest('[data-form]'); if (!form) return;
+  e.preventDefault();
+  const q = (form.elements.q?.value || '').trim();
+  if (form.dataset.form === 'edit') { saveIssue(form); return; }
+  if (form.dataset.form === 'studio') { studioGenerate(form); return; }
+  if (form.dataset.form === 'import') {
+    const raw = form.elements.raw.value;
+    if (!raw.trim()) { toast('الصق النص أو ارفع ملفاً أولاً'); return; }
+    const o = readImportOpts(form);
+    try { const R = parseBookText(raw, o); pendingImport = { R, o }; renderImportPreview(R, o); }
+    catch (err) { log.error(err); toast('تعذّر تقسيم النص'); }
+    return;
+  }
+  if (form.dataset.form === 'quick') { location.hash = '#/search' + (q ? '?q=' + encodeURIComponent(q) : ''); form.elements.q.blur(); return; }
+  const p = new URLSearchParams(); if (q) p.set('q', q);
+  ['bab', 'vol', 'sec', 'topic', 'author', 'book', 'type'].forEach(k => { const v = form.elements[k]?.value; if (v) p.set(k, v); });
+  const next = '#/search' + (p.toString() ? '?' + p.toString() : '');
+  if (location.hash === next) render(); else location.hash = next;
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.body.classList.remove('nav-open'); });
+window.addEventListener('hashchange', render);
+
+/* ======================= INIT ======================= */
+let EMBEDDED = emptyData();
+(async function init() {
+  applyTheme(store.get('theme', null));
+  await loadDecks();
+  document.documentElement.style.setProperty('--fs', store.get('fs', 1));
+  try { EMBEDDED = JSON.parse($('#fiqh-data').textContent); } catch (e) { log.error('تعذّرت قراءة البيانات المضمّنة', e); }
+  if (store.get('mode', null) === 'demo') setData(makeDemo(), 'demo');
+  else {
+    const saved = await loadUserData();
+    if (hasAnyData(saved)) setData(saved, 'imported');
+    else if (hasAnyData(EMBEDDED)) setData(EMBEDDED, 'embedded');
+    else {
+      setData(EMBEDDED, 'embedded');
+      refresh();
+      const remote = await tryRemote();
+      if (remote) { setData(remote, 'remote'); refresh(); }
+      return;
+    }
+  }
+  refresh();
+})();
+</script>
+</body>
+</html>
