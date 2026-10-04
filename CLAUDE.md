@@ -17,8 +17,9 @@ editor, TXT/EPUB importer and a NotebookLM-style slide studio.
 
 ## Layout
 - `index.html` — the whole app (single file, sections marked `CSS / HTML / DATA / JAVASCRIPT`).
-- `data/fiqh-data.json` — empty schema; when served over http the app fetches it if the
+- `data/fiqh-data.json` — **gitignored** (teks kitab berhak cipta kekal di mesin setempat); jana dengan `python3 scripts/build_from_shamela.py` (Shamela 4 + kitab id 6369 mesti ada di Mac). Repo hanya ada skema kosong. When served over http the app fetches it if the
   embedded `<script id="fiqh-data">` block is empty (see `CONFIG.DATA_URL`).
+- `scripts/build_from_epub.py` — **lapuk**: OCR archive.org ~18% perkataan salah dan pemetaan halaman cetakan tersasar (hanya betul hal. 26–97). Guna build_from_shamela.py.
 - `tests/smoke.test.cjs` — jsdom smoke tests (`npm install && npm test`).
 
 ## Run

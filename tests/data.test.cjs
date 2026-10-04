@@ -26,20 +26,20 @@ const text = D => D.getElementById('view').textContent.replace(/\s+/g, ' ');
 
 (async () => {
   const d = JSON.parse(DATA);
-  if (!d.issues.length) { console.log('- data tests skipped: data/fiqh-data.json is empty (run scripts/build_from_epub.py)'); return; }
+  if (!d.issues.length) { console.log('- data tests skipped: data/fiqh-data.json is empty (run scripts/build_from_shamela.py)'); return; }
   ok(d.chapters.map(c => c.key).join() === 'taharah,salah,zakah,siyam,hajj', 'only the five ibadat chapters');
-  ok(d.issues.length > 300 && d.issues.every(i => i.original_text && i.page), 'every issue has original text and a page');
+  ok(d.issues.length > 400 && d.issues.every(i => i.original_text && i.page), 'every issue has original text and a page');
 
   const { w, D, errs } = boot('#/'); await wait(400);
   ok(w.eval('DB.mode') === 'remote', 'data loaded via DATA_URL');
   const W = w.eval('validate()').filter(x => x.startsWith('تحذير'));
   ok(W.length === 0, 'validate() reports no broken relations' + (W.length ? ': ' + W.slice(0, 3).join(' | ') : ''));
-  for (const h of ['#/bab/salah', '#/topic/t1_2', '#/issue/p31', '#/search?q=' + encodeURIComponent('الوضوء'), '#/refs']) {
+  for (const h of ['#/bab/salah', '#/topic/t1_2', '#/issue/v1p33', '#/search?q=' + encodeURIComponent('الوضوء'), '#/refs']) {
     w.location.hash = h; await wait(150);
     ok(text(D).length > 50, 'renders ' + h);
   }
-  w.location.hash = '#/issue/p31'; await wait(150);
-  ok(text(D).includes('وتنقسم المياه إلى أربعة أقسام'), 'issue p31 shows verbatim text');
+  w.location.hash = '#/issue/v1p33'; await wait(150);
+  ok(text(D).includes('ودليل كونه غير مطهر'), 'issue v1p33 shows verbatim text');
   ok(errs.length === 0, 'no runtime errors' + (errs.length ? ': ' + errs[0] : ''));
   console.log(failed ? `\n${failed} failed` : '\nAll data tests passed');
   process.exit(failed ? 1 : 0);
