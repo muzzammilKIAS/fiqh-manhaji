@@ -169,6 +169,8 @@ def main():
     # ringkasan bertanggungjawab (data/summaries.json, dihasilkan oleh scripts/check_summaries.py --merge) disimpan jika ada
     sp = os.path.join(os.path.dirname(os.path.abspath(OUT)), 'summaries.json')
     d['summaries'] = json.load(open(sp, encoding='utf-8')).get('summaries', []) if os.path.exists(sp) else []
+    qp = os.path.join(os.path.dirname(os.path.abspath(OUT)), 'quizzes.json')  # soalan kuiz (scripts/check_quizzes.py --merge)
+    d['quizzes'] = json.load(open(qp, encoding='utf-8')).get('quizzes', []) if os.path.exists(qp) else []
     d['meta']['empty_pages'] = empty
     d['meta']['headings_unlocated'] = [h['heading_id'] for h in d['headings'] if not h['located']]
     os.makedirs(os.path.dirname(os.path.abspath(OUT)), exist_ok=True)

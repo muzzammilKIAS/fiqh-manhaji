@@ -1,0 +1,23 @@
+<!doctype html><meta charset=utf-8><body><pre id=o>wait</pre><iframe id=f src="../index.html#/about" style="width:1400px;height:900px"></iframe>
+<script>
+const MEASURE = `(() => {
+ const host=document.createElement('div');host.style.cssText='position:absolute;top:0;left:0;width:1000px';document.body.appendChild(host);
+ const SEL='.q,.sum-cards li,.sum-lead,.rc p,.rc b,.ag-list b,.ag-list li,.s-title,.dl blockquote,.pcards li,.rv-list li,.map-card,.t-title h1,.t-section h2,.t-section p,.src-grid b,.t-sub,.q-card,.dl,.rc,.s-path';
+ const topics=DB.raw.topics.map(t=>t.topic_id);
+ const res={};
+ SLIDE_THEMES.forEach(th=>{ const cnt={},ex={};
+   topics.forEach(tid=>{const t=Api.getTopicById(tid); if(!t)return; const bab=babOfTopic(t);
+     [buildLessonDeck('topic',t.title,[t],bab),buildExtractDeck(t.title,[t],bab)].forEach(r=>{const deck={title:t.title,mode:'extract',bab,sources:r.sources,slides:r.slides};
+       r.slides.forEach((s,k)=>{host.innerHTML='<div class="stage">'+slideHtml(deck,s,k,th.key)+'</div>';
+         fitSlide(host.firstChild); const sl=host.querySelector('.slide').getBoundingClientRect();
+         host.querySelectorAll(SEL).forEach(el=>{const cs=getComputedStyle(el); if(cs.display==='none')return;
+           const clipH=el.scrollHeight>el.clientHeight+3&&(cs.overflowY!=='visible'||cs.webkitLineClamp!=='none');
+           const clipW=el.scrollWidth>el.clientWidth+3&&cs.overflowX!=='visible';
+           const r2=el.getBoundingClientRect(), out=r2.bottom>sl.bottom-1||r2.top<sl.top-1;
+           if(clipH||clipW||out){const key=s.type+(s.kind?':'+s.kind:'')+' .'+(el.className.split(' ')[0]||el.tagName)+(clipH?' H':'')+(clipW?' W':'')+(out?' OUT':'');cnt[key]=(cnt[key]||0)+1;ex[key]=ex[key]||(tid+'#'+(k+1)+(r.slides===undefined?'':''));}
+         });});});});
+   res[th.key]=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([k,v])=>v+'  '+k+'  e.g.'+ex[k]);
+ });
+ host.remove(); return JSON.stringify(res,null,1); })()`;
+f.onload=()=>{const go=()=>{let ready=false;try{ready=f.contentWindow.eval('DB.raw.issues.length>0&&!!DB.idx.quizzesByTopic')}catch(e){} if(!ready) return setTimeout(go,300); try { o.textContent=f.contentWindow.eval(MEASURE); } catch(e){ o.textContent='ERR '+e.message+' '+e.stack.slice(0,300); } }; go();}
+</script>

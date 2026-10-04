@@ -826,7 +826,7 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 /* ---------- مخطوطة: كتاب — توسيط، فهرس بنقاط، نص بلا صناديق مع خط الحاشية ---------- */
 .slide.th-mushaf{padding-inline:9cqw}
 .th-mushaf .s-top{justify-content:center;gap:3cqw}
-.th-mushaf .s-path{flex:0 1 auto;max-width:40cqw}
+.th-mushaf .s-path{flex:0 1 auto;max-width:58cqw}
 .th-mushaf .s-title{text-align:center;border-bottom:0;white-space:normal;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
 .th-mushaf .s-title::before,.th-mushaf .s-title::after{content:"❁";color:#A88449;font-size:3cqh;margin:0 1.6cqw;vertical-align:middle}
 .slide.th-mushaf.t-title,.slide.th-mushaf.t-section{align-items:center;text-align:center;padding-inline:12cqw}
@@ -915,7 +915,7 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .slide.th-asri.t-quote,.slide.th-asri.t-dalil{display:grid;grid-template-columns:30cqw 1fr;grid-template-rows:auto 1fr auto;column-gap:4cqw;padding-inline-start:4cqw;
   background:linear-gradient(270deg,color-mix(in srgb,var(--sa) 12%,#fff) 0 calc(30cqw + 2cqw),#fff calc(30cqw + 2cqw))}
 .th-asri.t-quote .s-top,.th-asri.t-dalil .s-top{grid-column:1;grid-row:1;flex-direction:column;align-items:flex-start;gap:1.4cqh}
-.th-asri.t-quote .s-title,.th-asri.t-dalil .s-title{grid-column:1;grid-row:2;white-space:normal;font-size:5.6cqh;line-height:1.3;align-self:start;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
+.th-asri.t-quote .s-title,.th-asri.t-dalil .s-title{grid-column:1;grid-row:2;white-space:normal;font-size:5.6cqh;line-height:1.62;padding-block:.5cqh;align-self:start;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
 .th-asri.t-quote .s-path,.th-asri.t-dalil .s-path{white-space:normal;font-size:2.2cqh}
 .th-asri.t-quote .q-card,.th-asri.t-dalil .dl-grid{grid-column:2;grid-row:1/3;background:transparent;padding:1cqh 0}
 .th-asri.t-quote .q-ref,.th-asri.t-dalil .q-ref{grid-column:2;grid-row:3}
@@ -930,7 +930,7 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .th-asri .ag-list b{white-space:normal;font-family:var(--ui);font-weight:800;font-size:3cqh;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .th-asri .sum-cards,.th-asri .sum-cards.two{grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;align-content:stretch}
 .th-asri .sum-cards.big{grid-template-columns:repeat(auto-fit,minmax(0,1fr))}
-.th-asri .sum-cards li{padding:7.5cqh 2cqw 2cqh;font-size:3cqh!important}
+.th-asri .sum-cards li,.th-asri .sum-cards.small li,.th-asri .sum-cards.big li{padding:7.5cqh 2cqw 2cqh;font-size:3cqh}
 .th-asri .sum-cards li::before{inset-inline-start:2cqw;top:1.6cqh;width:auto;height:auto;background:none!important;color:#B8902F!important;font-family:var(--ui);font-weight:800;font-size:5.4cqh}
 .th-asri .sum-cards.n4{grid-template-columns:1fr 1fr}
 .th-asri .sum-cards.n5 li:first-child{grid-column:span 2}
@@ -957,13 +957,13 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .th-zakhrafa .ag-list small{display:none}
 /* بلاطات بقباب (محاريب) */
 .th-zakhrafa .sum-cards,.th-zakhrafa .sum-cards.two,.th-zakhrafa .sum-cards.big{display:flex;gap:1.6cqw;align-items:stretch;align-content:stretch}
-.th-zakhrafa .sum-cards li{flex:1;border-radius:40% 40% 1.4cqh 1.4cqh/18% 18% 1.4cqh 1.4cqh;padding:9cqh 1.6cqw 2cqh;text-align:center;font-size:2.8cqh!important;-webkit-line-clamp:8!important}
+.th-zakhrafa .sum-cards li,.th-zakhrafa .sum-cards.small li,.th-zakhrafa .sum-cards.big li{flex:1;border-radius:40% 40% 1.4cqh 1.4cqh/18% 18% 1.4cqh 1.4cqh;padding:9cqh 1.6cqw 2cqh;text-align:center;font-size:2.8cqh;-webkit-line-clamp:8!important}
 .th-zakhrafa .sum-cards li::before{inset-inline-start:50%;transform:translateX(50%);top:3cqh;border-radius:50%}
 .th-zakhrafa .sum-lead{text-align:center;border-inline-start:0;border-top:.4cqh solid #C9AE6E;border-bottom:.4cqh solid #C9AE6E;border-radius:0}
 .th-zakhrafa .rc-grid{display:flex!important;gap:1.6cqw}
 .th-zakhrafa .rc{flex:1;border-top:0;border:.3cqh solid #E2CF9C;border-radius:40% 40% 1.4cqh 1.4cqh/16% 16% 1.4cqh 1.4cqh;padding-top:6cqh;text-align:center;align-items:center}
 .th-zakhrafa .rc b{font-size:3cqh}
-.th-zakhrafa .rc p{font-size:2.4cqh!important;-webkit-line-clamp:8!important}
+.slide.th-zakhrafa .rc p{font-size:2.4cqh;-webkit-line-clamp:8!important}
 /* الآية في خرطوشة */
 .th-zakhrafa .dl{border:0;background:transparent!important;align-items:center;text-align:center;padding:2cqh 6cqw;position:relative}
 .th-zakhrafa .dl::before{content:"";position:absolute;inset:0;border:.4cqh double #C9AE6E;border-radius:99px;pointer-events:none}
@@ -990,6 +990,47 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .s-copy{position:absolute;bottom:3.2cqh;inset-inline-start:9cqw;font-size:2.1cqh;color:rgba(247,241,223,.72);font-family:var(--ui);z-index:3}
 .th-asri.t-title .s-copy{color:var(--smut)}
 @media print{body:not(.print-deck-mode) .site-foot{display:block!important;border:0}.site-foot nav{display:none}}
+
+/* ---------- الاختبارات ---------- */
+.qz-wrap{max-width:860px;margin-inline:auto}
+.qz-top{display:flex;align-items:center;gap:1rem;margin:.4rem 0 1rem}
+.qz-top .progress{flex:1;margin:0;height:6px}
+.qz-card{background:var(--surface);border-radius:28px;box-shadow:var(--shadow);padding:clamp(1.1rem,3vw,2rem);border:2px solid transparent;transition:border-color .3s var(--ease)}
+.qz-card.is-ok{border-color:color-mix(in srgb,var(--emerald-2) 60%,transparent)}
+.qz-card.is-bad{border-color:color-mix(in srgb,var(--danger) 45%,transparent)}
+.qz-meta{font-size:.82rem;color:var(--a-ink,var(--muted));margin-bottom:.4rem}
+.qz-q{font-family:var(--nass);font-size:clamp(1.35rem,3.2vw,1.8rem);line-height:1.7;margin:0 0 1.1rem;color:var(--ink)}
+.qz-opts{display:grid;gap:.6rem}
+.qz-opt{display:flex;align-items:center;gap:.8rem;text-align:start;width:100%;padding:.85rem 1rem;border-radius:18px;border:1.5px solid var(--line);background:var(--bg);cursor:pointer;color:var(--ink);font:inherit;font-size:1.02rem;line-height:1.7;transition:border-color .2s,background .2s}
+.qz-opt:hover:not([disabled]){border-color:var(--a-ink,var(--emerald-2));background:var(--a-soft,var(--emerald-soft))}
+.qz-opt i{flex:none;font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);font-weight:700;color:var(--a-ink,var(--emerald))}
+.qz-opt span{flex:1}
+.qz-opt em{font-style:normal;font-weight:800;font-size:1.2rem}
+.qz-opt[disabled]{cursor:default}
+.qz-opt.ok{border-color:var(--emerald-2);background:color-mix(in srgb,var(--emerald-2) 13%,var(--surface))}
+.qz-opt.ok i{background:var(--emerald-2);color:#fff}.qz-opt.ok em{color:var(--emerald-2)}
+.qz-opt.bad{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 10%,var(--surface))}
+.qz-opt.bad i{background:var(--danger);color:#fff}.qz-opt.bad em{color:var(--danger)}
+.qz-exp{margin-top:1rem;padding:1rem 1.1rem;border-radius:18px;background:var(--surface-2);animation:tin .35s var(--ease)}
+.qz-exp>b{display:block;margin-bottom:.3rem}
+.qz-exp p{margin:0 0 .7rem}
+.qz-src{border-inline-start:4px solid var(--gold-line);padding-inline-start:.9rem}
+.qz-src>span{font-size:.82rem;color:var(--gold);font-weight:700}
+.qz-quote{font-size:calc(1.12rem * var(--fs,1));line-height:2;margin:.2rem 0 .3rem}
+.qz-src a{font-size:.88rem}
+.qz-hint{margin-top:.9rem}
+.qz-nav{display:flex;justify-content:space-between;margin-top:1.2rem}
+.qz-end{text-align:center}
+.qz-ring{--p:0;width:150px;height:150px;border-radius:50%;margin:0 auto 1rem;display:grid;place-content:center;background:radial-gradient(closest-side,var(--surface) 78%,transparent 80% 100%),conic-gradient(var(--emerald-2) calc(var(--p) * 1%),var(--line) 0)}
+.qz-ring b{font-size:2rem;font-family:var(--nass);color:var(--emerald)}.qz-ring span{color:var(--muted);font-size:.9rem}
+.qz-end h2{font-family:var(--nass);margin-bottom:1rem}
+.qz-review{text-align:start;display:grid;gap:.8rem;padding-inline-start:1.2rem}
+.qz-review .ok{color:var(--emerald-2);font-weight:600;margin:.2rem 0}
+
+/* لا تُقصّ رؤوس الحروف وأذنابها في العناوين (Amiri عالي الامتداد) */
+.slide .s-title{line-height:1.62;padding-block:.5cqh .3cqh}
+.ag-list b{line-height:1.62;padding-block:.3cqh}
+.th-mushaf .s-title{line-height:1.62}
 /* ---------- responsive ---------- */
 @media (max-width:900px){
   .shell{grid-template-columns:1fr}
@@ -1100,7 +1141,8 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
   "evidences": [],
   "references": [],
   "headings": [],
-  "summaries": []
+  "summaries": [],
+  "quizzes": []
 }
 </script>
 
@@ -1268,8 +1310,8 @@ function snippet(text, terms, len = 170) {
 }
 
 /* ======================= DATA LAYER ======================= */
-const COLS = [['books', 'book_id'], ['volumes', 'volume_id'], ['chapters', 'chapter_id'], ['sections', 'section_id'], ['topics', 'topic_id'], ['issues', 'issue_id'], ['evidences', 'evidence_id'], ['references', 'reference_id'], ['headings', 'heading_id'], ['summaries', 'summary_id']];
-const COL_AR = { books: 'الكتب', volumes: 'الأجزاء', chapters: 'الأبواب', sections: 'الفصول', topics: 'الموضوعات', issues: 'المسائل', evidences: 'الأدلة', references: 'المراجع', headings: 'العناوين الفرعية', summaries: 'الملخصات' };
+const COLS = [['books', 'book_id'], ['volumes', 'volume_id'], ['chapters', 'chapter_id'], ['sections', 'section_id'], ['topics', 'topic_id'], ['issues', 'issue_id'], ['evidences', 'evidence_id'], ['references', 'reference_id'], ['headings', 'heading_id'], ['summaries', 'summary_id'], ['quizzes', 'quiz_id']];
+const COL_AR = { books: 'الكتب', volumes: 'الأجزاء', chapters: 'الأبواب', sections: 'الفصول', topics: 'الموضوعات', issues: 'المسائل', evidences: 'الأدلة', references: 'المراجع', headings: 'العناوين الفرعية', summaries: 'الملخصات', quizzes: 'الأسئلة' };
 const DB = { raw: null, mode: 'none', idx: {}, warnings: [], rows: [] };
 
 function emptyData() { const d = { meta: {} }; COLS.forEach(([c]) => d[c] = []); return d; }
@@ -1306,6 +1348,7 @@ function buildIndexes() {
   I.issuesByTopic = group(d.issues, 'topic_id');
   I.headingsByTopic = group(d.headings, 'topic_id');
   I.headingKids = group(d.headings, 'parent_id');
+  I.quizzesByTopic = group(d.quizzes, 'topic_id');
   I.summaryBy = new Map(d.summaries.filter(x => has(x.level) && has(x.target_id)).map(x => [x.level + ':' + sid(x.target_id), x]));
   BLOCKS.clear();
   DB.idx = I;
@@ -1332,7 +1375,7 @@ function issueCtx(is) {
 /* ---------- Data Validation ---------- */
 function validate() {
   const d = DB.raw, I = DB.idx, W = [];
-  const one = { books: 'الكتاب', volumes: 'الجزء', chapters: 'الباب', sections: 'الفصل', topics: 'الموضوع', issues: 'المسألة', evidences: 'الدليل', references: 'المرجع', headings: 'العنوان', summaries: 'الملخص' };
+  const one = { books: 'الكتاب', volumes: 'الجزء', chapters: 'الباب', sections: 'الفصل', topics: 'الموضوع', issues: 'المسألة', evidences: 'الدليل', references: 'المرجع', headings: 'العنوان', summaries: 'الملخص', quizzes: 'السؤال' };
   COLS.forEach(([c, k]) => {
     const seen = new Set();
     d[c].forEach((o, i) => {
@@ -1663,7 +1706,7 @@ function topicCard(t, n, key) {
     <h3><a href="#/topic/${encodeURIComponent(t.topic_id)}">${esc(t.title)}</a></h3>
     ${def ? `<p class="def na">${esc(def.length > 160 ? def.slice(0, 160) + '…' : def)}</p>` : ''}
     <div class="row">${issues.length ? `<span class="pill">المسائل <b>${fmt(issues.length)}</b></span>` : ''}${rng ? `<span class="pill">${esc(rng)}</span>` : ''}
-    ${issues.length ? `<a class="play" href="#/slides/topic/${encodeURIComponent(t.topic_id)}">▶ شرائح</a>` : ''}</div></div>`;
+    ${quizzesOfTopic(t.topic_id).length ? `<a class="pill" href="#/quiz/topic/${encodeURIComponent(t.topic_id)}" style="text-decoration:none;position:relative;z-index:2">📝 ${fmt(quizzesOfTopic(t.topic_id).length)}</a>` : ''}${issues.length ? `<a class="play" href="#/slides/topic/${encodeURIComponent(t.topic_id)}">▶ شرائح</a>` : ''}</div></div>`;
 }
 
 function viewBab(key) {
@@ -1689,7 +1732,7 @@ function viewBab(key) {
   setView(`<div class="ab ab-${b.key}">
     <header class="bab-hero"><h1>${b.icon} ${b.title}</h1>
       <p>${ch && has(ch.description) ? esc(ch.description) : (ch ? MSG.NA : '')}</p>
-      <div class="hero-ctas" style="margin:0">${n.issues ? `<a class="gbtn solid" href="#/slides/bab/${b.key}">▶ عرض شرائح الباب</a><a class="gbtn" href="#/tree/bab/${b.key}">🌳 تشجير</a><a class="gbtn" href="#/cards/bab/${b.key}">🧠 بطاقات</a><a class="gbtn" href="#/studio?bab=${b.key}">🎞️ استوديو</a>` : ''}${canEdit() ? `<a class="gbtn" href="#/edit?bab=${b.key}">➕ إضافة مسألة</a>` : ''}</div>
+      <div class="hero-ctas" style="margin:0">${n.issues ? `<a class="gbtn solid" href="#/slides/bab/${b.key}">▶ عرض شرائح الباب</a><a class="gbtn" href="#/tree/bab/${b.key}">🌳 تشجير</a><a class="gbtn" href="#/cards/bab/${b.key}">🧠 بطاقات</a><a class="gbtn" href="#/quiz/bab/${b.key}">📝 اختبار</a><a class="gbtn" href="#/studio?bab=${b.key}">🎞️ استوديو</a>` : ''}${canEdit() ? `<a class="gbtn" href="#/edit?bab=${b.key}">➕ إضافة مسألة</a>` : ''}</div>
       <div class="meta" style="display:flex;gap:.4rem;margin-top:.9rem"><span class="gbtn" style="height:30px;font-size:.82rem">الموضوعات ${fmt(n.topics)}</span><span class="gbtn" style="height:30px;font-size:.82rem">المسائل ${fmt(n.issues)}</span></div></header>
     ${connectionNotice()}
     ${summaryBab(b.key)}
@@ -1717,7 +1760,7 @@ function viewTopic(id) {
   recordRecent('topic', t.topic_id, t.title);
   const issues = DB.idx.issuesByTopic.get(sid(t.topic_id)) || [];
   const addQ = new URLSearchParams({ bab: key || '', topic: t.title || '' }); if (sec) addQ.set('section', sec.title || '');
-  let html = `<header class="page-head head-row"><h1>${esc(t.title)}</h1><div class="cta-row" style="margin:0">${issues.length ? `<a class="btn sm" href="#/slides/topic/${encodeURIComponent(t.topic_id)}">▶ عرض شرائح الموضوع</a>` : ''}${topicHeads(t.topic_id).length ? `<a class="btn ghost sm" href="#/tree/topic/${encodeURIComponent(t.topic_id)}">🌳 تشجير</a><a class="btn ghost sm" href="#/cards/topic/${encodeURIComponent(t.topic_id)}">🧠 بطاقات</a>` : ''}${key && issues.length ? `<a class="btn ghost sm" href="#/studio?bab=${key}&topic=${encodeURIComponent(t.topic_id)}">🎞️ استوديو</a>` : ''}${canEdit() && key ? `<a class="btn ghost sm" href="#/edit?${addQ}">➕ إضافة مسألة هنا</a>` : ''}</div></header>${connectionNotice()}`;
+  let html = `<header class="page-head head-row"><h1>${esc(t.title)}</h1><div class="cta-row" style="margin:0">${issues.length ? `<a class="btn sm" href="#/slides/topic/${encodeURIComponent(t.topic_id)}">▶ عرض شرائح الموضوع</a>` : ''}${topicHeads(t.topic_id).length ? `<a class="btn ghost sm" href="#/tree/topic/${encodeURIComponent(t.topic_id)}">🌳 تشجير</a><a class="btn ghost sm" href="#/cards/topic/${encodeURIComponent(t.topic_id)}">🧠 بطاقات</a>` : ''}${quizzesOfTopic(t.topic_id).length ? `<a class="btn ghost sm" href="#/quiz/topic/${encodeURIComponent(t.topic_id)}">📝 اختبار (${fmt(quizzesOfTopic(t.topic_id).length)})</a>` : ''}${key && issues.length ? `<a class="btn ghost sm" href="#/studio?bab=${key}&topic=${encodeURIComponent(t.topic_id)}">🎞️ استوديو</a>` : ''}${canEdit() && key ? `<a class="btn ghost sm" href="#/edit?${addQ}">➕ إضافة مسألة هنا</a>` : ''}</div></header>${connectionNotice()}`;
   if (has(t.definition)) html += blk('التعريف', paras(t.definition));
   if (has(t.ruling)) html += blk('الحكم', paras(t.ruling));
   const evs = arr(t.evidence_ids).map(e => DB.idx.evidences.get(sid(e))).filter(Boolean);
@@ -2160,7 +2203,7 @@ function viewSection(id) {
   const kidsHtml = headKids(h).length ? `<h2 class="h2">العناوين التي تحته</h2><div class="tgrid">${headKids(h).map((k, i) => `<div class="tcard"><span class="tn">${fmt(i + 1)}</span><h3><a href="${headLink(k)}">${esc(k.title)}</a></h3>${headPage(k) ? `<div class="row"><span class="pill">${esc(headPage(k))}</span></div>` : ''}</div>`).join('')}</div>` : '';
   setView(`<article class="issue ab ab-${key}">
     <header class="issue-head"><a class="kicker-lnk" href="#/topic/${enc(t.topic_id)}">${esc(t.title)}</a><h1>${esc(h.title)}</h1><div class="infobar">${info}</div>
-      <div class="actions"><a class="btn" href="#/slides/section/${enc(h.heading_id)}">▶ شرائح العنوان</a><a class="btn ghost" href="#/tree/section/${enc(h.heading_id)}">🌳 تشجير</a><a class="btn ghost" href="#/cards/section/${enc(h.heading_id)}">🧠 بطاقات</a><button class="btn ghost" data-act="print">🖨️ طباعة</button>
+      <div class="actions"><a class="btn" href="#/slides/section/${enc(h.heading_id)}">▶ شرائح العنوان</a><a class="btn ghost" href="#/tree/section/${enc(h.heading_id)}">🌳 تشجير</a><a class="btn ghost" href="#/cards/section/${enc(h.heading_id)}">🧠 بطاقات</a>${quizScope('section', h.heading_id).list.length ? `<a class="btn ghost" href="#/quiz/section/${enc(h.heading_id)}">📝 اختبار</a>` : ''}<button class="btn ghost" data-act="print">🖨️ طباعة</button>
         <span class="size-ctl" role="group" aria-label="حجم خط النص"><button data-act="fs-down" aria-label="تصغير الخط">أ−</button><button data-act="fs-up" aria-label="تكبير الخط">أ+</button></span></div></header>
     ${connectionNotice()}${summarySection(h)}
     ${blk('📖 النص الأصلي', `${h.located === false ? `<p class="na sm">بداية هذا العنوان داخل الصفحة غير محددة بدقة؛ يبدأ العرض من أول موضعه المقدَّر.</p>` : ''}${body}${chips ? `<div class="cites">${chips}</div>` : ''}`, 'source-text')}
@@ -2321,6 +2364,78 @@ function issueHeadingChips(is) {
   const lead = before && !starts.some(h => (+h.offset || 0) === 0) ? before : null;
   if (!starts.length && !lead) return '';
   return `<div class="infobar hchips">${lead ? `<span class="pill">يتابع: ${headPath(lead).map(p => `<a href="${headLink(p)}">${esc(p.title)}</a>`).join(' › ')}</span>` : ''}${starts.length ? `<span class="pill">يبدأ في هذه الصفحة:</span>${starts.map(h => `<a class="chip-l" href="${headLink(h)}">${esc(h.title)}</a>`).join('')}` : ''}</div>`;
+}
+
+/* ======================= الاختبارات (أسئلة متوسطة من نص الكتاب) =======================
+   كل سؤال: ٤ خيارات، جواب واحد، شرح، و«دليل» = اقتباس حرفي من نص الكتاب (يُتحقق منه في check_quizzes.py والاختبارات). */
+const QUIZ_NOTE = 'أسئلة مولّدة آلياً من نص الكتاب وحده؛ والدليل تحت كل جواب منقول منه حرفياً. المرجع هو النص الأصلي.';
+const LETTERS = ['أ', 'ب', 'ج', 'د'];
+const quizzesOfTopic = tid => DB.idx.quizzesByTopic.get(sid(tid)) || [];
+function quizScope(kind, id) {
+  if (kind === 'topic') { const t = Api.getTopicById(id); return t ? { title: t.title, bab: babOfTopic(t), list: quizzesOfTopic(t.topic_id), back: '#/topic/' + enc(t.topic_id) } : null; }
+  if (kind === 'bab') { const b = BABS.find(x => x.key === id); return b ? { title: b.title, bab: id, list: babTopicsOrdered(id).flatMap(x => quizzesOfTopic(x.t.topic_id)), back: '#/bab/' + id } : null; }
+  if (kind === 'section') {
+    const h = Api.getHeadingById(id); if (!h) return null;
+    const ids = new Set(); (function walk(x) { ids.add(sid(x.heading_id)); headKids(x).forEach(walk); })(h);
+    return { title: h.title, bab: babOfTopic(Api.getTopicById(h.topic_id)), list: quizzesOfTopic(h.topic_id).filter(q => ids.has(sid(q.heading_id))), back: headLink(h) };
+  }
+  return null;
+}
+let QZ = { key: '', order: [], i: 0, picks: {}, title: '' };
+const quizBest = () => store.get('quizBest', {});
+function viewQuizIndex() {
+  currentNav = 'quiz'; crumbs([HOME, { label: 'الاختبارات' }]);
+  if (!DB.raw.quizzes.length) { setView(`<header class="page-head"><h1>📝 الاختبارات</h1></header>${emptyState('لا توجد أسئلة في قاعدة البيانات الحالية.', noDataBody())}`); return; }
+  const best = quizBest();
+  setView(`<header class="page-head"><h1>📝 الاختبارات</h1><p>أسئلة متوسطة الصعوبة لكل موضوع، بأربعة خيارات، مع الشرح والدليل من نص الكتاب.</p></header>
+    <p class="na sm">${QUIZ_NOTE}</p>
+    ${BABS.filter(b => babCounts(b.key).topics).map(b => {
+      const ts = babTopicsOrdered(b.key).map(x => x.t).filter(t => quizzesOfTopic(t.topic_id).length);
+      const n = ts.reduce((s, t) => s + quizzesOfTopic(t.topic_id).length, 0);
+      return `<section class="ab ab-${b.key}"><h2 class="h2">${b.icon} ${b.title} <small>${fmt(n)} سؤالاً</small> <a class="btn sm" href="#/quiz/bab/${b.key}" style="margin-inline-start:auto">اختبار الباب كله</a></h2>
+        <div class="tgrid">${ts.map((t, i) => { const k = 'topic/' + t.topic_id, bs = best[k]; return `<div class="tcard"><span class="tn">${fmt(i + 1)}</span><h3><a href="#/quiz/topic/${enc(t.topic_id)}">${esc(t.title)}</a></h3>
+          <div class="row"><span class="pill">${fmt(quizzesOfTopic(t.topic_id).length)} سؤالاً</span>${bs ? `<span class="pill">أفضل نتيجة: <b>${fmt(bs.s)}/${fmt(bs.n)}</b></span>` : ''}<a class="play" href="#/quiz/topic/${enc(t.topic_id)}">ابدأ</a></div></div>`; }).join('')}</div></section>`;
+    }).join('')}`);
+}
+function viewQuiz(kind, id) {
+  if (!kind) return viewQuizIndex();
+  const sc = quizScope(kind, id); if (!sc) return viewNotFound();
+  const key = kind + '/' + id;
+  currentNav = sc.bab ? 'bab:' + sc.bab : 'quiz';
+  crumbs([HOME, { label: 'الاختبارات', href: '#/quiz' }, sc.bab ? babCrumb(sc.bab) : null, { label: sc.title }].filter(Boolean));
+  if (!sc.list.length) { setView(`<header class="page-head"><h1>📝 اختبار: ${esc(sc.title)}</h1></header>${emptyState('لا توجد أسئلة لهذا النطاق بعد.', `<a href="${sc.back}">العودة</a>`)}`); return; }
+  if (QZ.key !== key) QZ = { key, list: sc.list, order: sc.list.map((_, i) => i), i: 0, picks: {}, title: sc.title, back: sc.back, bab: sc.bab };
+  setView(`<div class="ab${sc.bab ? ' ab-' + sc.bab : ''} qz-wrap"><header class="page-head head-row"><div><h1>📝 اختبار: ${esc(sc.title)}</h1><p class="na sm" style="margin:.2rem 0 0">${QUIZ_NOTE}</p></div>
+      <div class="cta-row" style="margin:0"><button class="btn ghost sm" data-act="qz-shuffle">🔀 ترتيب عشوائي</button><a class="btn ghost sm" href="${sc.back}">العودة إلى النص</a></div></header>
+    <div class="qz-top"><div class="progress"><span id="qzProg"></span></div><span class="na" id="qzCount"></span></div>
+    <div id="qzBox"></div></div>`);
+  showQuiz();
+}
+function quizScore() { return QZ.order.reduce((s, i) => s + (QZ.picks[i] === QZ.list[i].answer ? 1 : 0), 0); }
+function showQuiz() {
+  const box = $('#qzBox'); if (!box) return;
+  const n = QZ.order.length, answered = QZ.order.filter(i => i in QZ.picks).length;
+  $('#qzProg').style.width = (answered / n * 100) + '%';
+  $('#qzCount').textContent = QZ.i < n ? `السؤال ${fmt(QZ.i + 1)} من ${fmt(n)} · الصحيح ${fmt(quizScore())}` : '';
+  if (QZ.i >= n) {
+    const s = quizScore(), wrong = QZ.order.filter(i => QZ.picks[i] !== QZ.list[i].answer), pct = Math.round(s / n * 100);
+    const best = quizBest(), b = best[QZ.key]; if (!b || s / n > b.s / b.n) { best[QZ.key] = { s, n }; store.set('quizBest', best); }
+    box.innerHTML = `<div class="qz-card qz-end"><div class="qz-ring" style="--p:${pct}"><b>${fmt(pct)}٪</b><span>${fmt(s)} / ${fmt(n)}</span></div>
+      <h2>${pct >= 80 ? 'أحسنت! فهمٌ متين' : pct >= 50 ? 'جيد — راجع ما أخطأت فيه' : 'تحتاج إلى مراجعة النص'}</h2>
+      <div class="cta-row" style="justify-content:center">${wrong.length ? `<button class="btn" data-act="qz-wrong">🔁 أعد الأسئلة الخاطئة (${fmt(wrong.length)})</button>` : ''}<button class="btn ghost" data-act="qz-restart">↺ أعد الاختبار</button><a class="btn ghost" href="${QZ.back}">📖 راجع النص</a></div>
+      ${wrong.length ? `<h3 class="sec-title">مراجعة الأخطاء</h3><ol class="qz-review">${wrong.map(i => { const q = QZ.list[i]; return `<li><b>${esc(q.q)}</b><div class="ok">✓ ${esc(q.options[q.answer])}</div><div class="nass qz-quote">${esc(q.quote)}</div></li>`; }).join('')}</ol>` : ''}</div>`;
+    return;
+  }
+  const idx = QZ.order[QZ.i], q = QZ.list[idx], picked = QZ.picks[idx], done = picked !== undefined;
+  const h = has(q.heading_id) ? Api.getHeadingById(q.heading_id) : null, t = Api.getTopicById(q.topic_id);
+  box.innerHTML = `<div class="qz-card${done ? (picked === q.answer ? ' is-ok' : ' is-bad') : ''}">
+    <div class="qz-meta">${t ? esc(t.title) : ''}${h ? ' › ' + esc(h.title) : ''}</div>
+    <h2 class="qz-q">${esc(q.q)}</h2>
+    <div class="qz-opts">${q.options.map((o, k) => `<button class="qz-opt${done && k === q.answer ? ' ok' : ''}${done && k === picked && k !== q.answer ? ' bad' : ''}" data-act="qz-pick" data-k="${k}"${done ? ' disabled' : ''}><i>${LETTERS[k]}</i><span>${esc(o)}</span>${done && k === q.answer ? '<em>✓</em>' : done && k === picked ? '<em>✗</em>' : ''}</button>`).join('')}</div>
+    ${done ? `<div class="qz-exp"><b>${picked === q.answer ? '✓ إجابة صحيحة' : '✗ الإجابة الصحيحة: ' + esc(q.options[q.answer])}</b><p>${esc(q.explain)}</p>
+      <div class="qz-src"><span>📖 الدليل من نص الكتاب</span><div class="nass qz-quote">${esc(q.quote)}</div><a href="${h ? headLink(h) : '#/topic/' + enc(q.topic_id)}">افتح الموضع في الكتاب ←</a></div></div>`
+      : `<button class="btn ghost sm qz-hint" data-act="qz-hint">💡 تلميح: أين في الكتاب؟</button><div class="na sm" id="qzHint" hidden>ابحث في: ${h ? esc(h.title) : t ? esc(t.title) : ''}</div>`}
+    <div class="qz-nav"><button class="btn ghost sm" data-act="qz-prev"${QZ.i ? '' : ' disabled'}>→ السابق</button><button class="btn sm" data-act="qz-next">${QZ.i === QZ.order.length - 1 ? 'إنهاء الاختبار' : 'التالي ←'}</button></div></div>`;
 }
 
 /* ======================= TEXT / EPUB IMPORTER =======================
@@ -3159,6 +3274,20 @@ const SLIDE_THEMES = [
 const themeOk = k => SLIDE_THEMES.some(t => t.key === k);
 function slideTheme() { const q = parseHash().params.get('th'); if (themeOk(q)) return q; const v = store.get('slideTheme', 'classic'); return themeOk(v) ? v : 'classic'; }
 function slideHtml(deck, s, k, th) { return slideHtmlRaw(deck, s, k).replace('<div class="slide', `<div class="slide th-${th || slideTheme()}`); }
+/* يصغّر الخط تدريجياً حتى يتسع النص لصندوقه (لا يُقصّ نص الكتاب). الحجم يُحفظ بوحدة cqh فيبقى صحيحاً عند ملء الشاشة. */
+const FIT_BOX = '.q-card,.sum-cards,.rc-grid,.ag-list,.rv-list,.pcards,.dl-grid,.src-grid,.map-grid,.sum-lead,.t-section p,.t-sub';
+const FIT_LEAF = '.q,li,p,blockquote,b,small,.sum-lead';
+function fitSlide(stage) {
+  const sl = stage && stage.querySelector('.slide'); if (!sl) return;
+  const cqh = stage.clientHeight / 100; if (!cqh) return;
+  const shrink = el => { const px = parseFloat(getComputedStyle(el).fontSize); el.style.fontSize = (px * 0.93 / cqh).toFixed(3) + 'cqh'; };
+  sl.querySelectorAll(FIT_BOX).forEach(box => {
+    const leaves = box.matches('.sum-lead,.t-section p,.t-sub') ? [box] : [...box.querySelectorAll(FIT_LEAF)];
+    const over = () => box.scrollHeight > box.clientHeight + 1 || leaves.some(l => l.scrollHeight > l.clientHeight + 1);
+    for (let n = 0; n < 16 && over(); n++) leaves.forEach(shrink);
+  });
+  sl.querySelectorAll('.s-title,.ag-list b,.s-path').forEach(t => { for (let n = 0; n < 8 && (t.scrollWidth > t.clientWidth + 1 || t.scrollHeight > t.clientHeight + 2); n++) shrink(t); });
+}
 function slideHtmlRaw(deck, s, k) {
   const N = deck.slides.length, ab = deck.bab ? ' ab-' + deck.bab : '';
   const foot = `<div class="s-foot"><span>${esc(deck.title)}</span><span>${deck.mode === 'ai' ? '✨ ملخص آلي · ' : ''}${fmt(k + 1)} / ${fmt(N)}</span></div><div class="s-bar" style="--p:${((k + 1) / N * 100).toFixed(1)}%"><i></i></div>`;
@@ -3280,6 +3409,7 @@ function showSlide() {
   const n = deck.slides.length;
   deckState.i = Math.max(0, Math.min(n - 1, deckState.i));
   $('#stage').innerHTML = slideHtml(deck, deck.slides[deckState.i], deckState.i);
+  fitSlide($('#stage'));
   const label = `${fmt(deckState.i + 1)} / ${fmt(n)}`;
   $('#dkCount').textContent = label; $('#dkCount2').textContent = label;
   $('#dkProg').style.width = ((deckState.i + 1) / n * 100) + '%';
@@ -3327,7 +3457,7 @@ function deckStandaloneHtml(deck) {
 <style>${css}
 :root{padding:0}body{display:grid;place-items:center;min-height:100vh;margin:0;background:#0B110F}.sa{width:min(100vw,calc(100vh * 16 / 9));border:0;border-radius:0}.c-mini{pointer-events:none}
 @media print{body{background:#fff;display:block}.sa{display:block!important;width:100%;break-after:page}@page{size:A4 landscape;margin:0}}</style></head>
-<body>${slides}<script>let i=0;const s=[...document.querySelectorAll('.sa')];const go=n=>{i=Math.max(0,Math.min(s.length-1,n));s.forEach((e,k)=>e.hidden=k!==i)};addEventListener('keydown',e=>{if(['ArrowLeft','PageDown',' '].includes(e.key))go(i+1);if(['ArrowRight','PageUp'].includes(e.key))go(i-1)});addEventListener('click',e=>go(e.clientX<innerWidth/2?i+1:i-1));<\/script></body></html>`;
+<body>${slides}<script>const FIT_BOX=${JSON.stringify(FIT_BOX)},FIT_LEAF=${JSON.stringify(FIT_LEAF)};${fitSlide.toString()}let i=0;const s=[...document.querySelectorAll('.sa')];const go=n=>{i=Math.max(0,Math.min(s.length-1,n));s.forEach((e,k)=>e.hidden=k!==i);fitSlide(s[i])};addEventListener('load',()=>go(0));addEventListener('keydown',e=>{if(['ArrowLeft','PageDown',' '].includes(e.key))go(i+1);if(['ArrowRight','PageUp'].includes(e.key))go(i-1)});addEventListener('click',e=>go(e.clientX<innerWidth/2?i+1:i-1));<\/script></body></html>`;
 }
 async function saveFile(filename, data) {
   if (!CAP.downloads) return false;
@@ -3355,6 +3485,13 @@ document.addEventListener('click', async e => {
     const id = el.dataset.id, shut = el.dataset.def === '1';
     treeState.ov.set(id, !shut); drawTree();
   }
+  else if (act === 'qz-pick') { const idx = QZ.order[QZ.i]; if (!(idx in QZ.picks)) { QZ.picks[idx] = +el.dataset.k; showQuiz(); } }
+  else if (act === 'qz-next') { QZ.i++; showQuiz(); $('#qzBox')?.scrollIntoView({ block: 'nearest' }); }
+  else if (act === 'qz-prev') { QZ.i = Math.max(0, QZ.i - 1); showQuiz(); }
+  else if (act === 'qz-hint') { const x = $('#qzHint'); if (x) x.hidden = false; }
+  else if (act === 'qz-restart') { QZ.picks = {}; QZ.i = 0; QZ.order = QZ.list.map((_, i) => i); showQuiz(); }
+  else if (act === 'qz-wrong') { QZ.order = QZ.order.filter(i => QZ.picks[i] !== QZ.list[i].answer); QZ.order.forEach(i => delete QZ.picks[i]); QZ.i = 0; showQuiz(); }
+  else if (act === 'qz-shuffle') { const o = QZ.list.map((_, i) => i); for (let i = o.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [o[i], o[j]] = [o[j], o[i]]; } QZ.order = o; QZ.picks = {}; QZ.i = 0; showQuiz(); toast('تم ترتيب الأسئلة عشوائياً'); }
   else if (act === 'set-theme') {
     if (e.target.closest('a')) return;
     store.set('slideTheme', el.dataset.th); toast('النمط: ' + SLIDE_THEMES.find(t => t.key === el.dataset.th).name);
@@ -3392,6 +3529,7 @@ document.addEventListener('click', async e => {
   else if (act === 'dk-print') {
     const d = curDeck(), pd = $('.print-deck'); if (!d || !pd) return;
     pd.innerHTML = d.slides.map((s, k) => `<div class="stage">${slideHtml(d, s, k)}</div>`).join('');
+    pd.style.cssText = 'display:block;position:absolute;left:-12000px;top:0;width:1000px'; pd.querySelectorAll('.stage').forEach(fitSlide); pd.style.cssText = '';
     const pg = document.createElement('style'); pg.id = 'pgLandscape'; pg.textContent = '@page{size:A4 landscape;margin:0}';
     document.head.appendChild(pg); document.body.classList.add('print-deck-mode');
     const done = () => { pg.remove(); pd.innerHTML = ''; document.body.classList.remove('print-deck-mode'); window.removeEventListener('afterprint', done); };
@@ -3417,6 +3555,11 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Enter' && e.target.classList && (e.target.classList.contains('thumb') || e.target.classList.contains('trn') || e.target.classList.contains('th-card'))) { e.target.click(); return; }
+  if (location.hash.startsWith('#/quiz/') && $('#qzBox') && !(e.target.closest && e.target.closest('input,textarea,select'))) {
+    const k = ['1', '2', '3', '4'].indexOf(e.key); const idx = QZ.order[QZ.i];
+    if (k > -1 && idx !== undefined && !(idx in QZ.picks)) { QZ.picks[idx] = k; showQuiz(); return; }
+    if (e.key === 'Enter' && !(e.target.closest && e.target.closest('a,button'))) { QZ.i++; showQuiz(); return; }
+  }
   if (location.hash.startsWith('#/cards/') && !(e.target.closest && e.target.closest('input,textarea,select,dialog'))) {
     if ([' ', 'Enter'].includes(e.key) && !(e.target.closest && e.target.closest('a,button'))) { e.preventDefault(); CARDS.flip = !CARDS.flip; showCard(); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); cardMove(1); } else if (e.key === 'ArrowRight') { e.preventDefault(); cardMove(-1); }
@@ -3483,6 +3626,7 @@ function viewThemeGallery(key) {
     <div class="cta-row" style="margin:0">${key === cur ? '<span class="pill">✓ النمط الحالي</span>' : `<button class="btn sm" data-act="set-theme" data-th="${key}">اعتماد هذا النمط</button>`}<a class="btn ghost sm" href="#/settings">كل الأنماط</a></div></header>
     <div class="chips" style="margin-bottom:1rem">${SLIDE_THEMES.map(t => `<a class="chip${t.key === key ? ' on' : ''}" href="#/themes/${t.key}">${esc(t.name)}</a>`).join('')}</div>
     <div class="gal">${galleryItems().map(x => `<figure><div class="stage">${slideHtml(x.deck, x.s, x.k, key)}</div><figcaption>${esc(x.cap)}</figcaption></figure>`).join('')}</div>`);
+  document.querySelectorAll('.gal .stage').forEach(fitSlide);
 }
 function viewSettings() {
   currentNav = 'settings'; crumbs([HOME, { label: 'الإعدادات' }]);
@@ -3495,6 +3639,7 @@ function viewSettings() {
     ${blk('🎓 العرض الافتراضي للشرائح', `<div class="modes">
       <label class="mode"><input type="radio" name="deckMode" value="dars"${defMode !== 'nas' ? ' checked' : ''}><div><b>🎓 وضع الدرس</b><span>محاور وخلاصات وأدلة ومسائل ومراجعة، والنص الكامل في ملاحظات المقدّم.</span></div></label>
       <label class="mode"><input type="radio" name="deckMode" value="nas"${defMode === 'nas' ? ' checked' : ''}><div><b>📖 النص الكامل</b><span>نص الكتاب كما هو مقسّماً على الشرائح.</span></div></label></div>`)}`);
+  document.querySelectorAll('.th-prev .stage').forEach(fitSlide);
 }
 
 /* ======================= SIDEBAR / THEME ======================= */
@@ -3506,6 +3651,7 @@ function renderSidebar() {
     <div class="nav-sep"></div>
     <a href="#/search" data-nav="search">البحث</a>
     <a href="#/tree" data-nav="tree">🌳 التشجير</a>
+    <a href="#/quiz" data-nav="quiz">📝 الاختبارات</a>
     <a href="#/studio" data-nav="studio">🎞️ استوديو العروض</a>
     <a href="#/edit" data-nav="edit">➕ إضافة مسألة</a>
     <a href="#/refs" data-nav="refs">المراجع</a>
@@ -3562,6 +3708,7 @@ function render() {
       case 'cards': viewCards(a, parts[2]); break;
       case 'settings': viewSettings(); break;
       case 'themes': viewThemeGallery(a); break;
+      case 'quiz': viewQuiz(a, parts[2]); break;
       default: viewNotFound();
     }
   } catch (e) { log.error(e); setView(emptyState('تعذّر عرض هذه الصفحة.', '<a href="#/">العودة إلى الرئيسية</a>')); }

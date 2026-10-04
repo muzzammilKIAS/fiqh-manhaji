@@ -79,3 +79,13 @@ Full template: `SCHEMA_EXAMPLE` in index.html. `validate()` reports broken relat
 
 ## Deploy
 - GitHub Pages from `main` (repo public): https://muzzammilkias.github.io/fiqh-manhaji/ — the app loads `data/fiqh-data.json` automatically. Push to `main` redeploys (~1 min).
+
+## Quizzes (📝 #/quiz)
+- `data/quizzes.json` → embedded as `quizzes` by `build_from_shamela.py`: `{quiz_id, topic_id, heading_id, q, options[4], answer, explain, quote, difficulty:'medium', source:'ai_from_source'}`. 477 questions, 4–12 per topic.
+- Pipeline: agents write questions from `sections.json` only → `python3 scripts/check_quizzes.py sections.json quiz/*.json --merge data/quizzes.json`. Rejects: quote not an exact substring of the book text; correct answer + explanation with >15% words not in the source; stems mostly ungrounded (question-framing words like «بحسب النص/فماذا يفعل» are ignored). Tests re-verify every quote.
+- Routes: `#/quiz` (index + best scores), `#/quiz/{topic|bab|section}/:id`. Keys 1–4 answer, Enter next. Always labelled as machine-generated with the verbatim proof under each answer.
+
+## Slide text fitting
+- `fitSlide(stage)` shrinks fonts (in `cqh`, so fullscreen stays right) until every text box fits — book text is never clipped. Called for the main stage, galleries/settings previews, print (offscreen pass) and the HTML export; thumbnails are not fitted.
+- Do not use `font-size … !important` in slide CSS (it blocks fitting); raise selector specificity instead. Titles use line-height ≥1.6 so Amiri marks are not cut.
+- Check: `npm start`, open http://localhost:8080/tests/overflow.html — renders every slide of every topic in all 5 themes and lists clipped elements (expect all empty).

@@ -93,6 +93,23 @@ const text = D => D.getElementById('view').textContent.replace(/\s+/g, ' ');
       DB.raw.headings.slice(0, 80).forEach(h => { const r = buildLessonDeck('section', h.title, [Api.getTopicById(h.topic_id)], 'x', h); if (!r.slides.every(ok)) bad.push(h.heading_id); });
       return { bad, max: Math.max(...counts) }; })()`);
     ok(res.bad.length === 0, 'lesson (PdP) decks well-formed, dalil verbatim; longest ' + res.max + ' slides' + (res.bad.length ? ': ' + res.bad.slice(0, 5).join() : '')); }
+  if (d.quizzes && d.quizzes.length) {
+    const qb = w.eval(`(() => { const ws = t => norm(t).replace(/\\s+/g, ' ').trim(), bad = [];
+      DB.raw.quizzes.forEach(q => { const t = Api.getTopicById(q.topic_id); if (!t) { bad.push(q.quiz_id + ':topic'); return; }
+        const src = ws(topicIssues(t).map(i => i.original_text).join(' '));
+        if (!src.includes(ws(q.quote))) bad.push(q.quiz_id + ':quote');
+        if (!Array.isArray(q.options) || q.options.length !== 4 || new Set(q.options).size !== 4 || !(q.answer >= 0 && q.answer <= 3)) bad.push(q.quiz_id + ':shape');
+        if (has(q.heading_id) && !Api.getHeadingById(q.heading_id)) bad.push(q.quiz_id + ':heading'); });
+      return bad; })()`);
+    ok(qb.length === 0, 'quizzes: ' + d.quizzes.length + ' questions, 4 options each, quote verbatim from the book' + (qb.length ? ': ' + qb.slice(0, 5).join() : ''));
+    const tq = d.quizzes[0].topic_id;
+    w.location.hash = '#/quiz/topic/' + tq; await wait(150);
+    const ans = w.eval('QZ.list[QZ.order[0]].answer'), wrongK = (ans + 1) % 4;
+    D.querySelector('.qz-opt[data-k="' + wrongK + '"]').click(); await wait(30);
+    ok(D.querySelector('.qz-opt.bad') && D.querySelector('.qz-opt.ok') && D.querySelector('.qz-src .qz-quote'), 'quiz: wrong pick marked, correct shown, explanation + verbatim quote');
+    w.location.hash = '#/quiz'; await wait(100);
+    ok(text(D).includes('الاختبارات') && D.querySelectorAll('.tcard').length > 0, 'quiz index renders');
+  }
   for (const h of ['#/slides/topic/t1_3?m=nas', '#/tree/topic/t1_3', '#/section/h20', '#/tree', '#/tree/bab/salah', '#/tree/topic/t1_3', '#/tree/section/h20', '#/cards/topic/t1_3', '#/cards/bab/zakah', '#/slides/section/h20', '#/search?q=' + encodeURIComponent('أقسام المياه')]) {
     w.location.hash = h; await wait(250);
     ok(text(D).length > 80 && !/تعذّر عرض/.test(text(D)), 'renders ' + h);
