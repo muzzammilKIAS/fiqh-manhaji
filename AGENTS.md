@@ -1,6 +1,6 @@
-# CLAUDE.md — موسوعة الفقه المنهجي – قسم العبادات
+# AGENTS.md — موسوعة الفقه المنهجي – قسم العبادات
 
-> `AGENTS.md` mirrors this file for other coding agents (Codex, etc.). Keep both in sync.
+> Mirror of `CLAUDE.md` for other coding agents (Codex, etc.). Keep both files identical in content; when you change one, update the other.
 
 Arabic RTL, database-driven encyclopedia for Shafi'i fiqh of worship (عبادات), with a content
 editor, TXT/EPUB importer and a NotebookLM-style slide studio.
@@ -46,10 +46,10 @@ Full template: `SCHEMA_EXAMPLE` in index.html. `validate()` reports broken relat
 - Slides: `buildExtractDeck()` splits each Shamela page into verbatim chunks (`chunkText()`; body and `— الحواشي —` footnotes via `splitFoot()` become separate slides) — `tests/data.test.cjs` checks every page survives unchanged. `slideHtml()` renders title/section/quote/points/sources slides in cq-units (fixed light palette so print/export match); per-bab accent comes from `.ab-<key>` (`--a`, `--a-deep`). Viewer = canvas + filmstrip; thumbs are `div role=button` (never nest `<button>` inside — the HTML parser would close the outer one).
 - Studio: `buildExtractDeck()` (verbatim, no AI), `buildAiDeck()` + `validateAiSlides()`
   (drops points whose `cite` is not a real issue id; non-verbatim quotes become points).
-- Claude-only features: `claude.use('sample')` (AI slides) and `claude.use('downloads')` exist
-  only when published as a claude.ai artifact. Elsewhere `CAP.*` is null and the UI hides them.
-  To enable AI slides outside claude.ai, add a small backend that calls the Anthropic API and
-  implement the same `sample.json(prompt)` contract.
+- claude.ai-only features: `window.claude.use('sample')` (AI slides) and `window.claude.use('downloads')`
+  exist only when the page is published as a claude.ai artifact. Elsewhere `CAP.*` is null and the UI
+  hides them. To enable AI slides elsewhere, add a small backend that calls an LLM API and implement
+  the same `sample.json(prompt)` contract.
 
 ## Conventions
 - UI text in Arabic; `dir="rtl"`; fonts Cairo (UI) + Amiri (sacred text).

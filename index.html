@@ -478,6 +478,63 @@ body.presenting{overflow:hidden}
 .pg a.stretch{position:absolute;inset:0;border-radius:20px}
 .pg .play{position:relative;z-index:2;margin-inline-start:auto;align-self:center;flex:none}
 
+/* ---------- home polish ---------- */
+body{line-height:1.75}
+:root{--bar:64px}
+.topbar{height:var(--bar);padding-inline:clamp(1rem,3vw,2rem);background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(14px)}
+.brand{gap:.7rem;letter-spacing:.01em}
+.brand svg{width:25px;height:25px}
+.shell{grid-template-columns:260px minmax(0,1fr)}
+main{padding-top:clamp(1.2rem,3vw,2rem)}
+.content,.crumbs{max-width:1080px}
+.nav a{transition:background .2s,color .2s,transform .2s}
+.nav a:hover{transform:translateX(-2px)}
+.hero2{min-height:360px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(2rem,6vw,4.25rem);border-radius:30px;background:radial-gradient(ellipse at 12% 5%,rgba(205,174,101,.2),transparent 38%),linear-gradient(130deg,#092A20 0%,#145A41 58%,#28785A 100%)}
+.hero2 .deco{inset-inline-end:0;width:min(42%,390px);height:auto;aspect-ratio:1;opacity:.8}
+.hero2 h1{font-size:clamp(3rem,7vw,5rem);letter-spacing:.01em}
+.hero2 .sub{margin:.35rem 0 .9rem}
+.hero2 .desc{max-width:590px;line-height:1.9}
+.hero2 .hs{width:min(100%,560px);padding:.35rem .4rem .35rem .55rem}
+.hero2 .hs input{height:48px}
+.hero2 .hs .btn{min-width:96px}
+.hero-ctas{gap:.65rem}
+.gbtn{transition:background .2s,transform .2s}
+.gbtn:hover{transform:translateY(-1px)}
+.h2{margin:2.35rem 0 1rem;font-size:1.3rem}
+.h2::before{content:"";width:4px;height:1.15em;border-radius:4px;background:var(--gold-line)}
+.babs2{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1rem}
+.bab2{min-height:245px;padding:1.25rem 1.4rem;border:1px solid rgba(255,255,255,.16);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.bab2:hover{transform:translateY(-4px);box-shadow:0 18px 38px -18px rgba(18,38,30,.38)}
+.bab2 .no{inset-inline-end:1.25rem;top:.4rem;font-size:5.7rem}
+.bab2 .ico{font-size:1.8rem}
+.bab2 h3{font-size:2.15rem}
+.bab2 p{max-width:34rem;line-height:1.7}
+.bab2 .meta{margin:.35rem 0 .8rem}
+.bab2 .meta span{padding:.2rem .8rem;background:rgba(255,255,255,.12)}
+.stats{gap:.75rem}
+.stats>div{padding:1rem;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow)}
+.stats dd{font-family:var(--nass);font-size:1.8rem;color:var(--emerald);font-weight:700}
+.card{transition:transform .2s var(--ease)}
+.card:hover{transform:translateY(-2px)}
+.bab2:focus-within{outline:3px solid var(--gold-line);outline-offset:3px}
+.bab2 .stretch:focus-visible{outline:0}
+.gbtn:focus-visible,.btn:focus-visible,.theme-btn:focus-visible{outline:3px solid var(--gold-line);outline-offset:3px}
+.btn:active,.gbtn:active,.theme-btn:active{transform:translateY(1px)}
+.hero2 .hs:focus-within{box-shadow:0 0 0 3px rgba(233,208,142,.7),0 10px 30px -12px rgba(0,0,0,.4)}
+.hero2 .hs input:focus-visible{outline:0}
+.bab2 .go{flex-wrap:wrap}
+.bab2 .go .gbtn{min-height:44px}
+.stats>div{min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:.15rem}
+.stats dt{line-height:1.5}
+@media (max-width:400px){
+  .brand{font-size:1.1rem}
+  .hero2{padding-inline:1rem}
+  .hero2 .hs{padding:.3rem}
+  .hero2 .hs .btn{min-width:68px;padding-inline:.8rem}
+  .hero-ctas .gbtn{font-size:.82rem}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
 /* المسألة: النص الأصلي والحواشي */
 .blk.foot{border:1px dashed var(--line);box-shadow:none;background:transparent}
 .blk.foot .nass{font-size:calc(1.08rem * var(--fs,1));line-height:2}
@@ -1048,6 +1105,17 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
   .hero-search,.search-main{flex-direction:column}
   .hero-search .btn,.search-main .btn{width:100%}
   .card .row .btn{margin-inline-start:0;width:100%}
+  main{padding:1rem .85rem 0}
+  .hero2{min-height:0;padding:1.65rem 1.15rem;border-radius:24px}
+  .hero2 h1{font-size:clamp(2.6rem,13vw,3.6rem)}
+  .hero2 .desc{font-size:.94rem;margin-bottom:1rem}
+  .hero2 .hs{flex-direction:row;border-radius:999px}
+  .hero2 .hs input{width:0;padding-inline:.75rem}
+  .hero2 .hs .btn{width:auto;min-width:76px}
+  .hero-ctas{width:100%}
+  .hero-ctas .gbtn{flex:1;justify-content:center;padding-inline:.65rem}
+  .h2{margin-top:1.8rem}
+  .bab2{min-height:220px}
 }
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 
