@@ -11,13 +11,13 @@ editor, TXT/EPUB importer and a NotebookLM-style slide studio.
   Incomplete reference → `بيانات المرجع غير مكتملة في قاعدة البيانات.`
 - Keep original text (📖 النص الأصلي) visually separate from explanation (💡 شرح وتوضيح).
 - Scope: only الطهارة، الصلاة، الزكاة، الصيام، الحج والعمرة. Shafi'i madhhab only.
-- Do not add the text of *al-Fiqh al-Manhaji* (copyrighted). Users import their own licensed text.
+- Text of *al-Fiqh al-Manhaji* (Dar al-Qalam, 1429H; Shamela id 6369): the project owner confirmed on 2026-10-04 that publication permission was obtained, so the ibadat data is committed and published with the site. Do not add other books or other parts of this book without the same confirmation; keep the source credited.
 - Demo/placeholder data must be bracketed and obviously fake: `[بيانات تجريبية – …]`.
 - Priorities: correctness > citation accuracy > data integrity > search > UX > speed > looks.
 
 ## Layout
 - `index.html` — the whole app (single file, sections marked `CSS / HTML / DATA / JAVASCRIPT`).
-- `data/fiqh-data.json` — **gitignored** (teks kitab berhak cipta kekal di mesin setempat); jana dengan `python3 scripts/build_from_shamela.py` (Shamela 4 + kitab id 6369 mesti ada di Mac). Repo hanya ada skema kosong. When served over http the app fetches it if the
+- `data/fiqh-data.json` — the published ibadat data (committed; permission confirmed, see above); regenerate with `python3 scripts/build_from_shamela.py` (Shamela 4 + kitab id 6369 mesti ada di Mac). When served over http the app fetches it if the
   embedded `<script id="fiqh-data">` block is empty (see `CONFIG.DATA_URL`).
 - `scripts/build_from_epub.py` — **lapuk**: OCR archive.org ~18% perkataan salah dan pemetaan halaman cetakan tersasar (hanya betul hal. 26–97). Guna build_from_shamela.py.
 - `tests/smoke.test.cjs` — jsdom smoke tests (`npm install && npm test`).
@@ -61,7 +61,7 @@ Full template: `SCHEMA_EXAMPLE` in index.html. `validate()` reports broken relat
 3. Optional backend (SQL/API) behind `FiqhApi`.
 
 ## Summaries (ملخص مصوغ) — grounded, never from memory
-- `data/summaries.json` (gitignored with the book text) → embedded as `summaries` by `build_from_shamela.py`: `{summary_id, level: heading|topic, target_id, ringkas, masail[], source:'ai_from_source', ungrounded_ratio}`.
+- `data/summaries.json` (committed) → embedded as `summaries` by `build_from_shamela.py`: `{summary_id, level: heading|topic, target_id, ringkas, masail[], source:'ai_from_source', ungrounded_ratio}`.
 - Pipeline: `node scripts/dump_sections.cjs` → agents write `ringkas`/`masail` using ONLY the section text → `python3 scripts/check_summaries.py sections.json out/*.json --strict 0.10 --merge data/summaries.json`. The checker rejects any summary where >10% of its words do not occur in the source section (lexical grounding only: **spot-check rulings by eye** — it cannot catch a reversed ruling).
 - UI always labels them (`AI_NOTE`, tag «ملخص آلي»). Dalil shown in summaries/tasyjir is NOT generated: `extractDalil()` copies verses (﴿ ﴾ + ref) and «روى/رواه/أخرجه» lines verbatim; tests assert they occur in the book text.
 - Tasyjir detailed view (`#/tree/topic|section/:id`, toggle on bab/overview) = per node: ringkas · first dalil · up to 3 masail.
@@ -76,3 +76,6 @@ Full template: `SCHEMA_EXAMPLE` in index.html. `validate()` reports broken relat
 - Themes differ in **layout**, not just colour («تخطيطات الأنماط» block): mushaf = book (centred rubric titles, agenda as a dotted-leader فهرس, boxless text with a margin rule); lail = stage (glowing timeline agenda, single big centred dalil, chat-bubble review); asri = bento/split (coloured title column beside text/dalil, big-number tiles; first tile spans by item count via `.n<count>` classes); zakhrafa = symmetry (zig-zag agenda on a central axis, arch-topped tiles, verse in a cartouche). Theme selectors that target the slide's own type must be compound (`.th-lail.k-foot`, not `.th-lail .k-foot`). Gallery of every slide type per theme: `#/themes/:key`.
 - Theme colour CSS («أنماط الشرائح» block) overrides tokens (`--sbg --sink --smut --sline --card --sa --sd --sg`) plus title/section/summary backgrounds. Every theme must keep the three-way distinction: verbatim text · summary (own colour, `--mlk` font) · dalil.
 - `#/settings` also sets the default deck mode (`store('deckMode')`: dars | nas); the viewer toggle passes `?m=dars|nas` explicitly.
+
+## Deploy
+- GitHub Pages from `main` (repo public): https://muzzammilkias.github.io/fiqh-manhaji/ — the app loads `data/fiqh-data.json` automatically. Push to `main` redeploys (~1 min).
