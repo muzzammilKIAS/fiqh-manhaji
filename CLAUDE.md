@@ -28,6 +28,7 @@ editor, TXT/EPUB importer and a NotebookLM-style slide studio.
 ## Data model (ids are strings, relations by id)
 books → volumes → chapters (`key`: taharah|salah|zakah|siyam|hajj) → sections → topics → issues
 → evidences (type quran|hadith|other) / references (book_id, volume_id, page, url…).
+`headings` = sub-topic hierarchy taken from the book's own TOC (Shamela title tree): `{heading_id, topic_id, parent_id, level 1..3, title, issue_id (page where it starts), offset (char index of its line inside that page's text), located}`. A heading's text = the verbatim slice from its offset to the next heading's offset (`topicBlocks()`); footnotes follow the segment that cites their number. Never invent headings — they come only from `build_from_shamela.py` (TOC depth 5) or a user's import.
 Full template: `SCHEMA_EXAMPLE` in index.html. `validate()` reports broken relations.
 
 ## Architecture (inside index.html)
@@ -37,9 +38,10 @@ Full template: `SCHEMA_EXAMPLE` in index.html. `validate()` reports broken relat
 - Search: `norm()` (أ/إ/آ→ا، ى→ي، ة→ه، strips tashkeel), `runSearch()`, `highlight()`.
 - Router: hash routes in `render()` — `#/`, `#/bab/:key`, `#/topic/:id`, `#/issue/:id`,
   `#/search?q=`, `#/refs`, `#/favs`, `#/recent`, `#/about`, `#/data`, `#/edit[/:id]`,
-  `#/studio`, `#/deck/:id`.
+  `#/section/:headingId`, `#/tree[/bab|topic|section/:id]` (tasyjir SVG, collapsible), `#/cards/{bab|topic|section}/:id` (flashcards: title → verbatim text), `#/studio`, `#/deck/:id`, `#/slides/{section|bab|topic|issue}/:id[?s=N]` (temporary deck, nothing saved until "حفظ في عروضي"). "ملخص" blocks show TOC structure + verbatim excerpts, plus grounded summaries when present (see Summaries).
 - Storage: user data + decks in IndexedDB (`idb`), small prefs in localStorage (`store`).
 - Importer: `parseBookText()`, `extractPage()`, `epubToText()` (JSZip from cdnjs).
+- Slides: `buildExtractDeck()` splits each Shamela page into verbatim chunks (`chunkText()`; body and `— الحواشي —` footnotes via `splitFoot()` become separate slides) — `tests/data.test.cjs` checks every page survives unchanged. `slideHtml()` renders title/section/quote/points/sources slides in cq-units (fixed light palette so print/export match); per-bab accent comes from `.ab-<key>` (`--a`, `--a-deep`). Viewer = canvas + filmstrip; thumbs are `div role=button` (never nest `<button>` inside — the HTML parser would close the outer one).
 - Studio: `buildExtractDeck()` (verbatim, no AI), `buildAiDeck()` + `validateAiSlides()`
   (drops points whose `cite` is not a real issue id; non-verbatim quotes become points).
 - Claude-only features: `claude.use('sample')` (AI slides) and `claude.use('downloads')` exist
@@ -57,3 +59,20 @@ Full template: `SCHEMA_EXAMPLE` in index.html. `validate()` reports broken relat
 1. Split into `/css/style.css`, `/js/data.js`, `/js/app.js`, `/js/search.js` (brief §37) and update tests.
 2. "اسأل مصادرك": grounded Q&A chat over selected issues with numbered citations.
 3. Optional backend (SQL/API) behind `FiqhApi`.
+
+## Summaries (ملخص مصوغ) — grounded, never from memory
+- `data/summaries.json` (gitignored with the book text) → embedded as `summaries` by `build_from_shamela.py`: `{summary_id, level: heading|topic, target_id, ringkas, masail[], source:'ai_from_source', ungrounded_ratio}`.
+- Pipeline: `node scripts/dump_sections.cjs` → agents write `ringkas`/`masail` using ONLY the section text → `python3 scripts/check_summaries.py sections.json out/*.json --strict 0.10 --merge data/summaries.json`. The checker rejects any summary where >10% of its words do not occur in the source section (lexical grounding only: **spot-check rulings by eye** — it cannot catch a reversed ruling).
+- UI always labels them (`AI_NOTE`, tag «ملخص آلي»). Dalil shown in summaries/tasyjir is NOT generated: `extractDalil()` copies verses (﴿ ﴾ + ref) and «روى/رواه/أخرجه» lines verbatim; tests assert they occur in the book text.
+- Tasyjir detailed view (`#/tree/topic|section/:id`, toggle on bab/overview) = per node: ringkas · first dalil · up to 3 masail.
+
+## Slide flow (PdP)
+- `#/slides/{bab|topic|section}/:id` opens **وضع الدرس** by default (`buildLessonDeck()`); `?m=nas` = full verbatim text deck (`buildExtractDeck()`); issue decks are always verbatim. Studio has the same «🎓 درس» option.
+- Lesson flow: title → agenda (محاور) → overview + أهم المسائل → per unit (level-1 heading): divider (ringkas) → المسائل → الأدلة (verbatim `extractDalil`, ≤4) → تفصيل (sub-headings) → خلاصة الدرس → أسئلة المراجعة (template questions built from heading titles only) → sources. Full unit text sits in presenter notes (key **N**). Anything taken from `summaries` is tagged «ملخص آلي». Summary slides (`t-summary`, `t-recap`) use their own honey-gold palette and `--mlk` font (Amiri → Lotus fallback) so they never look like verbatim text (cream) or dalil (green). The same applies inside `?m=nas` decks and Studio AI decks (`points` slides flagged `mlk` → class `t-mlk`).
+- Lists are split with `evenChunks()` (no 6+1 orphan slides); full mode skips bare heading-line blocks (`isBareTitle`) and merges short tail chunks in `chunkText()`.
+
+## Slide themes (⚙️ #/settings)
+- `SLIDE_THEMES` = classic · mushaf (مخطوطة) · lail (ليلي) · asri (عصري) · zakhrafa (زخرفة); chosen in `#/settings` (live previews) or the 🎨 picker in the deck viewer; stored as `store('slideTheme')`, overridable per link with `?th=`. `slideHtml(deck, s, k, th)` adds `th-<key>` to every slide (stage, thumbs, print, HTML export).
+- Themes differ in **layout**, not just colour («تخطيطات الأنماط» block): mushaf = book (centred rubric titles, agenda as a dotted-leader فهرس, boxless text with a margin rule); lail = stage (glowing timeline agenda, single big centred dalil, chat-bubble review); asri = bento/split (coloured title column beside text/dalil, big-number tiles; first tile spans by item count via `.n<count>` classes); zakhrafa = symmetry (zig-zag agenda on a central axis, arch-topped tiles, verse in a cartouche). Theme selectors that target the slide's own type must be compound (`.th-lail.k-foot`, not `.th-lail .k-foot`). Gallery of every slide type per theme: `#/themes/:key`.
+- Theme colour CSS («أنماط الشرائح» block) overrides tokens (`--sbg --sink --smut --sline --card --sa --sd --sg`) plus title/section/summary backgrounds. Every theme must keep the three-way distinction: verbatim text · summary (own colour, `--mlk` font) · dalil.
+- `#/settings` also sets the default deck mode (`store('deckMode')`: dars | nas); the viewer toggle passes `?m=dars|nas` explicitly.

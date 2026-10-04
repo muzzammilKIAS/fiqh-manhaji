@@ -37,6 +37,34 @@ def parse_toc(text):
                           'id': int(m[3]), 'page_id': int(m[4].translate(AR))})
     return nodes
 
+def nrm(t):
+    """Normalisasi untuk memadankan tajuk fihrist dengan baris dalam teks halaman (tiada tashkil/tanda baca)."""
+    t = re.sub(r'[\u064B-\u0652\u0670\u0640]', '', t)
+    t = re.sub(r'[أإآٱ]', 'ا', t).replace('ة', 'ه').replace('ى', 'ي')
+    t = re.sub(r'[^\w\s]|_', ' ', t)
+    return ' '.join(t.split())
+
+ORD = r'(?:اولا|ثانيا|ثالثا|رابعا|خامسا|سادسا|سابعا|ثامنا|تاسعا|عاشرا|الاول|الثاني|الثالث|الرابع|الخامس|السادس|السابع|الثامن|التاسع|العاشر|\d+)'
+def strip_ord(n):
+    """يحذف ترقيم العنوان في أول السطر: «أولاً ـ »، «١ـ »، «ثانيا»."""
+    return re.sub(r'^' + ORD + r'\s+', '', n).strip()
+
+def locate(body, title, start_line):
+    """(offset aksara, indeks baris) bagi baris tajuk dalam body. Urutan: sama tepat → sama selepas buang nombor tertib →
+    awalan → mengandungi (baris pendek sahaja). None jika tiada."""
+    lines, pos, tn = body.split('\n'), 0, nrm(title)
+    offs = []
+    for l in lines: offs.append(pos); pos += len(l) + 1
+    if not tn: return None
+    tests = [lambda ln: ln == tn,
+             lambda ln: strip_ord(ln) == tn,
+             lambda ln: ln.startswith(tn) or strip_ord(ln).startswith(tn),
+             lambda ln: tn in ln and len(ln) < len(tn) + 30]
+    for test in tests:
+        for i in range(start_line, len(lines)):
+            if test(nrm(lines[i])): return offs[i], i
+    return None
+
 def label(pp):
     """'1/ 32' -> (1, '32'); '2/ 5' -> (2, '5')."""
     m = re.match(r'^\s*(\d+)\s*/\s*(\d+)', pp.translate(AR))
@@ -44,7 +72,7 @@ def label(pp):
 
 def main():
     s = Shm()
-    toc = parse_toc(s.call('shamela_get_toc', book_id=BOOK, depth=3))
+    toc = parse_toc(s.call('shamela_get_toc', book_id=BOOK, depth=5))
     pages, nxt = {}, 1
     while nxt and nxt <= LAST_PAGE_ID:
         sc = s.rpc('tools/call', {'name': 'shamela_get_pages_range',
@@ -63,6 +91,8 @@ def main():
                      {'volume_id': 'v2', 'book_id': 'b1', 'number': 2, 'title': 'الجزء الثاني'}],
          'chapters': [], 'sections': [], 'topics': [], 'issues': [], 'evidences': [], 'references': []}
     empty = []
+    d['headings'] = []
+    pid2iid = {}
     for ci, (key, ctitle, a, b, mode) in enumerate(CHAPTERS, 1):
         cid = f'c{ci}'
         if mode == 'sib':
@@ -92,6 +122,7 @@ def main():
                 if p.get('foot', '').strip(): text += '\n\n— الحواشي —\n' + p['foot'].strip()
                 if not text: empty.append(f'{vol}/{pg}'); continue
                 iid, prid = f'v{vol}p{pg}', f'r_v{vol}p{pg}'
+                pid2iid[pid] = iid
                 if any(i['issue_id'] == iid for i in d['issues'][-3:]): continue
                 d['references'].append({'reference_id': prid, 'book_id': 'b1', 'volume_id': f'v{vol}', 'chapter_title': ctitle,
                                         'section_title': t['title'], 'page': pg, 'shamela_page_id': pid, 'source_type': 'book'})
@@ -99,10 +130,51 @@ def main():
                 d['issues'].append({'issue_id': iid, 'topic_id': tid, 'title': f'{t["title"]} — ص {pg}: {lead}…',
                                     'original_text': text, 'evidence_ids': [], 'reference_ids': [prid], 'related_issue_ids': [],
                                     'volume_id': f'v{vol}', 'page': pg, 'order': order, 'keywords': [ctitle, t['title']]})
+            # ---- tajuk kecil (sub-topik, sub-sub-topik) daripada fihrist Shamela, dalam topik ini
+            limit = tops[ti + 1]['id'] if ti + 1 < len(tops) else b
+            sub = [n for n in toc if t['id'] < n['id'] < limit and n['depth'] > t['depth']]
+            stack, last_page, last_line = [], None, 0
+            for hi_, n in enumerate(sub, 1):
+                while stack and stack[-1][0] >= n['depth']: stack.pop()
+                parent = stack[-1][1] if stack else None
+                hid = f'h{n["id"]}'
+                pgid = n['page_id']
+                body = pages[pgid]['body'].strip() if pgid in pages else ''
+                if pgid != last_page: last_line = 0
+                loc = locate(body, n['title'], last_line)
+                if loc: last_line = loc[1]
+                off = loc[0] if loc else (d['headings'][-1]['offset'] if d['headings'] and d['headings'][-1]['issue_id'] == pid2iid.get(pgid) else 0)
+                vol_n, pg_n = label(pages[pgid]['printed_page']) if pgid in pages else (None, '')
+                d['headings'].append({'heading_id': hid, 'topic_id': tid, 'parent_id': parent, 'level': n['depth'] - t['depth'],
+                                      'title': n['title'], 'order': hi_, 'shamela_title_id': n['id'],
+                                      'issue_id': pid2iid.get(pgid), 'offset': off, 'located': bool(loc),
+                                      'volume_id': f'v{vol_n}' if vol_n else None, 'page': pg_n})
+                last_page = pgid
+                stack.append((n['depth'], hid))
+    # kata kunci carian: tajuk kecil yang bermula pada halaman, dan tajuk yang sedang berjalan pada awal halaman
+    by_issue = {}
+    for h in d['headings']:
+        if h['issue_id']: by_issue.setdefault(h['issue_id'], []).append(h)
+    for t_ in d['topics']:
+        cur = None
+        for i in (x for x in d['issues'] if x['topic_id'] == t_['topic_id']):
+            hs = by_issue.get(i['issue_id'], [])
+            chain = []
+            if cur:
+                x = cur
+                while x: chain.append(x['title']); x = next((y for y in d['headings'] if y['heading_id'] == x['parent_id']), None)
+            for h in sorted(hs, key=lambda y: y['offset']): chain.append(h['title'])
+            i['keywords'] = list(dict.fromkeys(i['keywords'] + chain))
+            if hs: cur = sorted(hs, key=lambda y: y['offset'])[-1]
+    # ringkasan bertanggungjawab (data/summaries.json, dihasilkan oleh scripts/check_summaries.py --merge) disimpan jika ada
+    sp = os.path.join(os.path.dirname(os.path.abspath(OUT)), 'summaries.json')
+    d['summaries'] = json.load(open(sp, encoding='utf-8')).get('summaries', []) if os.path.exists(sp) else []
     d['meta']['empty_pages'] = empty
+    d['meta']['headings_unlocated'] = [h['heading_id'] for h in d['headings'] if not h['located']]
     os.makedirs(os.path.dirname(os.path.abspath(OUT)), exist_ok=True)
     json.dump(d, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     ids = [i['issue_id'] for i in d['issues']]
+    print(f"headings={len(d['headings'])} unlocated={len(d['meta']['headings_unlocated'])}")
     print(f"chapters={len(d['chapters'])} topics={len(d['topics'])} issues={len(ids)} unique={len(set(ids))} empty={empty}")
 
 if __name__ == '__main__':

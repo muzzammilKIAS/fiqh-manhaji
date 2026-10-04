@@ -120,6 +120,8 @@ main{min-width:0;padding:1.25rem clamp(1rem,4vw,3rem) 0}
 :root[data-theme="dark"] .btn{color:#0D1412}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#0D1412}}
 .btn:hover{filter:brightness(1.08)}
+:root[data-theme="dark"] .btn.ghost{color:var(--emerald)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.ghost{color:var(--emerald)}}
 .btn.ghost{background:transparent;color:var(--emerald);border-color:var(--line)}
 .btn.ghost:hover{background:var(--surface-2);filter:none}
 .btn.sm{height:36px;padding:0 .85rem;font-size:.9rem}
@@ -304,64 +306,687 @@ legend{padding:0 .5rem;font-weight:700;color:var(--emerald)}
 @keyframes sp{to{transform:rotate(360deg)}}
 .pill.ai{background:var(--gold-soft);color:var(--ink)}
 
-/* ---------- deck ---------- */
-.deck-wrap{max-width:1100px;margin-inline:auto}
-.deck-bar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:.4rem}
-.deck-bar h1{font-family:var(--nass);font-size:clamp(1.4rem,4vw,2rem);color:var(--emerald);margin-inline-end:auto}
-.stage{position:relative;width:100%;aspect-ratio:16/9;container-type:size;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface);box-shadow:0 12px 40px rgba(0,0,0,.08);-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.progress{height:3px;background:var(--line);border-radius:3px;margin:.7rem 0;overflow:hidden}
-.progress span{display:block;height:100%;width:0;background:var(--gold);transition:width .4s var(--ease)}
-.deck-ctl{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
-.deck-ctl .count{min-width:4.5rem;text-align:center;color:var(--muted);font-size:.92rem}
-.deck-ctl .spacer{flex:1}
+/* ---------- deck viewer (NotebookLM-style) ---------- */
+.deck-wrap{max-width:1240px;margin-inline:auto}
+.deck-top{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.9rem}
+.deck-top h1{font-family:var(--nass);font-size:clamp(1.4rem,3.6vw,2rem);color:var(--a-ink,var(--emerald));margin-inline-end:auto}
+.deck-warn{margin:0 0 .8rem;font-size:.9rem}
+.deck-body{display:grid;grid-template-columns:176px minmax(0,1fr);gap:1rem;align-items:start}
+.film{position:sticky;top:calc(var(--bar) + 12px);max-height:calc(100vh - var(--bar) - 40px);overflow:auto;display:flex;flex-direction:column;gap:.55rem;padding:.2rem;scrollbar-width:thin}
+.thumb{position:relative;display:block;flex:none;width:100%;border:2px solid transparent;border-radius:13px;padding:2px;background:none;cursor:pointer;content-visibility:auto;contain-intrinsic-size:auto 96px}
+.thumb .stage{box-shadow:none;border-radius:9px;pointer-events:none}
+.thumb .no{position:absolute;inset-inline-start:.45rem;bottom:.35rem;z-index:2;font-size:.68rem;line-height:1.5;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:0 .35rem}
+.thumb:hover{border-color:var(--line)}
+.thumb:focus-visible{border-color:var(--a,var(--gold))}
+.thumb.on{border-color:var(--a,var(--gold))}
+.canvas{background:var(--surface-2);border-radius:30px;padding:clamp(.5rem,1.6vw,1.2rem)}
+.stage{position:relative;width:100%;aspect-ratio:16/9;container-type:size;border-radius:18px;overflow:hidden;background:#FBF8F0;box-shadow:0 18px 50px -22px rgba(10,30,22,.5);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.deck-ctl{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.8rem;margin-top:1rem}
+.pillbar{display:flex;align-items:center;gap:.4rem;background:var(--surface);border-radius:999px;padding:.3rem;box-shadow:var(--shadow)}
+.pillbar .count{min-width:5rem;text-align:center;color:var(--muted);font-size:.95rem}
+.round{width:44px;height:44px;border-radius:50%;border:0;background:var(--a-soft,var(--emerald-soft));color:var(--a-ink,var(--emerald));display:grid;place-items:center;cursor:pointer;flex:none}
+.round:hover{filter:brightness(.94)}
+.round svg{width:22px;height:22px}
+.progress{height:4px;background:var(--line);border-radius:4px;margin:1rem 0 0;overflow:hidden}
+.progress span{display:block;height:100%;width:0;background:var(--a,var(--gold));transition:width .4s var(--ease)}
 .present-ctl{display:none}
-.present.is-present{position:fixed;inset:0;z-index:100;background:#0B110F;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
-.present.is-present .stage{width:min(100vw,calc((100vh - 64px) * 16 / 9));width:min(100vw,calc((100dvh - 64px) * 16 / 9));border:0;border-radius:6px;box-shadow:none}
+.present.is-present{position:fixed;inset:0;z-index:100;background:#0B110F;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.present.is-present .stage{width:min(100vw,calc((100vh - 64px) * 16 / 9));width:min(100vw,calc((100dvh - 64px) * 16 / 9));border-radius:8px;box-shadow:none}
 .present.is-present .present-ctl{display:flex;gap:.9rem;align-items:center;color:#cfd8d3;font-size:.95rem}
-.present-ctl button{background:rgba(255,255,255,.1);border:0;color:#fff;width:44px;height:44px;border-radius:50%;cursor:pointer;display:grid;place-items:center}
+.present-ctl button{background:rgba(255,255,255,.12);border:0;color:#fff;width:44px;height:44px;border-radius:50%;cursor:pointer;display:grid;place-items:center}
 .present-ctl svg{width:22px;height:22px}
 body.presenting{overflow:hidden}
-.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.8rem;margin-top:1rem}
-.thumb{border:2px solid transparent;border-radius:12px;padding:2px;background:none;cursor:pointer;text-align:start;color:var(--muted);font-size:.78rem}
-.thumb .stage{box-shadow:none;border-radius:9px;pointer-events:none}
-.thumb.on{border-color:var(--gold)}
 .print-deck{display:none}
 
-/* ---------- slides (تتحجّم مع الإطار) ---------- */
-.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:7cqh 7cqw 11cqh;background:var(--surface);color:var(--ink);overflow:hidden}
-.slide .s-title{font-family:var(--nass);font-weight:700;color:var(--emerald);font-size:6.2cqh;line-height:1.35;padding-bottom:2.2cqh;margin:0 0 3.2cqh;border-bottom:.3cqh solid var(--gold-line)}
-.s-foot{position:absolute;bottom:3.4cqh;inset-inline:7cqw;display:flex;justify-content:space-between;gap:3cqw;font-size:2.4cqh;color:var(--muted);white-space:nowrap}
+/* ---------- slides (تتحجّم مع الإطار؛ ألوانها ثابتة فتصلح للطباعة والتصدير) ---------- */
+.slide{--sa:var(--a,#1B6B4C);--sd:var(--a-deep,#0A3426);--sbg:#FBF8F0;--sink:#1B2621;--smut:#5C675F;--sline:#E6DFCB;--sg:#B08A3E;
+  position:absolute;inset:0;display:flex;flex-direction:column;padding:7.5cqh 6cqw 12cqh;padding-inline-start:8cqw;background:var(--sbg);color:var(--sink);overflow:hidden;font-family:var(--ui)}
+.slide::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:1.5cqw;background:linear-gradient(180deg,var(--sa),var(--sd))}
+.slide>*{position:relative}
+.s-top{display:flex;align-items:center;justify-content:space-between;gap:2cqw;margin-bottom:2.2cqh;flex:none}
+.s-kicker{display:inline-flex;align-items:center;gap:1cqw;padding:.7cqh 2.2cqw;border-radius:99px;background:color-mix(in srgb,var(--sa) 12%,#fff);color:var(--sa);font-size:2.5cqh;font-weight:700}
+.s-part{font-size:2.5cqh;color:var(--smut)}
+.slide .s-title{font-family:var(--nass);font-weight:700;color:var(--sd);font-size:5.4cqh;line-height:1.35;margin:0 0 2.4cqh;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s-foot{position:absolute;bottom:3.2cqh;inset-inline:8cqw 6cqw;display:flex;justify-content:space-between;gap:3cqw;font-size:2.3cqh;color:var(--smut);white-space:nowrap}
 .s-foot span:first-child{overflow:hidden;text-overflow:ellipsis}
-.t-title{justify-content:center;align-items:center;text-align:center;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23A8833A' stroke-opacity='.08'%3E%3Crect x='18' y='18' width='20' height='20'/%3E%3Crect x='18' y='18' width='20' height='20' transform='rotate(45 28 28)'/%3E%3C/g%3E%3C/svg%3E");background-size:16cqh 16cqh;-webkit-mask-image:none}
-.t-orn{color:var(--gold);width:9cqh;height:9cqh;margin-bottom:3cqh;flex:none}
-.t-orn svg{width:100%;height:100%}
-.t-title h1{font-family:var(--nass);font-size:10.5cqh;color:var(--emerald);line-height:1.25;max-width:84cqw}
-.t-title p{font-size:3.9cqh;color:var(--muted);margin:2.2cqh 0 0}
-.t-title .ai-note{font-size:2.9cqh;color:var(--gold)}
-.t-section{background:#0F3D2C;color:#F4EEDD;justify-content:center}
-.t-section .t-orn{color:#D2B46C}
-.t-section h2{font-family:var(--nass);font-size:8.6cqh;line-height:1.3}
-.t-section p{font-size:3.7cqh;opacity:.85;margin:2.6cqh 0 0;max-width:80cqw;line-height:1.7}
-.t-section .s-foot{color:rgba(244,238,221,.6)}
-.pts{margin:0;padding:0 4cqw 0 0;display:flex;flex-direction:column;gap:2.4cqh;font-size:4.2cqh;line-height:1.65}
-.pts li::marker{color:var(--gold)}
-.pts.dense{font-size:3.4cqh;gap:1.5cqh}
-.q{margin:0;font-family:var(--nass);font-size:5.3cqh;line-height:1.95;flex:1;display:flex;align-items:center;min-height:0}
-.q.lg{font-size:4.4cqh}.q.xl{font-size:3.7cqh}
-.k-quran .q{color:var(--emerald);justify-content:center;text-align:center}
-.q-ref{font-size:2.9cqh;color:var(--muted);display:flex;gap:1cqw;align-items:center;justify-content:flex-end}
-.c-mini{display:inline-grid;place-items:center;min-width:3.6cqh;height:3.6cqh;padding:0 .8cqh;margin-inline-start:.8cqw;border-radius:1cqh;border:.25cqh solid var(--gold-line);background:var(--gold-soft);color:var(--ink);font-size:2.2cqh;font-family:var(--ui);cursor:pointer;vertical-align:middle;line-height:1}
-.src-ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:1.3cqh 4cqw;font-size:2.8cqh;line-height:1.5}
-.src-ol li{display:flex;gap:1cqw;align-items:baseline}
-.src-book{font-size:2.6cqh;color:var(--muted);margin-top:auto}
+.s-bar{position:absolute;inset-inline:0;bottom:0;height:.9cqh;background:var(--sline)}
+.s-bar i{display:block;height:100%;width:var(--p);background:linear-gradient(90deg,var(--sd),var(--sa))}
+.slide::before,.slide .s-bar{z-index:0}
+.slide .s-foot,.slide .s-bar{z-index:3}
+.t-title,.t-section{color:#F7F1DF;justify-content:center;align-items:flex-start;padding-inline:9cqw}
+.t-title{background:radial-gradient(90% 120% at 100% 0%,color-mix(in srgb,var(--sa) 75%,#fff) 0%,transparent 62%),linear-gradient(135deg,var(--sd),var(--sa))}
+.t-section{background:linear-gradient(135deg,var(--sd),color-mix(in srgb,var(--sd) 65%,var(--sa)))}
+.t-title::before,.t-section::before{inset:0;width:auto;background:var(--pat);background-size:15cqh;-webkit-mask-image:linear-gradient(to right,#000,transparent 62%);mask-image:linear-gradient(to right,#000,transparent 62%)}
+.t-deco{position:absolute;inset-inline-end:-7cqw;top:50%;transform:translateY(-50%);width:62cqh;height:62cqh;color:rgba(246,240,222,.14)}
+.t-deco svg{width:100%;height:100%}
+.t-kick{font-size:2.8cqh;color:#E9D08E;border:.25cqh solid rgba(233,208,142,.55);border-radius:99px;padding:.7cqh 2.4cqw;margin-bottom:3.4cqh}
+.t-title h1{font-family:var(--nass);font-size:12cqh;line-height:1.2;max-width:68cqw;margin:0;color:#fff}
+.t-sub{font-size:3.5cqh;opacity:.88;margin:2.2cqh 0 0;max-width:60cqw}
+.t-stats{display:flex;gap:3.5cqw;margin-top:5.2cqh}
+.t-stats div{border-inline-start:.4cqh solid #E9D08E;padding-inline-start:1.6cqw}
+.t-stats b{display:block;font-family:var(--nass);font-size:7.4cqh;color:#F2DDA0;line-height:1.05}
+.t-stats span{font-size:2.5cqh;opacity:.85}
+.t-title .ai-note{font-size:2.8cqh;color:#F2DDA0;margin:2cqh 0 0}
+.sec-no{position:absolute;inset-inline-end:5cqw;top:50%;transform:translateY(-50%);font-family:var(--nass);font-size:50cqh;line-height:1;color:transparent;-webkit-text-stroke:.4cqh rgba(242,221,160,.5)}
+.sec-of{font-size:2.8cqh;color:#E9D08E;margin-bottom:2.6cqh}
+.t-section h2{font-family:var(--nass);font-size:10cqh;line-height:1.3;max-width:62cqw;color:#fff;margin:0}
+.t-section p{font-size:3.3cqh;opacity:.85;margin:2.6cqh 0 0;max-width:60cqw;line-height:1.7}
+.t-title .s-foot,.t-section .s-foot{color:rgba(247,241,223,.7)}
+.t-title .s-bar,.t-section .s-bar{background:rgba(255,255,255,.18)}
+.t-title .s-bar i,.t-section .s-bar i{background:#E9D08E}
+.q-card{flex:1;min-height:0;display:flex;align-items:center;background:var(--card,#fff);border:.25cqh solid var(--sline);border-radius:2.6cqh;padding:3cqh 3.6cqw;box-shadow:0 .8cqh 2.4cqh -1.2cqh rgba(20,40,30,.2)}
+.q{margin:0;font-family:var(--nass);font-size:4.5cqh;line-height:1.95;max-height:100%;overflow:hidden}
+.q.lg{font-size:4cqh}.q.xl{font-size:3.6cqh}
+.k-quran .q{color:var(--sd);text-align:center;width:100%}
+.k-foot .q-card{background:color-mix(in srgb,var(--sa) 6%,#fff)}
+.k-foot .q{font-size:3.4cqh;line-height:1.9}
+.q-ref{display:flex;gap:1.2cqw;align-items:center;justify-content:space-between;margin-top:1.8cqh;font-size:2.6cqh;color:var(--smut);flex:none;min-height:4.2cqh}
+.c-mini{display:inline-flex;align-items:center;height:4.2cqh;padding:0 1.5cqw;border-radius:99px;border:0;background:color-mix(in srgb,var(--sa) 12%,#fff);color:var(--sa);font-size:2.4cqh;font-weight:700;font-family:var(--ui);cursor:pointer;margin-inline-start:.8cqw;line-height:1}
+.pcards{list-style:none;margin:0;padding:0;display:grid;gap:1.8cqh;counter-reset:p;align-content:start;flex:1;min-height:0;overflow:hidden}
+.pcards li{counter-increment:p;display:flex;align-items:center;gap:2cqw;background:var(--card,#fff);border:.25cqh solid var(--sline);border-radius:2.2cqh;padding:2cqh 2.4cqw;font-size:3.7cqh;line-height:1.6}
+.pcards li::before{content:counter(p,arabic-indic);flex:none;width:6.4cqh;height:6.4cqh;border-radius:50%;background:var(--sa);color:#fff;display:grid;place-items:center;font-family:var(--nass);font-size:4cqh;line-height:1}
+.pcards.dense li{font-size:3cqh;padding:1.4cqh 2cqw}.pcards.dense{gap:1.2cqh}
+.pcards.dense li::before{width:5cqh;height:5cqh;font-size:3cqh}
+.src-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:1.5cqh 2cqw;align-content:start;flex:1;min-height:0;overflow:hidden}
+.src-grid li{background:var(--card,#fff);border:.25cqh solid var(--sline);border-radius:2cqh;padding:1.5cqh 1.8cqw;display:flex;flex-direction:column;gap:.3cqh;min-width:0}
+.src-grid b{font-family:var(--nass);font-size:3.2cqh;color:var(--sd);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.src-grid small{font-size:2.3cqh;color:var(--smut)}
+.src-grid .more{background:none;border-style:dashed;color:var(--smut);font-size:2.6cqh;justify-content:center}
+.src-book{font-size:2.5cqh;color:var(--smut);margin:1.4cqh 0 0;flex:none}
+
+/* ---------- NotebookLM-style layer: بطاقات واسعة الزوايا، ألوان لكل باب، أسطح هادئة ---------- */
+:root{--r:22px;--shadow:0 1px 2px rgba(18,38,30,.06),0 10px 28px -14px rgba(18,38,30,.16);
+  --pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23fff' stroke-opacity='.11' stroke-width='1.2'%3E%3Crect x='20' y='20' width='24' height='24'/%3E%3Crect x='20' y='20' width='24' height='24' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='6'/%3E%3C/g%3E%3C/svg%3E")}
+.ab-taharah{--a:#1F6F8B;--a-deep:#0B3647}
+.ab-salah{--a:#1B6B4C;--a-deep:#0A3426}
+.ab-zakah{--a:#9A7420;--a-deep:#4A3510}
+.ab-siyam{--a:#5E4D93;--a-deep:#271F4D}
+.ab-hajj{--a:#A8502F;--a-deep:#55220F}
+.ab{--a-ink:var(--a);--a-soft:color-mix(in srgb,var(--a) 11%,var(--surface))}
+:root[data-theme="dark"] .ab{--a-ink:color-mix(in srgb,var(--a) 45%,#fff)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ab{--a-ink:color-mix(in srgb,var(--a) 45%,#fff)}}
+.content,.crumbs{max-width:1040px}
+.topbar{border-bottom:0;box-shadow:0 1px 0 var(--line)}
+.sidebar{border-inline-end:0;background:transparent;padding-inline:.9rem}
+.nav a{border-radius:999px;padding:.55rem 1rem}
+.tree{border-inline-start:0;margin-inline-start:.4rem;padding:0}
+.btn{border-radius:999px}
+.card,.blk,.search-form,.empty,.notice{border-radius:var(--r);border-color:transparent;box-shadow:var(--shadow)}
+.blk>h2{border-bottom:0}
+.infobar,.stats{border-radius:var(--r)}
+.page-head h1,.issue-head h1{letter-spacing:0}
+.pill{background:var(--surface-2)}
+
+/* hero = شريحة العنوان */
+.hero2{position:relative;overflow:hidden;border-radius:34px;padding:clamp(1.6rem,5vw,3.6rem);color:#F6F0DE;background:linear-gradient(135deg,#0A3426 0%,#145A41 55%,#1F7556 100%);box-shadow:var(--shadow)}
+.hero2::before{content:"";position:absolute;inset:0;background:var(--pat);background-size:64px;-webkit-mask-image:linear-gradient(to right,#000,transparent 70%);mask-image:linear-gradient(to right,#000,transparent 70%)}
+.hero2>*{position:relative}
+.hero2 .deco{position:absolute;inset-inline-end:-60px;top:50%;transform:translateY(-50%);width:380px;height:380px;color:rgba(246,240,222,.13);pointer-events:none}
+.hero2 .deco svg{width:100%;height:100%}
+.kick{display:inline-block;margin:0 0 1.1rem;padding:.2rem 1.1rem;border:1px solid rgba(233,208,142,.6);border-radius:999px;color:#E9D08E;font-weight:700;font-size:.92rem}
+.hero2 h1{font-family:var(--nass);font-size:clamp(2.8rem,9vw,5.2rem);line-height:1.15;color:#fff}
+.hero2 .sub{font-family:var(--nass);font-size:clamp(1.2rem,3.5vw,1.7rem);margin:.2rem 0 .8rem;opacity:.92}
+.hero2 .desc{max-width:540px;margin:0 0 1.4rem;opacity:.82}
+.hero2 .hs{display:flex;gap:.5rem;max-width:520px;background:#fff;border-radius:999px;padding:.3rem;box-shadow:0 10px 30px -12px rgba(0,0,0,.4)}
+.hero2 .hs input{flex:1;min-width:0;height:46px;border:0;background:transparent;padding:0 1.1rem;color:#1B2621;outline:0}
+.hero2 .hs .btn{background:#145A41;border-color:#145A41;color:#fff;height:46px}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.1rem}
+.gbtn{display:inline-flex;align-items:center;gap:.4rem;height:38px;padding:0 1.1rem;border-radius:999px;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.9rem;border:0;cursor:pointer}
+.gbtn:hover{background:rgba(255,255,255,.26)}
+.gbtn.solid{background:#E9D08E;color:#3a2a08}
+.gbtn.solid:hover{background:#F2DDA0}
+
+/* بطاقات الأبواب كمصغّرات شرائح */
+.babs2{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.1rem}
+.bab2{position:relative;min-height:260px;border-radius:28px;overflow:hidden;color:#F6F0DE;padding:1.2rem 1.4rem;display:flex;flex-direction:column;background:linear-gradient(145deg,var(--a-deep),var(--a));box-shadow:var(--shadow);transition:transform .35s var(--ease)}
+.bab2:hover{transform:translateY(-4px)}
+.bab2::before{content:"";position:absolute;inset:0;background:var(--pat);background-size:56px;-webkit-mask-image:linear-gradient(to right,#000,transparent 75%);mask-image:linear-gradient(to right,#000,transparent 75%)}
+.bab2>*{position:relative}
+.bab2 .no{position:absolute;inset-inline-end:1.1rem;top:-.3rem;font-family:var(--nass);font-size:6.4rem;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(246,240,222,.38)}
+.bab2 .ico{font-size:1.6rem;line-height:1}
+.bab2 h3{font-family:var(--nass);font-size:2.3rem;margin-top:auto;color:#fff}
+.bab2 h3 a{color:inherit;text-decoration:none}
+.bab2 .stretch::after{content:"";position:absolute;inset:0;z-index:1}
+.bab2 p{margin:0 0 .5rem;font-size:.85rem;opacity:.78}
+.bab2 .meta{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem}
+.bab2 .meta span{background:rgba(255,255,255,.15);border-radius:999px;padding:.1rem .75rem;font-size:.8rem}
+.bab2 .go{display:flex;gap:.5rem;z-index:2}
+
+/* صفحة الباب */
+.bab-hero{position:relative;overflow:hidden;border-radius:30px;padding:clamp(1.3rem,4vw,2.4rem);color:#F6F0DE;background:linear-gradient(135deg,var(--a-deep),var(--a));margin-bottom:1.2rem;box-shadow:var(--shadow)}
+.bab-hero::before{content:"";position:absolute;inset:0;background:var(--pat);background-size:60px;-webkit-mask-image:linear-gradient(to right,#000,transparent 70%);mask-image:linear-gradient(to right,#000,transparent 70%)}
+.bab-hero>*{position:relative}
+.bab-hero h1{font-family:var(--nass);font-size:clamp(2.2rem,6vw,3.4rem);color:#fff}
+.bab-hero p{margin:.3rem 0 1rem;opacity:.82}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:.9rem}
+.tcard{position:relative;display:flex;flex-direction:column;gap:.55rem;padding:1.1rem 1.2rem;border-radius:24px;background:var(--surface);box-shadow:var(--shadow);transition:transform .3s var(--ease)}
+.tcard:hover{transform:translateY(-3px)}
+.tcard .tn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--a-soft);color:var(--a-ink);font-family:var(--nass);font-size:1.25rem;font-weight:700}
+.tcard h3{font-family:var(--nass);font-size:1.45rem;color:var(--ink);line-height:1.4}
+.tcard h3 a{color:inherit;text-decoration:none}
+.tcard h3 a::after{content:"";position:absolute;inset:0;border-radius:24px}
+.tcard .row{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin-top:auto;position:relative;z-index:2}
+.tcard .play{margin-inline-start:auto;display:inline-flex;align-items:center;gap:.35rem;height:36px;padding:0 .95rem;border-radius:999px;background:var(--a);color:#fff;text-decoration:none;font-weight:700;font-size:.88rem}
+.tcard .play:hover{filter:brightness(1.1)}
+.pgs{display:grid;gap:.7rem}
+.pg{position:relative;display:flex;gap:1rem;align-items:flex-start;padding:.9rem 1.1rem;border-radius:20px;background:var(--surface);box-shadow:var(--shadow)}
+.pg .pn{flex:none;min-width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:var(--a-soft);color:var(--a-ink);font-weight:700;padding:0 .4rem}
+.pg .pn small{display:block;font-size:.65rem;font-weight:400;line-height:1;margin-bottom:-.15rem;opacity:.8}
+.pg-ex{font-family:var(--nass);font-size:1.12rem;line-height:1.9;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0}
+.pg a.stretch{position:absolute;inset:0;border-radius:20px}
+.pg .play{position:relative;z-index:2;margin-inline-start:auto;align-self:center;flex:none}
+
+/* المسألة: النص الأصلي والحواشي */
+.blk.foot{border:1px dashed var(--line);box-shadow:none;background:transparent}
+.blk.foot .nass{font-size:calc(1.08rem * var(--fs,1));line-height:2}
+.sub-line{color:var(--muted);margin:.2rem 0 0;font-size:1rem}
+.kicker-lnk{display:inline-block;margin-bottom:.4rem;color:var(--a-ink,var(--emerald-2));font-weight:700;text-decoration:none;font-size:.9rem}
+
+@media (max-width:900px){
+  .deck-body{grid-template-columns:1fr}
+  .film{display:none;position:static;max-height:none;flex-direction:row;overflow-x:auto;padding:.4rem 0}
+  .film.open{display:flex}
+  .thumb{width:150px}
+  .hero2 .deco{display:none}
+}
+@media (max-width:620px){
+  .hero2 .hs{flex-direction:column;border-radius:24px}
+  .hero2 .hs .btn{width:100%}
+  .pg .play{display:none}
+}
+
+/* ---------- ملخص · هيكل · تشجير · بطاقات ---------- */
+.na.sm{font-size:.82rem;margin:.7rem 0 0}
+.statstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.6rem;margin:0 0 1rem}
+.statstrip div{background:var(--a-soft,var(--surface-2));border-radius:16px;padding:.6rem .9rem}
+.statstrip b{display:block;font-family:var(--nass);font-size:1.7rem;line-height:1.2;color:var(--a-ink,var(--emerald))}
+.statstrip span{font-size:.82rem;color:var(--muted)}
+.blk.sum>h2{background:var(--a-soft,var(--emerald-soft))}
+.blk>h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+.sum-topics{display:grid;gap:.5rem}
+.sum-t{border-radius:16px;background:var(--bg);padding:.1rem .9rem}
+.sum-t>summary{display:flex;align-items:center;gap:.6rem;cursor:pointer;padding:.55rem 0;list-style:none}
+.sum-t>summary::-webkit-details-marker{display:none}
+.sum-t>summary::after{content:"＋";margin-inline-start:auto;color:var(--muted)}
+.sum-t[open]>summary::after{content:"－"}
+.sum-t summary a{font-family:var(--nass);font-size:1.2rem;font-weight:700;color:var(--ink);text-decoration:none}
+.sum-t summary small{color:var(--muted);font-size:.8rem}
+.sum-t .tn{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--a-soft);color:var(--a-ink);font-family:var(--nass);font-weight:700;flex:none}
+ol.outline{list-style:none;margin:.2rem 0 .5rem;padding:0 1.1rem 0 0;border-inline-start:2px solid var(--line);margin-inline-start:.4rem}
+ol.outline ol.outline{margin-top:.1rem}
+ol.outline li{padding:.2rem 0 .2rem .4rem;font-size:.95rem}
+ol.outline li>a{color:var(--ink);text-decoration:none}
+ol.outline li>a:hover{color:var(--a-ink,var(--emerald-2));text-decoration:underline}
+ol.outline li>small{margin-inline-start:.5rem;color:var(--muted);font-size:.76rem}
+ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
+.sumlist{list-style:none;margin:0;padding:0;display:grid;gap:.7rem;counter-reset:s}
+.sumlist>li{counter-increment:s;position:relative;padding:.7rem 3rem .7rem .9rem;border-radius:16px;background:var(--bg)}
+.sumlist>li::before{content:counter(s,arabic-indic);position:absolute;inset-inline-end:.8rem;top:.7rem;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--a-soft);color:var(--a-ink);font-family:var(--nass);font-weight:700}
+.sl-h a{font-family:var(--nass);font-size:1.2rem;font-weight:700;color:var(--ink);text-decoration:none}
+.sl-h a:hover{text-decoration:underline}
+.sl-h small{margin-inline-start:.6rem;color:var(--muted);font-size:.78rem}
+.lead{font-family:var(--nass);font-size:1.05rem;line-height:1.9;margin:.25rem 0 0;color:var(--ink)}
+.chipline{display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0 0}
+.chip-l{display:inline-flex;align-items:baseline;gap:.4rem;padding:.2rem .8rem;border-radius:999px;background:var(--a-soft,var(--surface-2));color:var(--a-ink,var(--emerald));font-size:.86rem;text-decoration:none;border:1px solid transparent}
+.chip-l:hover{border-color:var(--a-ink,var(--emerald))}
+.chip-l small{color:var(--muted);font-size:.72rem}
+.sub-h{font-family:var(--nass);font-size:1.45rem;margin:1.6rem 0 .5rem;padding-top:1rem;border-top:1px dashed var(--line);display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
+.sub-h a{color:var(--a-ink,var(--emerald));text-decoration:none}
+.sub-h small{font-family:var(--ui);font-size:.74rem;color:var(--muted)}
+.seg{position:relative}
+.pgmark{display:inline-block;font-size:.72rem;color:var(--muted);background:var(--surface-2);border-radius:999px;padding:0 .6rem;margin:.4rem 0 .1rem}
+.pgmark:empty{display:none}
+.notes{margin-top:1rem;padding:.8rem 1rem;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}
+.notes>b{font-size:.85rem;color:var(--ink)}
+.notes .nass{font-size:calc(1.05rem * var(--fs,1));line-height:2}
+.hchips{align-items:center}
+.hchips .pill a{color:inherit}
+.s-path{flex:1;min-width:0;font-size:2.3cqh;color:var(--smut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.map-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:2.4cqh 2cqw;flex:1;min-height:0}
+.map-card{background:var(--card,#fff);border:.25cqh solid var(--sline);border-radius:2.2cqh;padding:1.8cqh 1.6cqw;display:flex;flex-direction:column;gap:1cqh;min-width:0;overflow:hidden;border-top:.8cqh solid var(--sa)}
+.map-card b{display:flex;gap:1cqw;align-items:flex-start;font-family:var(--nass);font-size:3.9cqh;line-height:1.4;color:var(--sd)}
+.map-card b i{flex:none;font-style:normal;width:5.4cqh;height:5.4cqh;border-radius:50%;background:var(--sa);color:#fff;display:grid;place-items:center;font-size:3cqh;line-height:1}
+.map-card ul{margin:0;padding:0 2.2cqw 0 0;font-size:2.7cqh;line-height:1.5;color:var(--smut)}
+.map-card li.more{list-style:none;color:var(--sa);font-weight:700}
+
+/* التشجير */
+.tree-bar{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:.8rem 0}
+.tree-scroll{overflow:auto;border-radius:24px;background:var(--surface);box-shadow:var(--shadow);padding:1rem;max-height:calc(100vh - 230px);min-height:260px;direction:rtl}
+.tree-svg{display:block;margin-inline:auto}
+.tree-svg .tr-links path{fill:none;stroke:var(--gold-line);stroke-width:2;stroke-opacity:.75}
+.trn{height:100%;box-sizing:border-box;display:flex;align-items:center;gap:.4rem;direction:rtl;padding:0 .7rem;border-radius:14px;background:color-mix(in srgb,var(--a) 10%,var(--surface));border:1.5px solid color-mix(in srgb,var(--a) 45%,transparent);color:var(--ink);cursor:default;font-family:var(--ui);font-size:13.5px;line-height:1.35;overflow:hidden}
+.trn.has{cursor:pointer}
+.trn:hover{border-color:var(--a)}
+.trn .t{flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.trn .tg{flex:none;font-style:normal;font-size:11px;font-weight:700;background:var(--a);color:#fff;border-radius:999px;padding:0 .45rem;min-width:18px;text-align:center}
+.trn .go{flex:none;color:var(--a-ink,var(--a));text-decoration:none;font-weight:700;opacity:.7}
+.trn .go:hover{opacity:1}
+.trn.lv-root{background:linear-gradient(135deg,#0A3426,#145A41);color:#fff;border-color:transparent;font-family:var(--nass);font-size:19px;font-weight:700}
+.trn.lv-root .go{color:#E9D08E}
+.trn.lv-bab{background:linear-gradient(135deg,var(--a-deep),var(--a));color:#fff;border-color:transparent;font-family:var(--nass);font-size:19px;font-weight:700}
+.trn.lv-bab .go{color:#F2DDA0}
+.trn.lv-topic{background:color-mix(in srgb,var(--a) 20%,var(--surface));font-weight:700;font-family:var(--nass);font-size:16px}
+.trn.lv-h2{background:var(--surface);font-size:13px}
+.trn.lv-h3{background:var(--surface);font-size:12.5px;color:var(--muted)}
+
+/* بطاقات المراجعة */
+.fc-wrap{margin:1rem 0}
+.fc{min-height:340px;border-radius:30px;background:var(--surface);box-shadow:var(--shadow);cursor:pointer;display:flex;border:2px solid transparent;transition:border-color .3s var(--ease)}
+.fc.back{border-color:color-mix(in srgb,var(--a,var(--emerald)) 55%,transparent)}
+.fc.known{box-shadow:0 0 0 2px var(--emerald-2),var(--shadow)}
+.fc-face{flex:1;padding:1.6rem clamp(1rem,4vw,2.6rem);display:flex;flex-direction:column;gap:.8rem;max-height:62vh;overflow:auto;cursor:default}
+.fc-front{align-items:center;justify-content:center;text-align:center;cursor:pointer;background:linear-gradient(135deg,var(--a-deep,#0A3426),var(--a,#145A41));color:#F7F1DF;border-radius:28px;max-height:none;min-height:340px}
+.fc-front h2{font-family:var(--nass);font-size:clamp(1.8rem,5vw,3rem);color:#fff}
+.fc-front .na{color:rgba(247,241,223,.75)}
+.fc-path{font-size:.85rem;color:var(--muted)}
+.fc-front .fc-path{color:#E9D08E}
+.fc-text{font-size:calc(1.3rem * var(--fs,1))}
+.fc-done{font-family:var(--nass);font-size:1.8rem;text-align:center;margin:auto}
+
+@media print{
+  .tree-bar,.chips,.cta-row,.actions{display:none!important}
+  .tree-scroll{max-height:none;overflow:visible;box-shadow:none;padding:0}
+  .tree-svg{width:100%!important;height:auto!important}
+  .sum-t{break-inside:avoid}
+}
+@media (max-width:620px){.map-grid{grid-template-columns:repeat(2,1fr)}.fc{min-height:280px}}
+
+
+/* ---------- ملخصات مصوغة + عقد التشجير المفصّلة ---------- */
+.aisum{margin:0 0 .8rem}
+.ms-t{font-weight:700;font-size:.9rem;color:var(--a-ink,var(--emerald));margin:.8rem 0 .3rem}
+.ms-t small{font-weight:400;color:var(--muted)}
+.mlist{margin:0;padding:0 1.2rem 0 0;display:grid;gap:.3rem}
+.mlist li::marker{color:var(--gold)}
+.aitag{font-style:normal;font-size:.68rem;background:var(--gold-soft);color:var(--ink);border-radius:999px;padding:0 .5rem;margin-inline-start:.4rem;vertical-align:middle}
+.dalil-list{display:grid;gap:.6rem}
+.dalil{border-radius:14px;padding:.7rem .9rem;background:var(--bg);border-inline-start:4px solid var(--gold-line)}
+.dalil.quran{background:var(--quran);border-inline-start-color:var(--emerald-2)}
+.dalil>b{font-size:.82rem;color:var(--gold)}
+.dalil .nass{font-size:calc(1.1rem * var(--fs,1));line-height:2}
+.dalil.quran .nass{color:var(--emerald)}
+.dalil small{color:var(--muted)}
+.trn.rich{flex-direction:column;align-items:stretch;gap:.28rem;padding:.5rem .7rem;font-size:12.5px;justify-content:flex-start}
+.trn-hd{display:flex;align-items:center;gap:.4rem;font-weight:700;min-height:22px}
+.trn.rich .trn-hd .t{-webkit-line-clamp:2}
+.trn-r{margin:0;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;color:var(--ink);font-weight:400}
+.trn-r b,.trn-d b{margin-inline-end:.3rem}
+.trn-r i{color:var(--muted);font-size:11px}
+.trn-d{font-family:var(--nass);font-size:14px;line-height:1.7;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;background:color-mix(in srgb,var(--a) 8%,var(--surface));border-radius:8px;padding:0 .4rem;font-weight:400;color:var(--ink)}
+.trn-d em{font-style:normal;font-family:var(--ui);font-size:11px;color:var(--a-ink,var(--a));margin-inline-start:.3rem}
+.trn-m{margin:0;padding:0 1rem 0 0;list-style:disc;font-weight:400}
+.trn-m li{line-height:22px;height:22px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.trn-m li::marker{color:var(--a)}
+.trn-f{margin-top:auto;font-size:11px;color:var(--muted);font-weight:400}
+.trn.lv-bab .trn-f,.trn.lv-root .trn-f{color:rgba(255,255,255,.75)}
+
+
+/* ---------- شرائح وضع الدرس ---------- */
+.s-ai{font-size:2.2cqh;color:#7a5d17;background:#F6EFDD;border-radius:99px;padding:.5cqh 1.6cqw;white-space:nowrap}
+.ag-list{list-style:none;margin:0;padding:0;display:grid;gap:1.8cqh 3cqw;flex:1;min-height:0;align-content:center;counter-reset:a}
+.ag-list.two{grid-template-columns:1fr 1fr;align-content:start;gap:1.6cqh 3cqw}
+.ag-list li{display:flex;align-items:center;gap:1.8cqw;background:var(--card,#fff);border:.25cqh solid var(--sline);border-radius:2.2cqh;padding:1.6cqh 2cqw;min-width:0}
+.ag-list i{flex:none;font-style:normal;width:6cqh;height:6cqh;border-radius:50%;background:linear-gradient(135deg,var(--sd),var(--sa));color:#fff;display:grid;place-items:center;font-family:var(--nass);font-size:3.4cqh;line-height:1}
+.ag-list span{display:flex;flex-direction:column;min-width:0}
+.ag-list b{font-family:var(--nass);font-size:3.9cqh;line-height:1.35;color:var(--sd);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ag-list.two b{font-size:3.3cqh}
+.ag-list small{font-size:2.2cqh;color:var(--smut)}
+.sum-lead{font-family:var(--nass);font-size:3.9cqh;line-height:1.85;background:color-mix(in srgb,var(--sa) 9%,#fff);border-inline-start:1cqh solid var(--sa);border-radius:2.2cqh;padding:2cqh 2.6cqw;margin-bottom:2.2cqh;flex:none;max-height:38cqh;overflow:hidden}
+.sum-lead.solo{flex:1;display:flex;align-items:center;font-size:4.6cqh;max-height:none}
+.sum-cards{list-style:none;margin:0;padding:0;display:grid;gap:1.6cqh 2cqw;flex:1;min-height:0;align-content:start;overflow:hidden;counter-reset:m}
+.sum-cards.two{grid-template-columns:1fr 1fr}
+.sum-cards li{counter-increment:m;position:relative;background:var(--card,#fff);border:.25cqh solid var(--sline);border-radius:2cqh;padding:1.7cqh 2cqw;padding-inline-start:6.4cqw;font-size:3.4cqh;line-height:1.6;overflow:hidden}
+.sum-cards.small li{font-size:2.8cqh;padding-block:1.3cqh}
+.sum-cards li::before{content:counter(m,arabic-indic);position:absolute;inset-inline-start:1.6cqw;top:1.5cqh;width:5cqh;height:5cqh;border-radius:1.4cqh;background:color-mix(in srgb,var(--sa) 14%,#fff);color:var(--sa);display:grid;place-items:center;font-family:var(--nass);font-weight:700;font-size:3cqh}
+.dl-grid{display:grid;gap:2.4cqh;flex:1;min-height:0}
+.dl-grid.n2{grid-template-rows:1fr 1fr}
+.dl{position:relative;display:flex;flex-direction:column;justify-content:center;gap:1cqh;border-radius:2.6cqh;padding:2.2cqh 3cqw;background:var(--card,#fff);border:.25cqh solid var(--sline);border-inline-start:1.1cqh solid var(--sg);overflow:hidden;min-height:0}
+.dl.quran{background:#F2F7F4;border-inline-start-color:var(--sa)}
+.dl b{font-size:2.4cqh;color:var(--sg);font-weight:700}
+.dl.quran b{color:var(--sa)}
+.dl blockquote{margin:0;font-family:var(--nass);font-size:4.4cqh;line-height:1.85;overflow:hidden}
+.dl.quran blockquote{color:var(--sd);text-align:center;font-size:4.8cqh}
+.dl-grid.n2 .dl blockquote{font-size:3.6cqh}
+.dl.sm blockquote,.dl-grid.n2 .dl.sm blockquote{font-size:3cqh;line-height:1.75}
+.dl small{font-size:2.4cqh;color:var(--smut);align-self:flex-end}
+.rc-grid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:2cqh 2cqw;flex:1;min-height:0}
+.rc-grid.n1{grid-template-columns:1fr}
+.rc-grid.n5,.rc-grid.n6{grid-template-columns:repeat(3,1fr)}
+.rc{background:var(--card,#fff);border:.25cqh solid var(--sline);border-top:.9cqh solid var(--sa);border-radius:2.2cqh;padding:1.8cqh 1.8cqw;display:flex;flex-direction:column;gap:1cqh;overflow:hidden;min-height:0}
+.rc b{font-family:var(--nass);font-size:3.5cqh;line-height:1.35;color:var(--sd)}
+.rc p{margin:0;font-size:2.6cqh;line-height:1.65;color:var(--sink);display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.rc-grid.n5 .rc p,.rc-grid.n6 .rc p{-webkit-line-clamp:4;font-size:2.4cqh}
+.rv-list{list-style:none;margin:0;padding:0;display:grid;gap:1.8cqh;flex:1;min-height:0;align-content:center}
+.rv-list li{display:flex;align-items:center;gap:2cqw;background:var(--card,#fff);border:.25cqh solid var(--sline);border-radius:2.2cqh;padding:1.6cqh 2.2cqw;font-family:var(--nass);font-size:3.5cqh;line-height:1.6}
+.rv-list i{flex:none;font-style:normal;font-family:var(--ui);font-weight:700;font-size:2.6cqh;color:#fff;background:var(--sg);border-radius:1.4cqh;padding:.6cqh 1.4cqw}
+.seg-tg{display:inline-flex;border-radius:999px;background:var(--surface-2);padding:3px}
+.seg-tg a{padding:.3rem .9rem;border-radius:999px;font-size:.86rem;text-decoration:none;color:var(--muted);font-weight:600}
+.seg-tg a.on{background:var(--surface);color:var(--a-ink,var(--emerald));box-shadow:var(--shadow)}
+#dkNotes{max-height:46vh;overflow:auto}
+#dkNotes strong small{font-weight:400;color:var(--muted)}
+#dkNotes .nass{font-size:1.15rem;margin-top:.5rem}
+
+
+.sum-cards li{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
+.sum-cards.small li{-webkit-line-clamp:4}
+.sum-cards.big{align-content:center;gap:2.4cqh}
+.sum-cards.big li{font-size:3.8cqh;padding-block:2.2cqh;-webkit-line-clamp:4}
+.sum-cards.big li::before{top:2.1cqh}
+.sec-ai{display:inline-block;margin-top:2cqh;font-size:2.2cqh;color:#E9D08E;border:.2cqh solid rgba(233,208,142,.5);border-radius:99px;padding:.4cqh 1.6cqw}
+
+/* ---------- شرائح الملخّص: لون مميَّز (ذهبي عسلي) وخط Amiri/Lotus ---------- */
+:root{--mlk:'Amiri','Lotus Linotype','Lotus','Traditional Arabic','Times New Roman',serif}
+.slide.t-summary,.slide.t-recap{--sg:#9A7420;background:linear-gradient(160deg,#FCF6E4 0%,#F3E4BC 100%)}
+.slide.t-summary::before,.slide.t-recap::before{background:linear-gradient(180deg,#D2AE58,#8A6516)}
+.t-summary .s-kicker,.t-recap .s-kicker{background:#FFF8E3;color:#7A5A12;border:.2cqh solid #E2C77F}
+.t-summary .s-title,.t-recap .s-title{color:#5E440C;font-family:var(--mlk)}
+.t-summary .s-ai{background:#fff;color:#7A5A12;border:.2cqh solid #E2C77F}
+.t-summary .sum-lead{font-family:var(--mlk);background:#FFFBF1;border-inline-start-color:#B8902F;color:#2A2110;line-height:1.9}
+.t-summary .sum-cards li{font-family:var(--mlk);font-size:3.5cqh;line-height:1.75;background:#FFFDF7;border-color:#E8D49A;color:#2A2110}
+.t-summary .sum-cards.small li{font-size:3cqh;line-height:1.7}
+.t-summary .sum-cards.big li{font-size:4cqh}
+.t-summary .sum-cards li::before{background:#B8902F;color:#fff}
+.t-summary .q-ref{color:#7A5A12}
+.t-recap .rc{background:#FFFDF7;border-color:#E8D49A;border-top-color:#B8902F}
+.t-recap .rc b{font-family:var(--mlk);color:#5E440C;font-size:3.6cqh}
+.t-recap .rc p{font-family:var(--mlk);font-size:2.9cqh;line-height:1.75;color:#2A2110}
+.t-recap .rc-grid.n5 .rc p,.t-recap .rc-grid.n6 .rc p{font-size:2.6cqh}
+.t-summary .s-bar i,.t-recap .s-bar i{background:linear-gradient(90deg,#8A6516,#D2AE58)}
+.t-summary .s-foot,.t-recap .s-foot{color:#7A5A12}
+.t-summary .c-mini{background:#fff;color:#7A5A12;border:.2cqh solid #E2C77F}
+/* الملخص في الصفحات أيضاً بالخط نفسه */
+.aisum .lead,.mlist,.sumlist .lead{font-family:var(--mlk)}
+.mlist{font-size:1.08rem;line-height:1.9}
+
+/* ملخصات داخل عرض «النص الكامل» وعروض الملخص الذكي: نفس لون/خط شرائح الملخّص */
+.slide.t-mlk{--sg:#9A7420;background:linear-gradient(160deg,#FCF6E4 0%,#F3E4BC 100%)}
+.slide.t-mlk::before{background:linear-gradient(180deg,#D2AE58,#8A6516)}
+.t-mlk .s-kicker{background:#FFF8E3;color:#7A5A12;border:.2cqh solid #E2C77F}
+.t-mlk .s-title{color:#5E440C;font-family:var(--mlk)}
+.t-mlk .pcards li{font-family:var(--mlk);font-size:3.5cqh;line-height:1.75;background:#FFFDF7;border-color:#E8D49A;color:#2A2110}
+.t-mlk .pcards li:first-child{background:#FFFBF1;border-inline-start:1cqh solid #B8902F;font-size:3.8cqh}
+.t-mlk .pcards.dense li{font-size:2.95cqh;line-height:1.7}
+.t-mlk .pcards.dense li:first-child{font-size:3.2cqh}
+.t-mlk .pcards li::before{background:#B8902F;font-family:var(--mlk)}
+.t-mlk .c-mini{background:#fff;color:#7A5A12;border:.2cqh solid #E2C77F}
+.t-mlk .s-bar i{background:linear-gradient(90deg,#8A6516,#D2AE58)}
+.t-mlk .s-foot{color:#7A5A12}
+
+/* ======================= أنماط الشرائح (تُختار من الإعدادات) =======================
+   كل نمط يحافظ على التمييز: النص (أساس النمط) · الملخص (لون مختلف + Amiri/Lotus) · الدليل (أخضر/فيروزي) · الفواصل (داكنة) */
+:root{--patd:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23145A41' stroke-opacity='.16' stroke-width='1.2'%3E%3Crect x='20' y='20' width='24' height='24'/%3E%3Crect x='20' y='20' width='24' height='24' transform='rotate(45 32 32)'/%3E%3Ccircle cx='32' cy='32' r='6'/%3E%3Cpath d='M0 32h12M52 32h12M32 0v12M32 52v12'/%3E%3C/g%3E%3C/svg%3E")}
+
+/* ---------- ٢. مخطوطة ---------- */
+.slide.th-mushaf{--sbg:#F3E7CB;--sink:#3B2A15;--smut:#7A6247;--sline:#D7BF92;--card:#FBF3E1;--sg:#9B6B1E;--sd:#5A3E1B;
+  background:radial-gradient(120% 120% at 50% 50%,#F8EFD9 40%,#E6D3A8 100%)}
+.slide.th-mushaf:not(.t-title):not(.t-section)::before{width:0}
+.slide.th-mushaf::after{content:"";position:absolute;inset:2.2cqh;border:.4cqh solid #A88449;border-radius:1.2cqh;box-shadow:inset 0 0 0 .9cqh transparent,inset 0 0 0 1.05cqh #A8844966;pointer-events:none}
+.th-mushaf .s-title{font-family:var(--nass);color:#5A3E1B;border-bottom:.3cqh double #A88449;padding-bottom:1cqh}
+.th-mushaf .s-kicker{background:transparent;color:#8A5A14;border:.25cqh solid #A88449}
+.th-mushaf .q-card{box-shadow:none;border-color:#D7BF92}
+.th-mushaf .s-bar{background:#D7BF92}.th-mushaf .s-bar i{background:#8A5A14}
+.slide.th-mushaf.t-title,.slide.th-mushaf.t-section{background:radial-gradient(90% 120% at 100% 0%,#8B6232 0%,transparent 60%),linear-gradient(135deg,#2E1E0D,#5C3D1A)}
+.slide.th-mushaf.t-title::after,.slide.th-mushaf.t-section::after{border-color:#C9A25A;box-shadow:inset 0 0 0 1.05cqh #C9A25A55}
+.slide.th-mushaf.t-summary,.slide.th-mushaf.t-recap,.slide.th-mushaf.t-mlk{background:radial-gradient(120% 120% at 50% 50%,#FBEFE6 40%,#EED3C2 100%)}
+.th-mushaf.t-summary .s-title,.th-mushaf.t-recap .s-title,.th-mushaf.t-mlk .s-title{color:#8E2323}
+.th-mushaf.t-summary .s-kicker,.th-mushaf.t-recap .s-kicker,.th-mushaf.t-mlk .s-kicker{color:#8E2323;border-color:#C98B7E;background:#FFF6F1}
+.th-mushaf.t-summary .sum-cards li::before,.th-mushaf.t-mlk .pcards li::before{background:#8E2323}
+.th-mushaf.t-summary .sum-lead,.th-mushaf.t-mlk .pcards li:first-child{border-inline-start-color:#8E2323;background:#FFF8F3}
+.th-mushaf.t-summary .sum-cards li,.th-mushaf.t-recap .rc,.th-mushaf.t-mlk .pcards li{border-color:#E3B9AC;background:#FFFAF6}
+.th-mushaf.t-recap .rc{border-top-color:#8E2323}.th-mushaf.t-recap .rc b{color:#8E2323}
+.th-mushaf .dl.quran{background:#EEF2E4;border-inline-start-color:#4E6B2E}.th-mushaf .dl.quran blockquote,.th-mushaf .dl.quran b{color:#3E5A22}
+
+/* ---------- ٣. ليلي ---------- */
+.slide.th-lail{--sbg:#0E1A22;--sink:#ECE5D1;--smut:#97A9A1;--sline:#28403A;--card:rgba(255,255,255,.055);--sg:#D8B866;
+  --sa:color-mix(in srgb,var(--a,#1B6B4C) 55%,#fff);--sd:#F2DDA0;background:radial-gradient(110% 90% at 100% 0%,#173029 0%,transparent 55%),linear-gradient(160deg,#0E1A22,#0B1513)}
+.th-lail .q-card{box-shadow:none}
+.th-lail .s-kicker{background:rgba(255,255,255,.08);color:#F2DDA0}
+.th-lail .c-mini{background:rgba(255,255,255,.1);color:#F2DDA0}
+.th-lail .pcards li::before,.th-lail .ag-list i,.th-lail .map-card b i{background:color-mix(in srgb,var(--a,#1B6B4C) 70%,#000);color:#F2DDA0}
+.th-lail .s-bar{background:#28403A}.th-lail .s-bar i{background:linear-gradient(90deg,#B8902F,#F2DDA0)}
+.th-lail.k-foot .q-card{background:rgba(255,255,255,.035)}
+.slide.th-lail.t-title,.slide.th-lail.t-section{background:radial-gradient(80% 110% at 100% 0%,color-mix(in srgb,var(--a,#1B6B4C) 60%,transparent) 0%,transparent 60%),linear-gradient(135deg,#061012,#0E1F1B)}
+.slide.th-lail.t-summary,.slide.th-lail.t-recap,.slide.th-lail.t-mlk{background:radial-gradient(100% 90% at 100% 0%,#4A3812 0%,transparent 60%),linear-gradient(160deg,#211909,#15110A)}
+.th-lail.t-summary .s-title,.th-lail.t-recap .s-title,.th-lail.t-mlk .s-title{color:#F2DDA0}
+.th-lail.t-summary .s-kicker,.th-lail.t-recap .s-kicker,.th-lail.t-mlk .s-kicker,.th-lail.t-summary .s-ai{background:rgba(242,221,160,.1);color:#F2DDA0;border-color:#6B5520}
+.th-lail.t-summary .sum-lead,.th-lail.t-mlk .pcards li:first-child{background:rgba(242,221,160,.08);color:#F7EBD0;border-inline-start-color:#D2AE58}
+.th-lail.t-summary .sum-cards li,.th-lail.t-recap .rc,.th-lail.t-mlk .pcards li{background:rgba(242,221,160,.06);border-color:#5A4718;color:#F4E8CC}
+.th-lail.t-recap .rc b{color:#F2DDA0}.th-lail.t-recap .rc p{color:#E9DDC0}
+.th-lail.t-summary .q-ref,.th-lail.t-summary .s-foot,.th-lail.t-recap .s-foot,.th-lail.t-mlk .s-foot{color:#C9B27A}
+.th-lail .dl{background:rgba(255,255,255,.05);border-color:#3A3420;border-inline-start-color:#D8B866}
+.th-lail .dl.quran{background:rgba(124,201,167,.09);border-color:#244A3E;border-inline-start-color:#7CC9A7}
+.th-lail .dl.quran blockquote,.th-lail .dl.quran b{color:#BFE6D4}
+.th-lail .src-grid b,.th-lail .map-card b{color:#F2DDA0}
+.th-lail.t-mlk .pcards li::before,.th-lail.t-summary .sum-cards li::before{background:#B8902F;color:#fff}
+
+/* ---------- ٤. عصري ---------- */
+.slide.th-asri{--sbg:#FFFFFF;--sink:#1A1F1D;--smut:#6B7470;--sline:transparent;--card:#F3F5F3;--sg:#B8902F;
+  background:radial-gradient(circle at 0% 100%,color-mix(in srgb,var(--a,#1B6B4C) 13%,transparent) 0 26cqh,transparent 26.3cqh),#fff}
+.slide.th-asri::before{inset:0 0 auto 0;width:auto;height:1.3cqh;background:var(--sa)}
+.th-asri .s-title{font-family:var(--ui);font-weight:800;font-size:5.6cqh;color:var(--sd)}
+.th-asri .s-kicker{background:var(--sa);color:#fff;border-radius:1cqh}
+.th-asri .q-card,.th-asri .pcards li,.th-asri .ag-list li,.th-asri .rc,.th-asri .rv-list li,.th-asri .src-grid li,.th-asri .map-card,.th-asri .dl,.th-asri .sum-cards li{border-color:transparent;box-shadow:none;border-radius:3cqh}
+.th-asri .ag-list i,.th-asri .pcards li::before{border-radius:1.4cqh}
+.slide.th-asri.t-title{background:linear-gradient(270deg,#fff 0 60%,var(--sa) 60% 100%);color:var(--sink)}
+.slide.th-asri.t-title::before{inset:0 60% 0 0;width:auto;height:auto;background:var(--pat);background-size:15cqh;-webkit-mask-image:none;mask-image:none}
+.th-asri.t-title h1{color:var(--sd);font-family:var(--ui);font-weight:800;font-size:10.5cqh;max-width:52cqw}
+.th-asri.t-title .t-kick{color:var(--sa);border-color:var(--sa)}
+.th-asri.t-title .t-sub{color:var(--smut);max-width:50cqw}
+.th-asri.t-title .t-stats b{color:var(--sa)}.th-asri.t-title .t-stats div{border-color:var(--sa)}
+.th-asri.t-title .t-deco{color:rgba(255,255,255,.35);inset-inline-end:4cqw}
+.slide.th-asri.t-section{background:var(--sa)}
+.slide.th-asri.t-section::before{inset:0;height:auto;background:radial-gradient(circle at 0% 0%,rgba(255,255,255,.12) 0 40cqh,transparent 40.3cqh)}
+.th-asri.t-section h2{font-family:var(--ui);font-weight:800}
+.th-asri.t-section .sec-no{-webkit-text-stroke:0;color:rgba(255,255,255,.14);font-family:var(--ui);font-weight:800}
+.slide.th-asri.t-summary,.slide.th-asri.t-recap,.slide.th-asri.t-mlk{background:radial-gradient(circle at 0% 100%,#F5E3B5 0 26cqh,transparent 26.3cqh),#FFF9EC}
+.th-asri.t-summary .s-kicker,.th-asri.t-recap .s-kicker,.th-asri.t-mlk .s-kicker{background:#B8902F;color:#fff;border:0}
+.slide.th-asri.t-summary::before,.slide.th-asri.t-recap::before,.slide.th-asri.t-mlk::before{background:#B8902F}
+.th-asri.t-summary .s-title,.th-asri.t-recap .s-title,.th-asri.t-mlk .s-title{font-family:var(--mlk);font-weight:700}
+.th-asri .dl.quran{background:#EAF4EE}
+
+/* ---------- ٥. زخرفة ---------- */
+.slide.th-zakhrafa{--card:#FFFDF8}
+.slide.th-zakhrafa::after{content:"";position:absolute;inset:0;background:var(--patd);background-size:9cqh;pointer-events:none;
+  -webkit-mask-image:radial-gradient(circle at 0 0,#000 0 14cqh,transparent 30cqh),radial-gradient(circle at 100% 100%,#000 0 14cqh,transparent 30cqh);
+  mask-image:radial-gradient(circle at 0 0,#000 0 14cqh,transparent 30cqh),radial-gradient(circle at 100% 100%,#000 0 14cqh,transparent 30cqh)}
+.th-zakhrafa .s-title{text-align:center;font-family:var(--nass)}
+.th-zakhrafa .s-title::after{content:"۞";display:block;font-size:2.8cqh;line-height:1.4;color:var(--sg)}
+.th-zakhrafa .s-top{justify-content:center}
+.th-zakhrafa .s-path{flex:0 1 auto}
+.th-zakhrafa .q-card,.th-zakhrafa .ag-list li,.th-zakhrafa .rc,.th-zakhrafa .rv-list li{border-color:#E2CF9C}
+.slide.th-zakhrafa.t-title,.slide.th-zakhrafa.t-section{align-items:center;text-align:center;padding-inline:12cqw}
+.slide.th-zakhrafa.t-title::after,.slide.th-zakhrafa.t-section::after{inset:7cqh 22cqw 7cqh;background:none;-webkit-mask-image:none;mask-image:none;border:.45cqh solid rgba(233,208,142,.65);border-bottom:0;border-radius:50% 50% 0 0/38% 38% 0 0}
+.th-zakhrafa.t-title h1,.th-zakhrafa.t-section h2,.th-zakhrafa.t-title .t-sub,.th-zakhrafa.t-section p{max-width:52cqw;margin-inline:auto}
+.th-zakhrafa.t-title h1{font-size:10cqh}
+.th-zakhrafa.t-title .t-stats{justify-content:center}
+.th-zakhrafa.t-title .t-deco,.th-zakhrafa.t-section .sec-no{opacity:.35}
+.th-zakhrafa.t-section .sec-of{margin-inline:auto}
+.th-zakhrafa.t-summary .s-title::after,.th-zakhrafa.t-recap .s-title::after,.th-zakhrafa.t-mlk .s-title::after{color:#B8902F}
+
+
+/* الإعدادات: بطاقات الأنماط */
+.th-grid{display:grid;gap:1rem}
+.th-card{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:1rem;align-items:center;text-align:start;border:2px solid transparent;border-radius:22px;background:var(--bg);padding:.8rem;cursor:pointer;color:var(--ink)}
+.th-card:hover{border-color:var(--line)}
+.th-card.on{border-color:var(--emerald-2);background:var(--emerald-soft)}
+.th-prev{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.45rem;pointer-events:none}
+.th-prev .stage{border-radius:8px;box-shadow:0 4px 14px -8px rgba(0,0,0,.4)}
+.th-meta b{display:block;font-size:1.1rem;font-family:var(--nass)}
+.th-meta span{font-size:.85rem;color:var(--muted)}
+.th-pick{position:relative}
+.th-pick>summary{list-style:none}
+.th-pick>summary::-webkit-details-marker{display:none}
+.th-pop{position:absolute;z-index:20;inset-inline-start:0;top:calc(100% + 6px);display:flex;flex-wrap:wrap;gap:.35rem;width:260px;padding:.7rem;border-radius:16px;background:var(--surface);box-shadow:0 14px 40px -12px rgba(0,0,0,.35)}
+@media (max-width:760px){.th-card{grid-template-columns:1fr}.th-prev{grid-template-columns:repeat(3,minmax(0,1fr))}.th-prev .stage:nth-child(n+4){display:none}}
+
+/* ======================= تخطيطات الأنماط: كل نمط له بنية مختلفة لا لونٌ فقط ======================= */
+
+/* ---------- مخطوطة: كتاب — توسيط، فهرس بنقاط، نص بلا صناديق مع خط الحاشية ---------- */
+.slide.th-mushaf{padding-inline:9cqw}
+.th-mushaf .s-top{justify-content:center;gap:3cqw}
+.th-mushaf .s-path{flex:0 1 auto;max-width:40cqw}
+.th-mushaf .s-title{text-align:center;border-bottom:0;white-space:normal;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.th-mushaf .s-title::before,.th-mushaf .s-title::after{content:"❁";color:#A88449;font-size:3cqh;margin:0 1.6cqw;vertical-align:middle}
+.slide.th-mushaf.t-title,.slide.th-mushaf.t-section{align-items:center;text-align:center;padding-inline:12cqw}
+.th-mushaf.t-title h1,.th-mushaf.t-section h2{margin-inline:auto;max-width:66cqw}
+.th-mushaf.t-title h1::before,.th-mushaf.t-title h1::after{content:"";display:block;height:.35cqh;width:30cqw;margin:2.4cqh auto;background:linear-gradient(90deg,transparent,#C9A25A,transparent)}
+.th-mushaf.t-title .t-sub,.th-mushaf.t-section p{margin-inline:auto}
+.th-mushaf.t-title .t-stats{justify-content:center}
+.th-mushaf.t-title .t-deco{display:none}
+.th-mushaf.t-section .sec-no{display:none}
+.th-mushaf.t-section .sec-of{font-family:var(--nass);font-size:3.6cqh;margin-inline:auto}
+.th-mushaf.t-section .sec-of::before,.th-mushaf.t-section .sec-of::after{content:" ❁ "}
+/* النص: صفحة كتاب */
+.th-mushaf .q-card{background:transparent;border:0;border-inline-start:.35cqh solid #C9AE6E;border-radius:0;padding:1cqh 3cqw 1cqh 1cqw;align-items:flex-start}
+.th-mushaf .q{text-align:justify}
+.th-mushaf.k-foot .q-card{background:transparent;border-inline-start-style:dashed}
+/* الفهرس */
+.th-mushaf .ag-list,.th-mushaf .ag-list.two{grid-template-columns:1fr;gap:.6cqh;align-content:center;max-width:70cqw;margin-inline:auto;width:100%}
+.th-mushaf .ag-list.two{grid-template-columns:1fr 1fr;column-gap:5cqw;max-width:none}
+.th-mushaf .ag-list li{background:transparent;border:0;border-radius:0;padding:.8cqh 0;gap:1.4cqw}
+.th-mushaf .ag-list i{background:none;color:#8A5A14;width:auto;height:auto;font-size:3.6cqh}
+.th-mushaf .ag-list i::after{content:"ـ"}
+.th-mushaf .ag-list span{flex-direction:row;align-items:baseline;flex:1;gap:1cqw}
+.th-mushaf .ag-list b{order:1;flex:none;max-width:70%}
+.th-mushaf .ag-list span::after{content:"";order:2;flex:1;border-bottom:.35cqh dotted #A88449;transform:translateY(-.8cqh)}
+.th-mushaf .ag-list small{order:3;flex:none;font-size:2.4cqh}
+/* المسائل والخلاصة: قائمة مرقّمة بلا صناديق مفصولة بزخرفة */
+.th-mushaf .sum-cards,.th-mushaf .sum-cards.two{grid-template-columns:1fr;gap:0;align-content:center}
+.th-mushaf .sum-cards li{background:transparent!important;border:0!important;border-radius:0;padding:1.3cqh 6cqw 1.3cqh 0;border-bottom:.2cqh dashed #D9B8A6!important}
+.th-mushaf .sum-cards li:last-child{border-bottom:0!important}
+.th-mushaf .sum-cards li::before{background:none!important;color:#8E2323!important;font-size:4cqh;top:1cqh;inset-inline-start:0}
+.th-mushaf .sum-cards.two li{font-size:3cqh}
+.th-mushaf .sum-lead{background:transparent!important;border:0;border-radius:0;text-align:center;font-size:4.2cqh;padding:0 4cqw}
+.th-mushaf .sum-lead::before{content:"«";color:#8E2323}.th-mushaf .sum-lead::after{content:"»";color:#8E2323}
+/* الأدلة */
+.th-mushaf .dl{background:transparent!important;border:0;border-top:.3cqh double #A88449;border-bottom:.3cqh double #A88449;border-radius:0;text-align:center;align-items:center}
+.th-mushaf .dl blockquote{text-align:center}
+.th-mushaf .dl.quran blockquote{font-size:5cqh}
+.th-mushaf .dl small{align-self:center}
+/* خلاصة الدرس: حواشٍ متدفقة */
+.th-mushaf .rc-grid{grid-template-columns:1fr 1fr!important;grid-auto-rows:auto;column-gap:5cqw;row-gap:1.6cqh;align-content:center}
+.th-mushaf .rc{background:transparent!important;border:0!important;border-radius:0;padding:0;display:block}
+.th-mushaf .rc b{display:inline;font-size:3.3cqh}.th-mushaf .rc b::after{content:": "}
+.th-mushaf .rc p{display:inline;font-size:2.8cqh}
+/* المراجعة: س في الهامش */
+.th-mushaf .rv-list li{background:transparent;border:0;border-bottom:.2cqh dashed #D7BF92;border-radius:0;padding:1.2cqh 0}
+.th-mushaf .rv-list i{background:none;color:#8E2323;font-family:var(--nass);font-size:3.6cqh;padding:0;min-width:7cqw}
+
+/* ---------- ليلي: مسرح — خط زمني مضيء، اقتباس واحد كبير، فقاعات حوار ---------- */
+.slide.th-lail.t-title{justify-content:flex-end;padding-bottom:16cqh}
+.th-lail.t-title .t-deco{top:30%;inset-inline-end:6cqw;width:48cqh;height:48cqh;color:rgba(242,221,160,.12);filter:drop-shadow(0 0 3cqh rgba(242,221,160,.35))}
+.th-lail.t-title h1{text-shadow:0 0 4cqh rgba(242,221,160,.35)}
+.slide.th-lail.t-section{align-items:center;text-align:center}
+.th-lail.t-section .sec-no{position:static;transform:none;font-size:9cqh;width:16cqh;height:16cqh;border-radius:50%;display:grid;place-items:center;color:#0E1A22;-webkit-text-stroke:0;background:radial-gradient(circle,#F2DDA0,#B8902F);box-shadow:0 0 6cqh rgba(242,221,160,.45);margin:0 auto 3cqh;font-family:var(--nass)}
+.th-lail.t-section .sec-of{margin-inline:auto}
+.th-lail.t-section h2,.th-lail.t-section p{margin-inline:auto}
+/* محاور: خط زمني */
+.th-lail .ag-list,.th-lail .ag-list.two{grid-template-columns:1fr;gap:0;position:relative;padding-inline-start:5cqw;align-content:center}
+.th-lail .ag-list.two{grid-template-columns:1fr 1fr;column-gap:4cqw}
+.th-lail .ag-list::before{content:"";position:absolute;inset-block:1cqh;inset-inline-start:1.6cqw;width:.4cqh;background:linear-gradient(#F2DDA0,transparent)}
+.th-lail .ag-list.two::before{display:none}
+.th-lail .ag-list li{background:transparent;border:0;padding:1cqh 0;position:relative}
+.th-lail .ag-list i{width:4.6cqh;height:4.6cqh;font-size:2.6cqh;background:#0E1A22!important;border:.35cqh solid #F2DDA0;box-shadow:0 0 2cqh rgba(242,221,160,.5);margin-inline-start:-4.6cqw}
+.th-lail .ag-list.two i{margin-inline-start:0}
+/* الخلاصة: اقتباس مركزي + قائمة بأشرطة مضيئة */
+.th-lail .sum-lead.solo{justify-content:center;text-align:center;background:transparent!important;border:0;font-size:4.8cqh;position:relative}
+.th-lail .sum-cards li{border:0!important;border-inline-start:.6cqh solid #D2AE58!important;border-radius:0 2cqh 2cqh 0;box-shadow:0 0 3cqh -1cqh rgba(242,221,160,.25)}
+/* الأدلة: اقتباس كبير واحد بلا بطاقات */
+.th-lail .dl{background:transparent!important;border:0!important;text-align:center;align-items:center;padding:1cqh 6cqw}
+.th-lail .dl-grid.n2 .dl+.dl{border-top:.2cqh solid rgba(242,221,160,.2)!important}
+.th-lail .dl blockquote{text-align:center;text-shadow:0 0 3cqh rgba(124,201,167,.25)}
+.th-lail .dl small{align-self:center}
+/* خلاصة الدرس: بطاقات زجاجية برقم علوي */
+.th-lail .rc{border:0;border-top:0;background:rgba(255,255,255,.05)!important;text-align:center;align-items:center;position:relative;padding-top:3cqh}
+.th-lail .rc::before{content:"✦";color:#F2DDA0;font-size:3cqh;line-height:1}
+/* المراجعة: فقاعات حوار متبادلة */
+.th-lail .rv-list{gap:1.4cqh}
+.th-lail .rv-list li{width:78%;border-radius:3cqh 3cqh 3cqh .6cqh;background:rgba(255,255,255,.06);border:0}
+.th-lail .rv-list li:nth-child(even){margin-inline-start:auto;border-radius:3cqh 3cqh .6cqh 3cqh;background:rgba(242,221,160,.09)}
+.th-lail .rv-list i{background:#B8902F;border-radius:50%;padding:1cqh 1.2cqw}
+
+/* ---------- عصري: بِنتو وتقسيم — عمود ملون للعنوان، بلاطات كبيرة بأرقام عملاقة ---------- */
+.slide.th-asri.t-section{align-items:flex-start;padding-inline-start:9cqw;padding-inline-end:46cqw}
+.th-asri.t-section .sec-no{inset-inline-end:0;top:0;bottom:0;transform:none;width:38cqw;display:grid;place-items:center;background:rgba(0,0,0,.14);font-size:46cqh;color:rgba(255,255,255,.9)}
+.th-asri.t-section h2,.th-asri.t-section p{max-width:none}
+/* النص والأدلة: تقسيم — العنوان في عمود ملون يميناً */
+.slide.th-asri.t-quote,.slide.th-asri.t-dalil{display:grid;grid-template-columns:30cqw 1fr;grid-template-rows:auto 1fr auto;column-gap:4cqw;padding-inline-start:4cqw;
+  background:linear-gradient(270deg,color-mix(in srgb,var(--sa) 12%,#fff) 0 calc(30cqw + 2cqw),#fff calc(30cqw + 2cqw))}
+.th-asri.t-quote .s-top,.th-asri.t-dalil .s-top{grid-column:1;grid-row:1;flex-direction:column;align-items:flex-start;gap:1.4cqh}
+.th-asri.t-quote .s-title,.th-asri.t-dalil .s-title{grid-column:1;grid-row:2;white-space:normal;font-size:5.6cqh;line-height:1.3;align-self:start;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
+.th-asri.t-quote .s-path,.th-asri.t-dalil .s-path{white-space:normal;font-size:2.2cqh}
+.th-asri.t-quote .q-card,.th-asri.t-dalil .dl-grid{grid-column:2;grid-row:1/3;background:transparent;padding:1cqh 0}
+.th-asri.t-quote .q-ref,.th-asri.t-dalil .q-ref{grid-column:2;grid-row:3}
+.th-asri .dl{background:#F3F5F3!important}
+/* بلاطات */
+.th-asri .ag-list,.th-asri .ag-list.two{grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:2cqh 2cqw;align-content:stretch}
+.th-asri .ag-list li{flex-direction:column;align-items:flex-start;justify-content:space-between;padding:2cqh 2cqw;gap:1cqh}
+.th-asri .ag-list li:first-child{grid-row:span 2;background:var(--sa);color:#fff}
+.th-asri .ag-list li:first-child b,.th-asri .ag-list li:first-child small{color:#fff}
+.th-asri .ag-list i{background:none!important;color:var(--sa);width:auto;height:auto;font-family:var(--ui);font-weight:800;font-size:7cqh;border-radius:0}
+.th-asri .ag-list li:first-child i{color:rgba(255,255,255,.85);font-size:12cqh}
+.th-asri .ag-list b{white-space:normal;font-family:var(--ui);font-weight:800;font-size:3cqh;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.th-asri .sum-cards,.th-asri .sum-cards.two{grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;align-content:stretch}
+.th-asri .sum-cards.big{grid-template-columns:repeat(auto-fit,minmax(0,1fr))}
+.th-asri .sum-cards li{padding:7.5cqh 2cqw 2cqh;font-size:3cqh!important}
+.th-asri .sum-cards li::before{inset-inline-start:2cqw;top:1.6cqh;width:auto;height:auto;background:none!important;color:#B8902F!important;font-family:var(--ui);font-weight:800;font-size:5.4cqh}
+.th-asri .sum-cards.n4{grid-template-columns:1fr 1fr}
+.th-asri .sum-cards.n5 li:first-child{grid-column:span 2}
+.th-asri .sum-lead.solo{font-size:4.8cqh;border-inline-start:0;border-top:1.4cqh solid #B8902F;border-radius:0 0 3cqh 3cqh}
+.th-asri .rc-grid{grid-template-columns:repeat(3,1fr)!important}
+.th-asri .rc-grid.n1{grid-template-columns:1fr!important}.th-asri .rc-grid.n2,.th-asri .rc-grid.n4{grid-template-columns:1fr 1fr!important}
+.th-asri .rc-grid.n5 .rc:first-child{grid-column:span 2}
+.th-asri .rc:first-child{background:#B8902F!important}
+.th-asri .rc:first-child b,.th-asri .rc:first-child p{color:#fff!important}
+.th-asri .rc{border:0!important;border-radius:3cqh}
+.th-asri .rv-list{grid-template-columns:1fr 1fr;align-content:stretch;grid-auto-rows:1fr}
+.th-asri .rv-list li{flex-direction:column;align-items:flex-start;justify-content:center;gap:1cqh;font-size:3.1cqh}
+.th-asri .rv-list i{background:none;color:var(--sa);font-size:5cqh;font-weight:800;padding:0}
+
+/* ---------- زخرفة: تناظر — محاور متعرجة حول محور، بلاطات بقباب، خرطوشة للآية ---------- */
+.th-zakhrafa .ag-list,.th-zakhrafa .ag-list.two{grid-template-columns:1fr;gap:.6cqh;position:relative;align-content:center}
+.th-zakhrafa .ag-list::before{content:"";position:absolute;inset-block:0;left:50%;width:.3cqh;background:linear-gradient(transparent,#C9AE6E 15%,#C9AE6E 85%,transparent)}
+.th-zakhrafa .ag-list li{width:46%;position:relative;padding:1cqh 1.6cqw;border-radius:99px}
+.th-zakhrafa .ag-list li:nth-child(even){margin-inline-start:auto;flex-direction:row}
+.th-zakhrafa .ag-list li::after{content:"✦";position:absolute;inset-inline-end:-4.6%;color:#B8902F;font-size:3cqh;line-height:1}
+.th-zakhrafa .ag-list li:nth-child(even)::after{inset-inline-end:auto;inset-inline-start:-4.6%}
+.th-zakhrafa .ag-list b{font-size:3cqh}
+.th-zakhrafa .ag-list i{width:4.6cqh;height:4.6cqh;font-size:2.6cqh}
+.th-zakhrafa .ag-list small{display:none}
+/* بلاطات بقباب (محاريب) */
+.th-zakhrafa .sum-cards,.th-zakhrafa .sum-cards.two,.th-zakhrafa .sum-cards.big{display:flex;gap:1.6cqw;align-items:stretch;align-content:stretch}
+.th-zakhrafa .sum-cards li{flex:1;border-radius:40% 40% 1.4cqh 1.4cqh/18% 18% 1.4cqh 1.4cqh;padding:9cqh 1.6cqw 2cqh;text-align:center;font-size:2.8cqh!important;-webkit-line-clamp:8!important}
+.th-zakhrafa .sum-cards li::before{inset-inline-start:50%;transform:translateX(50%);top:3cqh;border-radius:50%}
+.th-zakhrafa .sum-lead{text-align:center;border-inline-start:0;border-top:.4cqh solid #C9AE6E;border-bottom:.4cqh solid #C9AE6E;border-radius:0}
+.th-zakhrafa .rc-grid{display:flex!important;gap:1.6cqw}
+.th-zakhrafa .rc{flex:1;border-top:0;border:.3cqh solid #E2CF9C;border-radius:40% 40% 1.4cqh 1.4cqh/16% 16% 1.4cqh 1.4cqh;padding-top:6cqh;text-align:center;align-items:center}
+.th-zakhrafa .rc b{font-size:3cqh}
+.th-zakhrafa .rc p{font-size:2.4cqh!important;-webkit-line-clamp:8!important}
+/* الآية في خرطوشة */
+.th-zakhrafa .dl{border:0;background:transparent!important;align-items:center;text-align:center;padding:2cqh 6cqw;position:relative}
+.th-zakhrafa .dl::before{content:"";position:absolute;inset:0;border:.4cqh double #C9AE6E;border-radius:99px;pointer-events:none}
+.th-zakhrafa .dl.quran::before{border-color:var(--sa)}
+.th-zakhrafa .dl blockquote{text-align:center}
+.th-zakhrafa .dl small{align-self:center}
+.th-zakhrafa .q-card{position:relative}
+.th-zakhrafa .q-card::before,.th-zakhrafa .q-card::after{content:"❖";position:absolute;color:#C9AE6E;font-size:3cqh;line-height:1}
+.th-zakhrafa .q-card::before{top:1cqh;inset-inline-start:1cqw}.th-zakhrafa .q-card::after{bottom:1cqh;inset-inline-end:1cqw}
+.th-zakhrafa .rv-list li{justify-content:center;text-align:center;border-radius:99px}
+.th-zakhrafa .rv-list i{background:none;color:#B8902F;font-size:3cqh;padding:0}
+.th-zakhrafa .rv-list i::before{content:"✦ "}
+
+/* معرض أنماط */
+.gal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.gal figure{margin:0}
+.gal figcaption{font-size:.85rem;color:var(--muted);margin-top:.3rem;text-align:center}
+@media (max-width:760px){.gal{grid-template-columns:1fr}}
 
 /* ---------- responsive ---------- */
 @media (max-width:900px){
   .shell{grid-template-columns:1fr}
   .menu-btn{display:inline-grid}
-  .sidebar{position:fixed;top:0;bottom:0;inset-inline-start:0;width:min(86vw,320px);height:auto;z-index:60;transform:translateX(105%);transition:transform .35s var(--ease);padding-top:calc(env(safe-area-inset-top,0px) + 1rem);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 1rem);box-shadow:0 0 40px rgba(0,0,0,.15)}
-  body.nav-open .sidebar{transform:none}
+  .sidebar{position:fixed;top:0;bottom:0;inset-inline-start:0;width:min(86vw,320px);height:auto;z-index:60;transform:translateX(105%);transition:transform .35s var(--ease);padding-top:calc(env(safe-area-inset-top,0px) + 1rem);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 1rem);background:var(--surface)}
+  body.nav-open .sidebar{transform:none;box-shadow:0 0 40px rgba(0,0,0,.18)}
   body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(8,14,12,.45);z-index:55}
 }
 @media (max-width:620px){
@@ -463,7 +1088,9 @@ body.presenting{overflow:hidden}
   "topics": [],
   "issues": [],
   "evidences": [],
-  "references": []
+  "references": [],
+  "headings": [],
+  "summaries": []
 }
 </script>
 
@@ -518,6 +1145,46 @@ const nf = new Intl.NumberFormat('ar-EG');
 const fmt = n => nf.format(n);
 const paras = t => String(t ?? '').split(/\n{2,}/).map(p => `<p>${esc(p).replace(/\n/g, '<br>')}</p>`).join('');
 const STAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="6" y="6" width="12" height="12"/><rect x="6" y="6" width="12" height="12" transform="rotate(45 12 12)"/></svg>';
+function splitFoot(t) {
+  t = String(t ?? '');
+  const m = /\n*(?:\*{3,}\s*\n+)?— الحواشي —\n?/.exec(t);
+  if (!m) return { body: t.trim(), foot: '' };
+  return { body: t.slice(0, m.index).replace(/[\s*]+$/, '').trim(), foot: t.slice(m.index + m[0].length).trim() };
+}
+function chunkText(text, max = 400) {
+  const units = [];
+  const push = (t, sep) => units.push({ t, sep });
+  String(text ?? '').split('\n').map(l => l.trim()).filter(Boolean).forEach(line => {
+    if (line.length <= max) { push(line, '\n'); return; }
+    let cur = '', first = true;
+    const flush = () => { if (cur) { push(cur, first ? '\n' : ' '); first = false; cur = ''; } };
+    line.split(/(?<=[.؟!؛])\s+/).forEach(sent => {
+      if (cur && (cur + ' ' + sent).length > max) flush();
+      cur = cur ? cur + ' ' + sent : sent;
+      while (cur.length > max) {
+        const cut = cur.lastIndexOf(' ', max); const at = cut > max * 0.5 ? cut : max;
+        push(cur.slice(0, at).trim(), first ? '\n' : ' '); first = false; cur = cur.slice(at).trim();
+      }
+    });
+    flush();
+  });
+  const groups = []; let cur = [];
+  const len = g => g.reduce((n, u) => n + u.t.length + 1, 0);
+  units.forEach(u => {
+    if (cur.length && len(cur) + u.t.length + 1 > max) {
+      const carry = cur.length > 1 && /[:：]$/.test(cur[cur.length - 1].t) ? [cur.pop()] : []; // لا يُترك عنوان يتيماً في آخر الشريحة
+      groups.push(cur); cur = carry;
+    }
+    cur.push(u);
+  });
+  if (cur.length) groups.push(cur);
+  // ذيل قصير جداً يُضمّ إلى الشريحة السابقة ما دام المجموع يتسع للشريحة
+  if (groups.length > 1) {
+    const a = groups[groups.length - 2], b = groups[groups.length - 1];
+    if (len(b) < 130 && len(a) + len(b) <= max + 120) groups.splice(-2, 2, a.concat(b));
+  }
+  return groups.map(g => g.map((x, i) => (i ? x.sep : '') + x.t).join(''));
+}
 const orn = (cls = '') => `<div class="orn ${cls}" aria-hidden="true">${STAR}</div>`;
 
 /* localStorage آمن */
@@ -591,8 +1258,8 @@ function snippet(text, terms, len = 170) {
 }
 
 /* ======================= DATA LAYER ======================= */
-const COLS = [['books', 'book_id'], ['volumes', 'volume_id'], ['chapters', 'chapter_id'], ['sections', 'section_id'], ['topics', 'topic_id'], ['issues', 'issue_id'], ['evidences', 'evidence_id'], ['references', 'reference_id']];
-const COL_AR = { books: 'الكتب', volumes: 'الأجزاء', chapters: 'الأبواب', sections: 'الفصول', topics: 'الموضوعات', issues: 'المسائل', evidences: 'الأدلة', references: 'المراجع' };
+const COLS = [['books', 'book_id'], ['volumes', 'volume_id'], ['chapters', 'chapter_id'], ['sections', 'section_id'], ['topics', 'topic_id'], ['issues', 'issue_id'], ['evidences', 'evidence_id'], ['references', 'reference_id'], ['headings', 'heading_id'], ['summaries', 'summary_id']];
+const COL_AR = { books: 'الكتب', volumes: 'الأجزاء', chapters: 'الأبواب', sections: 'الفصول', topics: 'الموضوعات', issues: 'المسائل', evidences: 'الأدلة', references: 'المراجع', headings: 'العناوين الفرعية', summaries: 'الملخصات' };
 const DB = { raw: null, mode: 'none', idx: {}, warnings: [], rows: [] };
 
 function emptyData() { const d = { meta: {} }; COLS.forEach(([c]) => d[c] = []); return d; }
@@ -616,6 +1283,7 @@ function setData(obj, mode) {
   log.info('حالة البيانات:', DB.mode, counts());
 }
 
+const BLOCKS = new Map();
 function group(list, key) { const m = new Map(); list.forEach(o => { const k = sid(o[key]); if (!k) return; if (!m.has(k)) m.set(k, []); m.get(k).push(o); }); return m; }
 const byOrder = (a, b) => toNum(a.order) - toNum(b.order) || 0;
 
@@ -626,10 +1294,14 @@ function buildIndexes() {
   BABS.forEach(b => { const ch = d.chapters.find(c => c.key === b.key || norm(c.title) === norm(b.title)); if (ch && has(ch.chapter_id)) { I.babChapter.set(b.key, ch); I.chapterBab.set(sid(ch.chapter_id), b.key); } });
   I.sectionsByChapter = group(d.sections, 'chapter_id');
   I.issuesByTopic = group(d.issues, 'topic_id');
+  I.headingsByTopic = group(d.headings, 'topic_id');
+  I.headingKids = group(d.headings, 'parent_id');
+  I.summaryBy = new Map(d.summaries.filter(x => has(x.level) && has(x.target_id)).map(x => [x.level + ':' + sid(x.target_id), x]));
+  BLOCKS.clear();
   DB.idx = I;
   I.topicsByChapter = new Map();
   d.topics.forEach(t => { const cid = topicChapterId(t); if (!cid) return; if (!I.topicsByChapter.has(cid)) I.topicsByChapter.set(cid, []); I.topicsByChapter.get(cid).push(t); });
-  [I.sectionsByChapter, I.issuesByTopic, I.topicsByChapter].forEach(m => m.forEach(l => l.sort(byOrder)));
+  [I.sectionsByChapter, I.issuesByTopic, I.topicsByChapter, I.headingsByTopic, I.headingKids].forEach(m => m.forEach(l => l.sort(byOrder)));
 }
 function topicChapterId(t) { if (has(t.chapter_id)) return sid(t.chapter_id); const s = DB.idx.sections.get(sid(t.section_id)); return s ? sid(s.chapter_id) : ''; }
 
@@ -650,7 +1322,7 @@ function issueCtx(is) {
 /* ---------- Data Validation ---------- */
 function validate() {
   const d = DB.raw, I = DB.idx, W = [];
-  const one = { books: 'الكتاب', volumes: 'الجزء', chapters: 'الباب', sections: 'الفصل', topics: 'الموضوع', issues: 'المسألة', evidences: 'الدليل', references: 'المرجع' };
+  const one = { books: 'الكتاب', volumes: 'الجزء', chapters: 'الباب', sections: 'الفصل', topics: 'الموضوع', issues: 'المسألة', evidences: 'الدليل', references: 'المرجع', headings: 'العنوان', summaries: 'الملخص' };
   COLS.forEach(([c, k]) => {
     const seen = new Set();
     d[c].forEach((o, i) => {
@@ -658,10 +1330,15 @@ function validate() {
       const id = sid(o[k]);
       if (seen.has(id)) W.push(`تحذير: معرّف مكرر في ${COL_AR[c]}: ${id}.`);
       seen.add(id);
-      if (['books', 'chapters', 'sections', 'topics', 'issues'].includes(c) && !has(o.title)) W.push(`تحذير: ${one[c]} رقم ${id} بلا عنوان.`);
+      if (['books', 'chapters', 'sections', 'topics', 'issues', 'headings'].includes(c) && !has(o.title)) W.push(`تحذير: ${one[c]} رقم ${id} بلا عنوان.`);
     });
   });
   d.chapters.forEach(ch => { if (has(ch.chapter_id) && !I.chapterBab.has(sid(ch.chapter_id))) W.push(`تنبيه: الباب ${ch.chapter_id} («${ch.title ?? ''}») خارج أبواب العبادات الخمسة ولن يظهر في الواجهة.`); });
+  d.headings.forEach(h => {
+    if (has(h.heading_id) && !I.topics.has(sid(h.topic_id))) W.push(`تحذير: العنوان ${h.heading_id} يشير إلى موضوع غير موجود (${h.topic_id}).`);
+    if (has(h.parent_id) && !I.headings.has(sid(h.parent_id))) W.push(`تحذير: العنوان ${h.heading_id} يشير إلى عنوان أب غير موجود (${h.parent_id}).`);
+    if (has(h.issue_id) && !I.issues.has(sid(h.issue_id))) W.push(`تحذير: العنوان ${h.heading_id} يشير إلى مسألة غير موجودة (${h.issue_id}).`);
+  });
   d.volumes.forEach(v => { if (has(v.book_id) && !I.books.has(sid(v.book_id))) W.push(`تحذير: الجزء ${v.volume_id} يشير إلى كتاب غير موجود (${v.book_id}).`); });
   d.sections.forEach(s => {
     if (!has(s.chapter_id)) W.push(`تحذير: الفصل ${s.section_id} غير مرتبط بباب.`);
@@ -762,6 +1439,8 @@ const Api = {
   getReferences: () => DB.raw.references,
   getIssueById: id => DB.idx.issues.get(sid(id)) || null,
   getTopicById: id => DB.idx.topics.get(sid(id)) || null,
+  getHeadings: () => DB.raw.headings,
+  getHeadingById: id => DB.idx.headings.get(sid(id)) || null,
   searchIssues: (q, filters = {}) => runSearch(q, filters)
 };
 window.FiqhApi = Api; // للمطور: يمكن استدعاؤها من Console
@@ -842,6 +1521,8 @@ const SCHEMA_EXAMPLE = {
   issues: [{ issue_id: 'i1', topic_id: 't1', title: '...', original_text: '...', ruling: '...', explanation: '...', notes: '...',
     keywords: ['...'], evidence_ids: ['e1'], reference_ids: ['r1'], related_issue_ids: [], volume_id: 'v1', page: '...', order: 1,
     khilaf: [{ qawl: '...', attributed_to: '...', reference_id: 'r1' }], terms: [{ term: '...', simple: '...' }] }],
+  summaries: [{ summary_id: 's_h1', level: 'heading | topic', target_id: 'h1', ringkas: '... (ملخص من نص الكتاب فقط)', masail: ['...'], source: 'ai_from_source' }],
+  headings: [{ heading_id: 'h1', topic_id: 't1', parent_id: null, level: 1, title: '... (من فهرس الكتاب)', order: 1, issue_id: 'i1', offset: 0, located: true, volume_id: 'v1', page: '...' }],
   evidences: [{ evidence_id: 'e1', type: 'quran | hadith | other', text: '...', surah: '...', ayah: '...',
     narrator: '...', collection: '...', kitab: '...', bab: '...', hadith_number: '...', reference_id: 'r1' }],
   references: [{ reference_id: 'r1', book_id: 'b1', volume_id: 'v1', chapter_title: '...', section_title: '...', page: '...',
@@ -923,49 +1604,56 @@ function viewHome() {
   const C = counts();
   const cards = BABS.map((b, i) => {
     const ch = DB.idx.babChapter.get(b.key), n = babCounts(b.key);
-    const desc = ch && has(ch.description) ? esc(ch.description) : (n.topics ? MSG.NA : 'لم تُضف بيانات هذا الباب بعد.');
-    return `<a class="bab ${n.topics ? '' : 'is-empty'}" href="#/bab/${b.key}">
-      <span class="bab-no" aria-hidden="true">${fmt(i + 1)}</span>
-      <span class="bab-icon" aria-hidden="true">${b.icon}</span>
-      <h3>${b.title}</h3><p>${desc}</p>
-      <div class="bab-meta"><span class="pill">الموضوعات: <b>${fmt(n.topics)}</b></span><span class="pill">المسائل: <b>${fmt(n.issues)}</b></span></div>
-      <span class="enter">دخول القسم</span></a>`;
+    const desc = ch && has(ch.description) ? esc(ch.description) : (n.topics ? '' : 'لم تُضف بيانات هذا الباب بعد.');
+    return `<article class="bab2 ab ab-${b.key}">
+      <span class="no" aria-hidden="true">${fmt(i + 1)}</span><span class="ico" aria-hidden="true">${b.icon}</span>
+      <h3><a class="stretch" href="#/bab/${b.key}">${b.title}</a></h3>
+      ${desc ? `<p>${desc}</p>` : ''}
+      <div class="meta"><span>الموضوعات ${fmt(n.topics)}</span><span>المسائل ${fmt(n.issues)}</span></div>
+      <div class="go">${n.issues ? `<a class="gbtn solid" href="#/slides/bab/${b.key}">▶ شرائح</a>` : ''}<a class="gbtn" href="#/bab/${b.key}">تصفّح الباب</a></div></article>`;
   }).join('');
   const stats = [['إجمالي الأبواب', C.chapters], ['إجمالي الموضوعات', C.topics], ['إجمالي المسائل', C.issues], ['إجمالي الأدلة', C.evidences], ['إجمالي المراجع', C.references], ['إجمالي الأجزاء', C.volumes], ['إجمالي المصادر', C.books]]
     .map(([l, v]) => `<div><dt>${l}</dt><dd>${fmt(v)}</dd></div>`).join('');
   const recent = store.get('recent', []).filter(r => (r.k === 'issue' ? DB.idx.issues : DB.idx.topics).has(r.id)).slice(0, 5);
   setView(`
-    <section class="hero">
-      <h1 class="hero-title">الفقه المنهجي</h1>
-      <p class="hero-sub">على مذهب الإمام الشافعي</p>
-      ${orn('short')}
-      <p class="hero-part">قسم العبادات</p>
-      <p class="hero-desc">موسوعة رقمية تعليمية لفقه العبادات على مذهب الإمام الشافعي، تعتمد على مصادر فقهية موثقة وقابلة للبحث والاستعراض.</p>
-      <form class="hero-search" data-form="quick" role="search">
+    <section class="hero2">
+      <div class="deco" aria-hidden="true">${STAR}</div>
+      <span class="kick">قسم العبادات</span>
+      <h1>الفقه المنهجي</h1>
+      <p class="sub">على مذهب الإمام الشافعي</p>
+      <p class="desc">موسوعة رقمية تعليمية لفقه العبادات على مذهب الإمام الشافعي، نصوصها من الكتاب نفسه كما هي، مع عرض شرائح لكل باب وموضوع وصفحة.</p>
+      <form class="hs" data-form="quick" role="search">
         <input type="search" name="q" placeholder="ابحث عن مسألة أو موضوع…" aria-label="بحث">
         <button class="btn" type="submit">بحث</button>
       </form>
+      <div class="hero-ctas"><a class="gbtn solid" href="#/studio">🎞️ استوديو الشرائح</a><a class="gbtn" href="#/refs">المراجع</a></div>
     </section>
     ${connectionNotice()}
     <h2 class="h2">أبواب العبادات</h2>
-    <div class="babs">${cards}</div>
+    <div class="babs2">${cards}</div>
     <h2 class="h2">لوحة الإحصاءات <small>محسوبة من البيانات</small></h2>
     <dl class="stats">${stats}</dl>
     ${recent.length ? `<h2 class="h2">آخر ما قرأت</h2><div class="cards">${recent.map(r => `<div class="card"><h3><a href="#/${r.k}/${encodeURIComponent(r.id)}">${esc(r.t)}</a></h3></div>`).join('')}</div>` : ''}
   `);
 }
 
-function topicCard(t) {
+function pageRange(issues) {
+  const pg = issues.map(i => i.page).filter(has);
+  if (!pg.length) return '';
+  const vol = DB.idx.volumes.get(sid(issues[0].volume_id));
+  const r = pg.length > 1 && pg[0] !== pg[pg.length - 1] ? `${pg[0]}–${pg[pg.length - 1]}` : pg[0];
+  return [vol ? volLabel(vol) : '', `صـ ${r}`].filter(Boolean).join(' · ');
+}
+function topicCard(t, n, key) {
   const issues = DB.idx.issuesByTopic.get(sid(t.topic_id)) || [];
-  let book = null;
-  const rid = arr(t.reference_ids)[0] ?? issues.map(i => arr(i.reference_ids)[0]).find(has);
-  if (has(rid)) { const r = DB.idx.references.get(sid(rid)); if (r) book = DB.idx.books.get(sid(r.book_id)); }
   const def = has(t.definition) ? String(t.definition) : '';
-  return `<div class="card">
+  const rng = pageRange(issues);
+  return `<div class="tcard">
+    <span class="tn" aria-hidden="true">${fmt(n)}</span>
     <h3><a href="#/topic/${encodeURIComponent(t.topic_id)}">${esc(t.title)}</a></h3>
-    ${def ? `<p class="def">${esc(def.length > 160 ? def.slice(0, 160) + '…' : def)}</p>` : ''}
-    <div class="row"><span class="pill">المسائل: <b>${fmt(issues.length)}</b></span>${book ? `<span class="pill">المصدر: <b>${esc(book.title)}</b></span>` : ''}
-    <a class="btn sm" href="#/topic/${encodeURIComponent(t.topic_id)}">عرض الموضوع</a></div></div>`;
+    ${def ? `<p class="def na">${esc(def.length > 160 ? def.slice(0, 160) + '…' : def)}</p>` : ''}
+    <div class="row">${issues.length ? `<span class="pill">المسائل <b>${fmt(issues.length)}</b></span>` : ''}${rng ? `<span class="pill">${esc(rng)}</span>` : ''}
+    ${issues.length ? `<a class="play" href="#/slides/topic/${encodeURIComponent(t.topic_id)}">▶ شرائح</a>` : ''}</div></div>`;
 }
 
 function viewBab(key) {
@@ -979,23 +1667,24 @@ function viewBab(key) {
   else {
     const topics = DB.idx.topicsByChapter.get(sid(ch.chapter_id)) || [];
     const secs = DB.idx.sectionsByChapter.get(sid(ch.chapter_id)) || [];
-    const used = new Set();
+    const used = new Set(); let k = 0;
     body = secs.map(s => {
       const ts = topics.filter(t => sid(t.section_id) === sid(s.section_id));
       ts.forEach(t => used.add(t));
-      return ts.length ? `<h3 class="sec-title">${esc(s.title)}</h3><div class="cards">${ts.map(topicCard).join('')}</div>` : '';
+      return ts.length ? `<h3 class="sec-title">${esc(s.title)}</h3><div class="tgrid">${ts.map(t => topicCard(t, ++k)).join('')}</div>` : '';
     }).join('');
     const rest = topics.filter(t => !used.has(t));
-    if (rest.length) body += (secs.length ? '<h3 class="sec-title">موضوعات أخرى</h3>' : '') + `<div class="cards">${rest.map(topicCard).join('')}</div>`;
+    if (rest.length) body += (secs.length ? '<h3 class="sec-title">موضوعات أخرى</h3>' : '') + `<div class="tgrid">${rest.map(t => topicCard(t, ++k)).join('')}</div>`;
   }
-  setView(`
-    <header class="page-head head-row"><div><h1>${b.icon} ${b.title}</h1>
-      <p>${ch && has(ch.description) ? esc(ch.description) : (ch ? MSG.NA : '')}</p></div>
-      <div class="cta-row" style="margin:0">${n.issues ? `<a class="btn sm" href="#/studio?bab=${b.key}">🎞️ عرض شرائح</a>` : ''}${canEdit() ? `<a class="btn ghost sm" href="#/edit?bab=${b.key}">➕ إضافة مسألة</a>` : ''}</div></header>
+  setView(`<div class="ab ab-${b.key}">
+    <header class="bab-hero"><h1>${b.icon} ${b.title}</h1>
+      <p>${ch && has(ch.description) ? esc(ch.description) : (ch ? MSG.NA : '')}</p>
+      <div class="hero-ctas" style="margin:0">${n.issues ? `<a class="gbtn solid" href="#/slides/bab/${b.key}">▶ عرض شرائح الباب</a><a class="gbtn" href="#/tree/bab/${b.key}">🌳 تشجير</a><a class="gbtn" href="#/cards/bab/${b.key}">🧠 بطاقات</a><a class="gbtn" href="#/studio?bab=${b.key}">🎞️ استوديو</a>` : ''}${canEdit() ? `<a class="gbtn" href="#/edit?bab=${b.key}">➕ إضافة مسألة</a>` : ''}</div>
+      <div class="meta" style="display:flex;gap:.4rem;margin-top:.9rem"><span class="gbtn" style="height:30px;font-size:.82rem">الموضوعات ${fmt(n.topics)}</span><span class="gbtn" style="height:30px;font-size:.82rem">المسائل ${fmt(n.issues)}</span></div></header>
     ${connectionNotice()}
-    <div class="infobar"><span class="pill">الموضوعات: <b>${fmt(n.topics)}</b></span><span class="pill">المسائل: <b>${fmt(n.issues)}</b></span></div>
+    ${summaryBab(b.key)}
     <h2 class="h2">فهرس الموضوعات</h2>
-    ${body}`);
+    ${body}</div>`);
 }
 
 const TOPIC_LISTS = [['conditions', 'الشروط', 'الشرط'], ['arkan', 'الأركان', 'الركن'], ['sunan', 'السنن', 'السنة'], ['makruhat', 'المكروهات', 'المكروه'], ['mubtilat', 'المبطلات', 'المبطل']];
@@ -1018,20 +1707,27 @@ function viewTopic(id) {
   recordRecent('topic', t.topic_id, t.title);
   const issues = DB.idx.issuesByTopic.get(sid(t.topic_id)) || [];
   const addQ = new URLSearchParams({ bab: key || '', topic: t.title || '' }); if (sec) addQ.set('section', sec.title || '');
-  let html = `<header class="page-head head-row"><h1>${esc(t.title)}</h1><div class="cta-row" style="margin:0">${key && issues.length ? `<a class="btn sm" href="#/studio?bab=${key}&topic=${encodeURIComponent(t.topic_id)}">🎞️ عرض شرائح</a>` : ''}${canEdit() && key ? `<a class="btn ghost sm" href="#/edit?${addQ}">➕ إضافة مسألة هنا</a>` : ''}</div></header>${connectionNotice()}`;
+  let html = `<header class="page-head head-row"><h1>${esc(t.title)}</h1><div class="cta-row" style="margin:0">${issues.length ? `<a class="btn sm" href="#/slides/topic/${encodeURIComponent(t.topic_id)}">▶ عرض شرائح الموضوع</a>` : ''}${topicHeads(t.topic_id).length ? `<a class="btn ghost sm" href="#/tree/topic/${encodeURIComponent(t.topic_id)}">🌳 تشجير</a><a class="btn ghost sm" href="#/cards/topic/${encodeURIComponent(t.topic_id)}">🧠 بطاقات</a>` : ''}${key && issues.length ? `<a class="btn ghost sm" href="#/studio?bab=${key}&topic=${encodeURIComponent(t.topic_id)}">🎞️ استوديو</a>` : ''}${canEdit() && key ? `<a class="btn ghost sm" href="#/edit?${addQ}">➕ إضافة مسألة هنا</a>` : ''}</div></header>${connectionNotice()}`;
   if (has(t.definition)) html += blk('التعريف', paras(t.definition));
   if (has(t.ruling)) html += blk('الحكم', paras(t.ruling));
   const evs = arr(t.evidence_ids).map(e => DB.idx.evidences.get(sid(e))).filter(Boolean);
   if (evs.length) html += blk('الأدلة', evs.map(evidenceCard).join(''));
   TOPIC_LISTS.forEach(([k, label, col]) => { const tb = listTable(t[k], col); if (tb) html += blk(label, tb); });
-  if (issues.length) html += `<h2 class="h2">المسائل المتعلقة</h2><div class="cards">${issues.map(is => `<div class="card"><h3><a href="#/issue/${encodeURIComponent(is.issue_id)}">${esc(is.title)}</a></h3><div class="row">${has(is.page) ? `<span class="pill">صـ ${esc(is.page)}</span>` : ''}<a class="btn sm" href="#/issue/${encodeURIComponent(is.issue_id)}">عرض المسألة</a></div></div>`).join('')}</div>`;
+  if (topicHeads(t.topic_id).length) html += summaryTopic(t);
+  if (issues.length) html += `<h2 class="h2">صفحات الموضوع <small>${fmt(issues.length)}</small></h2><div class="pgs">${issues.map(is => {
+    const ex = excerpt(splitFoot(is.original_text).body.replace(/\s+/g, ' '), 190);
+    return `<div class="pg"><span class="pn"><span>${has(is.page) ? `<small>صـ</small>${esc(is.page)}` : '—'}</span></span>
+      <div><p class="pg-ex">${ex ? esc(ex) : MSG.NA_SHORT}</p></div>
+      <a class="stretch" href="#/issue/${encodeURIComponent(is.issue_id)}" aria-label="${esc(is.title)}"></a>
+      <a class="play btn sm" href="#/slides/issue/${encodeURIComponent(is.issue_id)}" aria-label="عرض شرائح الصفحة">▶</a></div>`;
+  }).join('')}</div>`;
   const rids = new Set(arr(t.reference_ids).map(sid));
   issues.forEach(is => arr(is.reference_ids).forEach(r => rids.add(sid(r))));
   TOPIC_LISTS.forEach(([k]) => arr(t[k]).forEach(it => it && has(it.reference_id) && rids.add(sid(it.reference_id))));
   const refs = [...rids].map(r => DB.idx.references.get(r)).filter(Boolean);
   if (refs.length) html += `<h2 class="h2">المصادر والمراجع</h2>` + blk('📚 المصادر', refs.map(r => `<div class="src-card">${citeChip(r.reference_id)}${refFields(r)}</div>`).join(''));
   if (!has(t.definition) && !has(t.ruling) && !evs.length && !issues.length) html += emptyState('لا توجد بيانات تفصيلية لهذا الموضوع في قاعدة البيانات الحالية.');
-  setView(html);
+  setView(`<div class="ab${key ? ' ab-' + key : ''}">${html}</div>`);
 }
 
 function evidenceCard(e) {
@@ -1055,7 +1751,8 @@ function viewIssue(id) {
   const c = issueCtx(is);
   currentNav = c.babKey ? 'bab:' + c.babKey : '';
   crumbs([HOME, IBADAT, babCrumb(c.babKey), c.section ? { label: c.section.title } : null,
-    c.topic ? { label: c.topic.title, href: '#/topic/' + encodeURIComponent(c.topic.topic_id) } : null, { label: is.title }].filter(Boolean));
+    c.topic ? { label: c.topic.title, href: '#/topic/' + encodeURIComponent(c.topic.topic_id) } : null,
+    { label: c.topic && has(is.page) && String(is.title).startsWith(String(c.topic.title) + ' — ص') ? 'صفحة ' + is.page : is.title }].filter(Boolean));
   recordRecent('issue', is.issue_id, is.title);
   const favs = store.get('favs', []), isFav = favs.includes(sid(is.issue_id));
   const sibs = c.topic ? (DB.idx.issuesByTopic.get(sid(c.topic.topic_id)) || []) : [];
@@ -1064,9 +1761,15 @@ function viewIssue(id) {
     .filter(([, v]) => has(v)).map(([l, v]) => `<span class="pill">${l}: <b>${esc(v)}</b></span>`).join('');
   const chips = c.refs.map(r => citeChip(r.reference_id)).join('');
   const evs = arr(is.evidence_ids).map(e => DB.idx.evidences.get(sid(e))).filter(Boolean);
-  let html = `<article class="issue">
-    <header class="issue-head"><h1>${esc(is.title)}</h1>${info ? `<div class="infobar">${info}</div>` : ''}
+  const derived = c.topic && has(is.page) && String(is.title).startsWith(String(c.topic.title) + ' — ص');
+  const heading = derived
+    ? `<a class="kicker-lnk" href="#/topic/${encodeURIComponent(c.topic.topic_id)}">${esc(c.topic.title)}</a><h1>صفحة ${esc(is.page)}${c.volume ? ' — ' + esc(volLabel(c.volume)) : ''}</h1>`
+    : `<h1>${esc(is.title)}</h1>`;
+  const txt = splitFoot(is.original_text);
+  let html = `<article class="issue ab${c.babKey ? ' ab-' + c.babKey : ''}">
+    <header class="issue-head">${heading}${info ? `<div class="infobar">${info}</div>` : ''}${issueHeadingChips(is)}
       <div class="actions">
+        <a class="btn" href="#/slides/issue/${encodeURIComponent(is.issue_id)}">▶ شرائح الصفحة</a>
         <button class="btn ghost" data-act="fav" data-id="${esc(is.issue_id)}" aria-pressed="${isFav}">${isFav ? '⭐ في المفضلة' : '⭐ إضافة إلى المفضلة'}</button>
         <button class="btn ghost" data-act="copy" data-id="${esc(is.issue_id)}">📋 نسخ</button>
         <button class="btn ghost" data-act="print">🖨️ طباعة</button>
@@ -1075,7 +1778,8 @@ function viewIssue(id) {
         <span class="size-ctl" role="group" aria-label="حجم خط النص"><button data-act="fs-down" aria-label="تصغير الخط">أ−</button><button data-act="fs-up" aria-label="تكبير الخط">أ+</button></span>
       </div></header>
     ${connectionNotice()}`;
-  html += blk('📖 النص الأصلي', has(is.original_text) ? `<div class="nass">${paras(is.original_text)}</div>${chips ? `<div class="cites">${chips}</div>` : ''}` : `<p class="na">${MSG.NA}</p>`, 'source-text');
+  html += blk('📖 النص الأصلي', has(txt.body) ? `<div class="nass">${paras(txt.body)}</div>${chips ? `<div class="cites">${chips}</div>` : ''}` : `<p class="na">${MSG.NA}</p>`, 'source-text');
+  if (has(txt.foot)) html += blk('الحواشي', `<div class="nass">${paras(txt.foot)}</div>`, 'foot');
   html += blk('⚖️ الحكم', has(is.ruling) ? paras(is.ruling) : `<p class="na">${MSG.NA}</p>`);
   html += blk('الأدلة', evs.length ? evs.map(evidenceCard).join('') : `<p class="na">${MSG.NA}</p>`);
   if (has(is.explanation)) html += blk('💡 شرح وتوضيح', paras(is.explanation), 'sharh');
@@ -1145,7 +1849,7 @@ function viewSearch(params) {
     const total = rows.length, start = (page - 1) * CONFIG.PAGE_SIZE, slice = rows.slice(start, start + CONFIG.PAGE_SIZE);
     const base = {}; if (q) base.q = q; Object.entries(F).forEach(([k, v]) => v && (base[k] = v));
     if (!total) results = emptyState('لا توجد نتائج مطابقة في قاعدة البيانات الحالية.', 'جرّب كلمة أقصر أو امسح الفلاتر.');
-    else results = `<p class="res-count">عرض ${fmt(start + 1)}–${fmt(start + slice.length)} من ${fmt(total)} نتيجة</p><div class="cards">` +
+    else results = headingMatches(terms) + `<p class="res-count">عرض ${fmt(start + 1)}–${fmt(start + slice.length)} من ${fmt(total)} نتيجة</p><div class="cards">` +
       slice.map(r => {
         const is = r.is, c = r.c;
         const meta = [['الباب', c.chapter?.title], ['الفصل', c.section?.title], ['الجزء', c.volume ? volLabel(c.volume) : null], ['الصفحة', has(c.page) ? `صـ ${c.page}` : null], ['المصدر', c.book?.title]]
@@ -1270,6 +1974,342 @@ function viewData() {
       <p style="margin-top:.5rem"><button class="btn ghost sm" data-act="copy-schema">📋 نسخ القالب</button></p>`)}
     ${blk('طبقة API', `<p>الواجهة لا تقرأ البيانات إلا عبر <code>FiqhApi</code>: getBooks، getVolumes، getChapters، getSections، getTopics، getIssues، getEvidences، getReferences، getIssueById، searchIssues. عند الانتقال إلى Backend تُستبدل هذه الدوال فقط. لا تضع أي اسم مستخدم أو كلمة مرور أو مفتاح سري في هذا الملف.</p>`)}
   `);
+}
+
+/* ======================= العناوين الفرعية: الهيكل · الملخص · التشجير · البطاقات =======================
+   العناوين (باب ← موضوع ← عنوان فرعي ← فرعي ثانوٍ) مأخوذة من فهرس الكتاب نفسه (حقل headings)،
+   ونصوصها مقاطع حرفية من صفحات الكتاب بين موضع عنوان وموضع العنوان التالي. لا يُكتب هنا أي محتوى فقهي جديد. */
+const BAB_COL = { taharah: ['#1F6F8B', '#0B3647'], salah: ['#1B6B4C', '#0A3426'], zakah: ['#9A7420', '#4A3510'], siyam: ['#5E4D93', '#271F4D'], hajj: ['#A8502F', '#55220F'] };
+const LEVEL_AR = ['', 'عنوان فرعي', 'عنوان فرعي ثانوي', 'عنوان فرعي ثالث'];
+const SUMMARY_NOTE = 'ملخص هيكلي: العناوين من فهرس الكتاب، والمقتطفات نصٌّ حرفي من الكتاب (ليست صياغة جديدة).';
+const enc = encodeURIComponent;
+const topicIssues = t => DB.idx.issuesByTopic.get(sid(t.topic_id)) || [];
+const topicHeads = tid => DB.idx.headingsByTopic.get(sid(tid)) || [];
+const headKids = h => DB.idx.headingKids.get(sid(h.heading_id)) || [];
+const babOfTopic = t => DB.idx.chapterBab.get(topicChapterId(t)) || '';
+function headPath(h) { const out = []; let x = h; while (x) { out.unshift(x); x = has(x.parent_id) ? DB.idx.headings.get(sid(x.parent_id)) : null; } return out; }
+function headPage(h) {
+  const is = DB.idx.issues.get(sid(h.issue_id)); if (!is) return '';
+  const v = DB.idx.volumes.get(sid(is.volume_id));
+  return [v ? volLabel(v) : '', has(is.page) ? `صـ ${is.page}` : ''].filter(Boolean).join(' · ');
+}
+const headLink = h => `#/section/${enc(h.heading_id)}`;
+
+function splitNotes(foot) {
+  const out = [];
+  String(foot || '').split('\n').forEach(l => {
+    const m = /^\s*(\([^)\s]{1,6}\))/.exec(l);
+    if (m || !out.length) out.push({ mark: m ? m[1] : '', text: l.trim() }); else out[out.length - 1].text += '\n' + l.trim();
+  });
+  return out.filter(n => n.text);
+}
+/* يقطع نص موضوع إلى كتل: كتلة تمهيدية (قبل أول عنوان) ثم كتلة لكل عنوان (نصه الخاص إلى العنوان التالي).
+   كل كتلة: { h, segs:[{ is, text, notes[] }] } — وتُنسب الحاشية إلى المقطع الذي يذكر رقمها، والباقي إلى آخر مقطع في صفحتها. */
+function topicBlocks(t) {
+  const key = sid(t.topic_id); if (BLOCKS.has(key)) return BLOCKS.get(key);
+  const iss = topicIssues(t), hs = topicHeads(t.topic_id), parts = iss.map(is => splitFoot(is.original_text));
+  const cuts = [{ h: null, k: 0, off: 0 }]; let pk = 0, po = 0;
+  hs.forEach(h => {
+    let k = iss.findIndex(i => sid(i.issue_id) === sid(h.issue_id)), off = +h.offset || 0;
+    if (k < 0) k = pk;
+    if (k < pk || (k === pk && off < po)) { k = pk; off = po; }
+    cuts.push({ h, k, off }); pk = k; po = off;
+  });
+  const blocks = cuts.map((c, i) => {
+    const nx = cuts[i + 1], endK = nx ? nx.k : iss.length - 1, segs = [];
+    for (let k = c.k; k <= endK && k < iss.length; k++) {
+      const body = parts[k].body, a = k === c.k ? c.off : 0, z = nx && k === endK ? nx.off : body.length;
+      const text = body.slice(a, z).trim();
+      if (text) segs.push({ is: iss[k], text, notes: [] });
+    }
+    return { h: c.h, segs };
+  });
+  iss.forEach((is, k) => {
+    const notes = splitNotes(parts[k].foot); if (!notes.length) return;
+    const mine = []; blocks.forEach(b => b.segs.forEach(sg => { if (sg.is === is) mine.push(sg); }));
+    if (!mine.length) return;
+    notes.forEach(n => (((n.mark && mine.find(m => m.text.includes(n.mark))) || mine[mine.length - 1]).notes.push(n.text)));
+  });
+  const res = blocks.filter(b => b.segs.length);
+  BLOCKS.set(key, res); return res;
+}
+/* كتل عنوان وأحفاده (inclusive) أو كتلته وحدها */
+function sectionBlocks(h, inclusive = true) {
+  const t = Api.getTopicById(h.topic_id); if (!t) return [];
+  const bl = topicBlocks(t), i = bl.findIndex(b => b.h === h); if (i < 0) return [];
+  if (!inclusive) return [bl[i]];
+  let j = i + 1; while (j < bl.length && !(bl[j].h && bl[j].h.level <= h.level)) j++;
+  return bl.slice(i, j);
+}
+const blockText = b => b.segs.map(s => s.text).join('\n');
+function ownText(b) { // بلا سطر العنوان نفسه (للعرض فقط)
+  let lines = blockText(b).split('\n');
+  if (b.h && lines.length > 1 && lines[0].length < b.h.title.length + 40 && norm(lines[0]).includes(norm(b.h.title))) lines = lines.slice(1);
+  return lines.join('\n').trim();
+}
+function leadOf(h, max = 230) {
+  const b = sectionBlocks(h, false)[0]; if (!b) return '';
+  return excerpt(ownText(b).replace(/\s+/g, ' '), max);
+}
+function topicStats(t) { const hs = topicHeads(t.topic_id); return { pages: topicIssues(t).length, subs: hs.length, top: hs.filter(h => !h.parent_id).length }; }
+const statStrip = items => `<div class="statstrip">${items.filter(Boolean).map(([n, l]) => `<div><b>${fmt(n)}</b><span>${l}</span></div>`).join('')}</div>`;
+const sumNote = () => `<p class="na sm">${SUMMARY_NOTE}</p>`;
+const AI_NOTE = 'ملخص مصوغ آلياً من نص الكتاب وحده؛ وتحقق الفحص الآلي من أن ألفاظه واردة في النص. المرجع هو النص الأصلي — راجعه قبل الاعتماد.';
+const summaryOf = (level, id) => DB.idx.summaryBy.get(level + ':' + sid(id)) || null;
+/* الأدلة تُنتقى من نص الكتاب نفسه (حرفياً): آيات بين ﴿ ﴾ مع مرجعها، وأسطر الأحاديث («روى/رواه/أخرجه») */
+function extractDalil(text) {
+  const out = [], seen = new Set(); text = String(text || '');
+  const push = d => { const k = norm(d.text).slice(0, 50); if (k && !seen.has(k)) { seen.add(k); out.push(d); } };
+  const rq = /﴿([^﴾]{3,420})﴾\s*(?:[\[\(]([^\]\)\n]{2,40})[\]\)])?/g; let m;
+  while ((m = rq.exec(text))) push({ kind: 'quran', text: m[1].trim(), ref: m[2] ? m[2].trim() : '' });
+  text.split('\n').forEach(l => {
+    l = l.trim(); if (l.length < 30 || !/(روى|رواه|أخرجه|رواها)/.test(l)) return;
+    // متن الحديث: نص بين علامتي تنصيص يسبقه «:» أو فيه ﷺ، مع «قال …» قبله وإحالته بعده — كلّه مقطع حرفي من السطر
+    let best = null; const rx = /"[^"]{8,420}"/g; let q;
+    while ((q = rx.exec(l))) { const inner = q[0]; if (/(رواه|روى)/.test(inner)) continue; if (/[:：]\s*$/.test(l.slice(Math.max(0, q.index - 3), q.index)) || inner.includes('ﷺ')) { best = q; break; } }
+    if (best && !/^و?روى/.test(l)) {
+      const back = l.slice(Math.max(0, best.index - 80), best.index), k = back.lastIndexOf('قال');
+      let a = k > -1 ? best.index - back.length + k : best.index;
+      let z = best.index + best[0].length; const tail = /^\s*[\[\(][^\]\)]{2,90}[\]\)]/.exec(l.slice(z)); if (tail) z += tail[0].length;
+      push({ kind: 'hadith', text: excerpt(l.slice(a, z).trim(), 320), ref: '' });
+    } else {
+      const m2 = /(و?روى|رواه|أخرجه|رواها)/.exec(l), back = l.slice(0, m2.index), cut = Math.max(back.lastIndexOf('.'), back.lastIndexOf('؛'));
+      push({ kind: 'hadith', text: excerpt(l.slice(cut > -1 && m2.index - cut < 160 ? cut + 1 : Math.max(0, back.lastIndexOf(' ', Math.max(0, m2.index - 120)) + 1)).trim(), 300), ref: '' });
+    }
+  });
+  return out;
+}
+const MS_RX = /^\s*(?:[٠-٩0-9]+\s*[ـ\-\.\)]|[أ-ي]\s*ـ|(?:أولاً|ثانياً|ثالثاً|رابعاً|خامساً|سادساً|سابعاً|ثامناً|تاسعاً|عاشراً)\s*[:ـ\-]?)/;
+const masailFallback = text => String(text || '').split('\n').filter(l => MS_RX.test(l) && l.length > 12).map(l => excerpt(l.trim(), 120));
+function headInfo(h) {
+  const b = sectionBlocks(h, false)[0], own = b ? ownText(b) : '', sm = summaryOf('heading', h.heading_id), dal = extractDalil(own);
+  const ms = sm && sm.masail.length ? sm.masail : masailFallback(own);
+  return { ringkas: sm ? sm.ringkas : leadOf(h, 200), ai: !!sm, masail: ms.slice(0, 3), masailAll: ms, dalil: dal.slice(0, 2), dalilAll: dal, pg: headPage(h) };
+}
+function topicInfo(t) {
+  const sm = summaryOf('topic', t.topic_id), s = topicStats(t);
+  return { ringkas: sm ? sm.ringkas : `${fmt(s.top)} عنواناً رئيساً، ${fmt(s.subs)} عنواناً فرعياً في ${fmt(s.pages)} صفحة`, ai: !!sm, masail: sm ? sm.masail.slice(0, 3) : [], masailAll: sm ? sm.masail : [], dalil: [], dalilAll: [], pg: pageRange(topicIssues(t)) };
+}
+const dalilHtml = list => list.length ? `<div class="dalil-list">${list.map(d => `<div class="dalil ${d.kind}"><b>${d.kind === 'quran' ? '📖 من القرآن الكريم' : '📜 من السنة'}</b><div class="nass">${d.kind === 'quran' ? '﴿' + esc(d.text) + '﴾' : esc(d.text)}</div>${d.ref ? `<small>${esc(d.ref)}</small>` : ''}</div>`).join('')}</div>` : '';
+const aiBlock = (sm, withNote = true) => sm ? `<div class="aisum"><p class="lead">${esc(sm.ringkas)}</p>${sm.masail.length ? `<div class="ms-t">⚖️ المسائل والأحكام</div><ul class="mlist">${sm.masail.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}${withNote ? `<p class="na sm">${AI_NOTE}</p>` : ''}</div>` : '';
+
+function outlineList(hs, depth = 1) {
+  if (!hs.length) return '';
+  return `<ol class="outline l${depth}">${hs.map(h => `<li><a href="${headLink(h)}">${esc(h.title)}</a>${headPage(h) ? `<small>${esc(headPage(h))}</small>` : ''}${outlineList(headKids(h), depth + 1)}</li>`).join('')}</ol>`;
+}
+function summaryBab(key) {
+  const ts = babTopicsOrdered(key).map(x => x.t); if (!ts.length) return '';
+  const st = ts.map(topicStats), sum = k => st.reduce((n, s) => n + s[k], 0);
+  return `<section class="blk sum"><h2>🧭 ملخص الباب <small>بابٌ ← موضوعاتٌ ← عناوين فرعية</small></h2><div class="body">
+    ${statStrip([[ts.length, 'موضوعاً'], [sum('subs'), 'عنواناً فرعياً'], [sum('pages'), 'صفحة من الكتاب']])}
+    <div class="sum-topics">${ts.map((t, i) => {
+      const tops = topicHeads(t.topic_id).filter(h => !h.parent_id);
+      const tsm = summaryOf('topic', t.topic_id);
+      return `<details class="sum-t"${i === 0 ? ' open' : ''}><summary><span class="tn">${fmt(i + 1)}</span><a href="#/topic/${enc(t.topic_id)}">${esc(t.title)}</a><small>${fmt(st[i].subs)} عنواناً</small></summary>${tsm ? `<p class="lead">${esc(tsm.ringkas)} <em class="aitag">ملخص آلي</em></p>` : ''}${tops.length ? outlineList(tops) : '<p class="na sm">لا عناوين فرعية في فهرس الكتاب لهذا الموضوع.</p>'}</details>`;
+    }).join('')}</div>${DB.raw.summaries.length ? `<p class="na sm">${AI_NOTE}</p>` : ''}${sumNote()}</div></section>`;
+}
+function summaryTopic(t) {
+  const hs = topicHeads(t.topic_id), tops = hs.filter(h => !h.parent_id), s = topicStats(t);
+  const list = tops.length ? `<ol class="sumlist">${tops.map(h => {
+    const sm = summaryOf('heading', h.heading_id), lead = sm ? sm.ringkas : leadOf(h, 200), ks = headKids(h);
+    return `<li><div class="sl-h"><a href="${headLink(h)}">${esc(h.title)}</a>${headPage(h) ? `<small>${esc(headPage(h))}</small>` : ''}${sm ? '<em class="aitag">ملخص آلي</em>' : ''}</div>
+      ${lead ? `<p class="lead">${esc(lead)}</p>` : ''}${ks.length ? `<div class="chipline">${ks.map(k => `<a class="chip-l" href="${headLink(k)}">${esc(k.title)}</a>`).join('')}</div>` : ''}</li>`;
+  }).join('')}</ol>` : '<p class="na">لا عناوين فرعية لهذا الموضوع في فهرس الكتاب.</p>';
+  return `<section class="blk sum"><h2>🧭 ملخص الموضوع <small>موضوعٌ ← عناوين فرعية</small></h2><div class="body">
+    ${statStrip([[s.top, 'عنواناً رئيساً'], [s.subs, 'عنواناً فرعياً (الكل)'], [s.pages, 'صفحة']])}${aiBlock(summaryOf('topic', t.topic_id), false)}${list}${summaryOf('topic', t.topic_id) ? `<p class="na sm">${AI_NOTE}</p>` : ''}${sumNote()}</div></section>`;
+}
+function summarySection(h) {
+  const ks = headKids(h), sm = summaryOf('heading', h.heading_id), lead = sm ? '' : leadOf(h, 320), info = headInfo(h);
+  return `<section class="blk sum"><h2>🧭 ملخص العنوان</h2><div class="body">
+    ${aiBlock(sm)}${lead ? `<p class="lead">${esc(lead)}</p>` : ''}${!sm && info.masailAll.length ? `<div class="ms-t">⚖️ مسائل مذكورة في النص</div><ul class="mlist">${info.masailAll.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}${info.dalilAll.length ? `<div class="ms-t">📚 الأدلة في هذا العنوان <small>(نص الكتاب)</small></div>${dalilHtml(info.dalilAll)}` : ''}${ks.length ? `<div class="sec-title" style="margin-top:.4rem">العناوين التي تحته</div>${outlineList(ks, h.level + 1)}` : '<p class="na sm">لا عناوين أصغر تحت هذا العنوان.</p>'}${sumNote()}</div></section>`;
+}
+
+/* ---------- صفحة العنوان الفرعي ---------- */
+function viewSection(id) {
+  const h = Api.getHeadingById(id); if (!h) return viewNotFound('العنوان');
+  const t = Api.getTopicById(h.topic_id); if (!t) return viewNotFound('الموضوع');
+  const key = babOfTopic(t), path = headPath(h);
+  currentNav = key ? 'bab:' + key : '';
+  crumbs([HOME, IBADAT, babCrumb(key), { label: t.title, href: '#/topic/' + enc(t.topic_id) },
+    ...path.slice(0, -1).map(p => ({ label: p.title, href: headLink(p) })), { label: h.title }].filter(Boolean));
+  const bl = sectionBlocks(h, true), hs = topicHeads(t.topic_id), pos = hs.indexOf(h);
+  const prev = pos > 0 ? hs[pos - 1] : null, next = pos > -1 && pos < hs.length - 1 ? hs[pos + 1] : null;
+  const pages = [...new Set(bl.flatMap(b => b.segs.map(s => s.is)))];
+  const firstP = pages[0], lastP = pages[pages.length - 1];
+  const rng = firstP ? (pages.length > 1 && firstP.page !== lastP.page ? `صـ ${firstP.page}–${lastP.page}` : `صـ ${firstP.page}`) : '';
+  const info = [['الباب', BABS.find(b => b.key === key)?.title], ['الموضوع', t.title], ['المستوى', LEVEL_AR[h.level] || ''], ['الصفحات', rng], ['عناوين تحته', headKids(h).length ? fmt(headKids(h).length) : '']]
+    .filter(([, v]) => has(v)).map(([l, v]) => `<span class="pill">${l}: <b>${esc(v)}</b></span>`).join('');
+  const body = bl.length ? bl.map(b => {
+    const head = b.h && b.h !== h ? `<h3 class="sub-h" id="s-${esc(b.h.heading_id)}"><a href="${headLink(b.h)}">${esc(b.h.title)}</a><small>${LEVEL_AR[b.h.level] || ''}</small></h3>` : '';
+    const txt = b.segs.map(sg => `<div class="seg"><span class="pgmark">${has(sg.is.page) ? 'صـ ' + esc(sg.is.page) : ''}</span><div class="nass">${paras(sg.text)}</div></div>`).join('');
+    const notes = b.segs.flatMap(sg => sg.notes);
+    return head + txt + (notes.length ? `<div class="notes"><b>الحواشي</b><div class="nass">${paras(notes.join('\n'))}</div></div>` : '');
+  }).join('') : `<p class="na">${MSG.NA}</p>`;
+  const chips = [...new Set(pages.flatMap(is => arr(is.reference_ids)))].slice(0, 6).map(citeChip).join('');
+  const kidsHtml = headKids(h).length ? `<h2 class="h2">العناوين التي تحته</h2><div class="tgrid">${headKids(h).map((k, i) => `<div class="tcard"><span class="tn">${fmt(i + 1)}</span><h3><a href="${headLink(k)}">${esc(k.title)}</a></h3>${headPage(k) ? `<div class="row"><span class="pill">${esc(headPage(k))}</span></div>` : ''}</div>`).join('')}</div>` : '';
+  setView(`<article class="issue ab ab-${key}">
+    <header class="issue-head"><a class="kicker-lnk" href="#/topic/${enc(t.topic_id)}">${esc(t.title)}</a><h1>${esc(h.title)}</h1><div class="infobar">${info}</div>
+      <div class="actions"><a class="btn" href="#/slides/section/${enc(h.heading_id)}">▶ شرائح العنوان</a><a class="btn ghost" href="#/tree/section/${enc(h.heading_id)}">🌳 تشجير</a><a class="btn ghost" href="#/cards/section/${enc(h.heading_id)}">🧠 بطاقات</a><button class="btn ghost" data-act="print">🖨️ طباعة</button>
+        <span class="size-ctl" role="group" aria-label="حجم خط النص"><button data-act="fs-down" aria-label="تصغير الخط">أ−</button><button data-act="fs-up" aria-label="تكبير الخط">أ+</button></span></div></header>
+    ${connectionNotice()}${summarySection(h)}
+    ${blk('📖 النص الأصلي', `${h.located === false ? `<p class="na sm">بداية هذا العنوان داخل الصفحة غير محددة بدقة؛ يبدأ العرض من أول موضعه المقدَّر.</p>` : ''}${body}${chips ? `<div class="cites">${chips}</div>` : ''}`, 'source-text')}
+    ${kidsHtml}
+    ${prev || next ? `<nav class="seq" aria-label="التنقل بين العناوين">${prev ? `<a href="${headLink(prev)}"><small>العنوان السابق</small>${esc(prev.title)}</a>` : ''}${next ? `<a class="next" href="${headLink(next)}"><small>العنوان التالي</small>${esc(next.title)}</a>` : ''}</nav>` : ''}
+  </article>`);
+}
+
+/* ---------- التشجير ---------- */
+function headNode(h, bab, d) { return { info: headInfo(h), id: h.heading_id, label: h.title, href: headLink(h), bab, lvl: 'h' + Math.min(h.level, 3), pg: headPage(h), kids: headKids(h).map(k => headNode(k, bab)) }; }
+function topicNode(t, bab) { return { info: topicInfo(t), id: t.topic_id, label: t.title, href: '#/topic/' + enc(t.topic_id), bab, lvl: 'topic', kids: topicHeads(t.topic_id).filter(h => !h.parent_id).map(h => headNode(h, bab)) }; }
+function babNode(b) { return { id: 'bab:' + b.key, label: b.title, href: '#/bab/' + b.key, bab: b.key, lvl: 'bab', kids: babTopicsOrdered(b.key).map(x => topicNode(x.t, b.key)) }; }
+function treeRoot(kind, id) {
+  if (kind === 'bab') { const b = BABS.find(x => x.key === id); return b ? { root: babNode(b), title: b.title, bab: b.key, def: 2 } : null; }
+  if (kind === 'topic') { const t = Api.getTopicById(id); return t ? { root: topicNode(t, babOfTopic(t)), title: t.title, bab: babOfTopic(t), def: 9 } : null; }
+  if (kind === 'section') { const h = Api.getHeadingById(id); const t = h && Api.getTopicById(h.topic_id); return h ? { root: headNode(h, babOfTopic(t)), title: h.title, bab: babOfTopic(t), def: 9 } : null; }
+  return { root: { id: 'root', label: 'العبادات', href: '#/', bab: '', lvl: 'root', kids: BABS.filter(b => babCounts(b.key).topics).map(babNode) }, title: 'العبادات', bab: '', def: 2 };
+}
+const treeState = { key: '', ov: new Map(), zoom: 1, detail: false };
+const richH = i => 16 + 38 + (i.ringkas ? 66 : 0) + (i.dalil.length ? 56 : 0) + (i.masail.length ? 8 + 22 * i.masail.length : 0) + 24;
+function richNode(n) {
+  const i = n.info, d = i.dalil[0];
+  return `${i.ringkas ? `<p class="trn-r"><b>📌</b>${esc(i.ringkas)}${i.ai ? '' : ' <i>(مقتطف)</i>'}</p>` : ''}
+    ${d ? `<div class="trn-d"><b>${d.kind === 'quran' ? '📖' : '📜'}</b><span>${d.kind === 'quran' ? '﴿' + esc(d.text) + '﴾' : esc(d.text)}</span>${i.dalilAll.length > 1 ? `<em>+${fmt(i.dalilAll.length - 1)}</em>` : ''}</div>` : ''}
+    ${i.masail.length ? `<ul class="trn-m">${i.masail.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+    <div class="trn-f">${i.pg ? esc(i.pg) : ''}${i.ai ? ' · ملخص آلي من النص' : ''}</div>`;
+}
+function treeSvg(root, def) {
+  const det = treeState.detail, W = det ? 372 : 236, H = 52, GX = 60, GY = 14;
+  let maxD = 0; const nodes = [], links = [];
+  const closed = (n, d) => n.kids.length && (treeState.ov.has(n.id) ? treeState.ov.get(n.id) : d >= def);
+  (function size(n, d) {
+    n._d = d; maxD = Math.max(maxD, d); n._shut = closed(n, d);
+    n._kids = n.kids.length && !n._shut ? n.kids : [];
+    n._kids.forEach(k => size(k, d + 1));
+    n._h = det && n.info ? richH(n.info) : H; n._rich = det && !!n.info;
+    n._ks = n._kids.reduce((s, k) => s + k._S, 0) + Math.max(0, n._kids.length - 1) * GY;
+    n._S = Math.max(n._h, n._ks);
+  })(root, 0);
+  (function place(n, top) {
+    n._y = top + (n._S - n._h) / 2; let y = top + (n._S - n._ks) / 2;
+    n._kids.forEach(k => { place(k, y); y += k._S + GY; links.push([n, k]); });
+    nodes.push(n);
+  })(root, 0);
+  const totalW = (maxD + 1) * (W + GX) - GX, totalH = root._S;
+  nodes.forEach(n => { n._x = totalW - (n._d * (W + GX) + W); });
+  const col = n => BAB_COL[n.bab] ? `--a:${BAB_COL[n.bab][0]};--a-deep:${BAB_COL[n.bab][1]}` : '--a:#145A41;--a-deep:#0A3426';
+  const paths = links.map(([a, b]) => { const x1 = a._x, y1 = a._y + a._h / 2, x2 = b._x + W, y2 = b._y + b._h / 2, mx = (x1 + x2) / 2; return `<path d="M${x1} ${y1}C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}"/>`; }).join('');
+  const boxes = nodes.map(n => `<foreignObject x="${n._x}" y="${n._y}" width="${W}" height="${n._h}"><div xmlns="http://www.w3.org/1999/xhtml" class="trn lv-${n.lvl}${n.kids.length ? ' has' : ''}${n._rich ? ' rich' : ''}" style="${col(n)}" data-act="tr-toggle" data-id="${esc(n.id)}" data-def="${n._shut ? 1 : 0}" role="button" tabindex="0"><div class="trn-hd"><span class="t">${esc(n.label)}</span>${n.kids.length ? `<i class="tg">${n._shut ? '+' + fmt(n.kids.length) : '−'}</i>` : ''}<a class="go" href="${n.href}" aria-label="فتح">↗</a></div>${n._rich ? richNode(n) : ''}</div></foreignObject>`).join('');
+  return { svg: `<svg xmlns="http://www.w3.org/2000/svg" class="tree-svg" viewBox="0 0 ${totalW} ${totalH}" width="${Math.round(totalW * treeState.zoom)}" height="${Math.round(totalH * treeState.zoom)}" role="img" aria-label="تشجير">${`<g class="tr-links">${paths}</g>`}${boxes}</svg>`, count: nodes.length };
+}
+let treeCtx = null;
+function viewTree(kind, id) {
+  const tr = treeRoot(kind, id); if (!tr) return viewNotFound();
+  const key = `${kind || ''}/${id || ''}`;
+  if (treeState.key !== key) { treeState.key = key; treeState.ov = new Map(); treeState.zoom = 1; treeState.detail = kind === 'topic' || kind === 'section'; }
+  treeCtx = tr;
+  currentNav = kind === 'bab' ? 'bab:' + id : tr.bab ? 'bab:' + tr.bab : 'tree';
+  crumbs([HOME, { label: 'التشجير', href: kind ? '#/tree' : undefined }, kind ? { label: tr.title } : null].filter(Boolean));
+  if (DB.mode === 'none' || !tr.root.kids.length) { setView(`<header class="page-head"><h1>🌳 التشجير</h1></header>${emptyState('لا توجد عناوين لتشجيرها في قاعدة البيانات الحالية.', noDataBody())}`); return; }
+  const jump = kind === 'bab' ? [`<a class="btn ghost sm" href="#/bab/${id}">فتح الباب</a>`, `<a class="btn sm" href="#/slides/bab/${id}">▶ شرائح</a>`, `<a class="btn ghost sm" href="#/cards/bab/${id}">🧠 بطاقات</a>`]
+    : kind === 'topic' ? [`<a class="btn ghost sm" href="#/topic/${enc(id)}">فتح الموضوع</a>`, `<a class="btn sm" href="#/slides/topic/${enc(id)}">▶ شرائح</a>`, `<a class="btn ghost sm" href="#/cards/topic/${enc(id)}">🧠 بطاقات</a>`]
+    : kind === 'section' ? [`<a class="btn ghost sm" href="#/section/${enc(id)}">فتح العنوان</a>`, `<a class="btn sm" href="#/slides/section/${enc(id)}">▶ شرائح</a>`, `<a class="btn ghost sm" href="#/cards/section/${enc(id)}">🧠 بطاقات</a>`] : [];
+  const tabs = `<div class="chips">${[['', 'كل العبادات'], ...BABS.filter(b => babCounts(b.key).topics).map(b => [b.key, b.icon + ' ' + b.title])].map(([k, l]) => `<a class="chip${(kind === 'bab' && id === k) || (!kind && !k) ? ' on' : ''}" href="${k ? '#/tree/bab/' + k : '#/tree'}">${l}</a>`).join('')}</div>`;
+  setView(`<div class="ab${tr.bab ? ' ab-' + tr.bab : ''}"><header class="page-head head-row"><div><h1>🌳 تشجير: ${esc(tr.title)}</h1><p>خريطة هرمية لعناوين الكتاب ذاتها (باب ← موضوع ← عنوان فرعي). في العرض المفصّل تحمل كل عقدة ملخصها وأدلتها (آيات وأحاديث من نص الكتاب) ومسائلها. اضغط العقدة لطيّها أو توسيعها، و«↗» لفتح الصفحة.</p></div><div class="cta-row" style="margin:0">${jump.join('')}</div></header>
+    ${tabs}
+    <div class="tree-bar"><button class="btn ghost sm" data-act="tr-all">توسيع الكل</button><button class="btn ghost sm" data-act="tr-none">طيّ الكل</button><button class="btn sm" data-act="tr-detail" id="trDetail"></button><button class="btn ghost sm" data-act="tr-zoom" data-d="-0.15" aria-label="تصغير">−</button><span class="na" id="trZoom"></span><button class="btn ghost sm" data-act="tr-zoom" data-d="0.15" aria-label="تكبير">+</button><button class="btn ghost sm" data-act="tr-fit">ملاءمة العرض</button><button class="btn ghost sm" data-act="print">🖨️ طباعة / PDF</button><span class="na" id="trCount"></span></div>
+    <div class="tree-scroll" id="treeBox" tabindex="0"></div></div>`);
+  drawTree();
+}
+function drawTree() {
+  if (!treeCtx || !$('#treeBox')) return;
+  const r = treeSvg(treeCtx.root, treeCtx.def);
+  $('#treeBox').innerHTML = r.svg;
+  $('#trDetail').textContent = treeState.detail ? '🗂️ عرض مختصر' : '🗂️ عرض مفصّل (ملخص · دليل · مسائل)';
+  $('#trCount').textContent = `${fmt(r.count)} عقدة ظاهرة`; $('#trZoom').textContent = Math.round(treeState.zoom * 100) + '٪';
+}
+function treeSetAll(open) {
+  (function walk(n, d) { if (n.kids.length) { treeState.ov.set(n.id, !open); n.kids.forEach(k => walk(k, d + 1)); } })(treeCtx.root, 0);
+  if (open) treeCtx.def = 99; else { treeState.ov.set(treeCtx.root.id, false); }
+  drawTree();
+}
+
+/* ---------- بطاقات المراجعة (من العناوين ونصوصها الحرفية) ---------- */
+let CARDS = { key: '', list: [], i: 0, flip: false, mode: 'all', order: [] };
+const knownCards = () => new Set(store.get('cardsKnown', []));
+function cardScope(kind, id) {
+  if (kind === 'bab') { const b = BABS.find(x => x.key === id); return b ? { title: b.title, bab: id, hs: babTopicsOrdered(id).flatMap(x => topicHeads(x.t.topic_id)) } : null; }
+  if (kind === 'topic') { const t = Api.getTopicById(id); return t ? { title: t.title, bab: babOfTopic(t), hs: topicHeads(t.topic_id) } : null; }
+  if (kind === 'section') {
+    const h = Api.getHeadingById(id), t = h && Api.getTopicById(h.topic_id); if (!h) return null;
+    const out = [], walk = x => { out.push(x); headKids(x).forEach(walk); }; walk(h);
+    return { title: h.title, bab: babOfTopic(t), hs: out };
+  }
+  return null;
+}
+function makeCards(hs) {
+  return hs.map(h => {
+    const b = sectionBlocks(h, false)[0], own = b ? ownText(b) : '', ks = headKids(h);
+    const t = Api.getTopicById(h.topic_id);
+    const front = { t: h.title, path: [t && t.title, ...headPath(h).slice(0, -1).map(x => x.title)].filter(Boolean).join(' › '), pg: headPage(h) };
+    if (own.length >= 40) return { id: h.heading_id, ...front, back: own, notes: b.segs.flatMap(s => s.notes), kind: 'text' };
+    if (ks.length) return { id: h.heading_id, ...front, back: ks.map((k, i) => `${i + 1}ـ ${k.title}`).join('\n'), notes: [], kind: 'list' };
+    return null;
+  }).filter(Boolean);
+}
+function viewCards(kind, id) {
+  const sc = cardScope(kind, id); if (!sc) return viewNotFound();
+  const key = `${kind}/${id}`;
+  currentNav = sc.bab ? 'bab:' + sc.bab : '';
+  crumbs([HOME, IBADAT, sc.bab ? babCrumb(sc.bab) : null, { label: 'بطاقات: ' + sc.title }].filter(Boolean));
+  if (CARDS.key !== key) CARDS = { key, list: makeCards(sc.hs), i: 0, flip: false, mode: 'all', order: [], title: sc.title, bab: sc.bab };
+  if (!CARDS.list.length) { setView(`<header class="page-head"><h1>🧠 بطاقات المراجعة</h1></header>${emptyState('لا عناوين فرعية لإنشاء بطاقات منها هنا.', 'جرّب باباً أو موضوعاً فيه عناوين فرعية.')}`); return; }
+  setView(`<div class="ab${sc.bab ? ' ab-' + sc.bab : ''}"><header class="page-head"><h1>🧠 بطاقات المراجعة: ${esc(sc.title)}</h1><p>الوجه: عنوان من الكتاب. الظهر: نصّه الحرفي من الكتاب. تذكّر ثم اقلب البطاقة (مسافة / Enter).</p></header>
+    <div class="chips" id="fcMode"></div>
+    <div class="fc-wrap"><div class="fc" id="fc" data-act="fc-flip" role="button" tabindex="0" aria-live="polite"></div></div>
+    <div class="deck-ctl"><div class="pillbar"><button class="round" data-act="fc-prev" aria-label="السابقة">${CHEV_R}</button><span class="count" id="fcCount"></span><button class="round" data-act="fc-next" aria-label="التالية">${CHEV_L}</button></div>
+      <button class="btn ghost sm" data-act="fc-flip">🔄 قلب</button><button class="btn sm" data-act="fc-know">✅ أعرفها</button><button class="btn ghost sm" data-act="fc-again">🔁 أعيدها</button><button class="btn ghost sm" data-act="fc-shuffle">🔀 خلط</button></div>
+    <div class="progress"><span id="fcProg"></span></div></div>`);
+  showCard(true);
+}
+function cardOrder() {
+  const k = knownCards();
+  const idx = CARDS.list.map((c, i) => i).filter(i => CARDS.mode === 'all' || !k.has(CARDS.list[i].id));
+  return CARDS.shuffled ? CARDS.shuffled.filter(i => idx.includes(i)) : idx;
+}
+function showCard(rebuildChips) {
+  const box = $('#fc'); if (!box) return;
+  const ord = cardOrder(), k = knownCards();
+  const known = CARDS.list.filter(c => k.has(c.id)).length;
+  if (rebuildChips) $('#fcMode').innerHTML = [['all', 'كل البطاقات'], ['todo', 'غير المحفوظة فقط']].map(([m, l]) => `<button class="chip${CARDS.mode === m ? ' on' : ''}" data-act="fc-mode" data-m="${m}">${l}</button>`).join('') + `<span class="na" id="fcKnown"></span>`;
+  $('#fcKnown').textContent = `عرفتُ ${fmt(known)} من ${fmt(CARDS.list.length)}`;
+  if (!ord.length) { box.className = 'fc'; box.innerHTML = `<div class="fc-face"><p class="fc-done">أحسنت! عرفتَ كل بطاقات هذا النطاق.</p></div>`; $('#fcCount').textContent = '—'; $('#fcProg').style.width = '100%'; return; }
+  CARDS.i = Math.max(0, Math.min(ord.length - 1, CARDS.i));
+  const c = CARDS.list[ord[CARDS.i]];
+  box.className = 'fc' + (CARDS.flip ? ' back' : '') + (k.has(c.id) ? ' known' : '');
+  box.innerHTML = CARDS.flip
+    ? `<div class="fc-face"><div class="fc-path">${esc(c.t)}${c.pg ? ' · ' + esc(c.pg) : ''}</div><div class="nass fc-text">${paras(c.back)}</div>${c.notes.length ? `<div class="notes"><b>الحواشي</b><div class="nass">${paras(c.notes.join('\n'))}</div></div>` : ''}<a class="btn ghost sm" href="#/section/${enc(c.id)}">فتح العنوان</a></div>`
+    : `<div class="fc-face fc-front"><div class="fc-path">${esc(c.path)}</div><h2>${esc(c.t)}</h2><p class="na">${c.kind === 'list' ? 'اذكر ما تحت هذا العنوان ثم اقلب' : 'تذكّر نصّ الكتاب تحت هذا العنوان ثم اقلب'}</p></div>`;
+  $('#fcCount').textContent = `${fmt(CARDS.i + 1)} / ${fmt(ord.length)}`;
+  $('#fcProg').style.width = ((CARDS.i + 1) / ord.length * 100) + '%';
+}
+function cardMove(d) { CARDS.i += d; CARDS.flip = false; showCard(); }
+
+/* ---------- رقائق العناوين في صفحة المسألة ---------- */
+function headingMatches(terms) {
+  if (!terms || !terms.length || !DB.raw.headings.length) return '';
+  const m = DB.raw.headings.filter(h => { const nt = norm(h.title); return terms.every(vs => vs.some(v => nt.includes(v))); }).slice(0, 12);
+  if (!m.length) return '';
+  return `<h2 class="h2">عناوين مطابقة <small>من فهرس الكتاب</small></h2><div class="chipline">${m.map(h => { const t = Api.getTopicById(h.topic_id); return `<a class="chip-l" href="${headLink(h)}">${esc(h.title)}${t ? `<small>${esc(t.title)}</small>` : ''}</a>`; }).join('')}</div>`;
+}
+function issueHeadingChips(is) {
+  const t = Api.getTopicById(is.topic_id); if (!t) return '';
+  const hs = topicHeads(t.topic_id); if (!hs.length) return '';
+  const iss = topicIssues(t), k = iss.indexOf(is);
+  const starts = hs.filter(h => sid(h.issue_id) === sid(is.issue_id));
+  const before = hs.filter(h => iss.findIndex(i => sid(i.issue_id) === sid(h.issue_id)) < k).pop();
+  const lead = before && !starts.some(h => (+h.offset || 0) === 0) ? before : null;
+  if (!starts.length && !lead) return '';
+  return `<div class="infobar hchips">${lead ? `<span class="pill">يتابع: ${headPath(lead).map(p => `<a href="${headLink(p)}">${esc(p.title)}</a>`).join(' › ')}</span>` : ''}${starts.length ? `<span class="pill">يبدأ في هذه الصفحة:</span>${starts.map(h => `<a class="chip-l" href="${headLink(h)}">${esc(h.title)}</a>`).join('')}` : ''}</div>`;
 }
 
 /* ======================= TEXT / EPUB IMPORTER =======================
@@ -1786,7 +2826,7 @@ function viewStudio(params) {
     return `${head}<label class="src-item"><input type="checkbox" name="st-topic" value="${esc(t.topic_id)}"${studioSel.topics.has(sid(t.topic_id)) ? ' checked' : ''}><span>${esc(t.title)}</span><small>${fmt(n)} مسألة</small></label>`;
   }).join('');
   const decks = DECKS.length ? `<div class="cards">${DECKS.map(d => `<div class="card"><h3><a href="#/deck/${encodeURIComponent(d.id)}">${esc(d.title)}</a></h3>
-      <div class="row">${d.mode === 'ai' ? '<span class="pill ai">✨ ملخص ذكي</span>' : '<span class="pill">📖 مستخرج</span>'}<span class="pill">الشرائح: <b>${fmt(d.slides.length)}</b></span><span class="pill">${esc(new Date(d.created).toLocaleDateString('ar-EG'))}</span>
+      <div class="row">${d.mode === 'ai' ? '<span class="pill ai">✨ ملخص ذكي</span>' : d.lesson ? '<span class="pill">🎓 درس</span>' : '<span class="pill">📖 مستخرج</span>'}<span class="pill">الشرائح: <b>${fmt(d.slides.length)}</b></span><span class="pill">${esc(new Date(d.created).toLocaleDateString('ar-EG'))}</span>
       <a class="btn sm" href="#/deck/${encodeURIComponent(d.id)}">فتح العرض</a></div></div>`).join('')}</div>` : emptyState('لم تُنشئ أي عرض بعد.', 'اختر المصادر في الأعلى ثم «إنشاء العرض».');
   setView(`<header class="page-head"><h1>🎞️ استوديو العروض</h1><p>اختر مصادرك من الموسوعة، ثم أنشئ عرض شرائح يعتمد عليها وحدها، وكل شريحة محالة إلى مسألتها.</p></header>
     ${connectionNotice()}
@@ -1800,6 +2840,7 @@ function viewStudio(params) {
       <fieldset><legend>٢. نوع العرض</legend>
         <div class="modes">
           <label class="mode"><input type="radio" name="mode" value="extract"${studioSel.mode === 'extract' ? ' checked' : ''}><div><b>📖 مستخرج من النص</b><span>شرائح من نصوص المسائل وأحكامها وأدلتها كما هي، دون أي توليد.</span></div></label>
+          <label class="mode"><input type="radio" name="mode" value="lesson"${studioSel.mode === 'lesson' ? ' checked' : ''}><div><b>🎓 درس (PdP)</b><span>تمهيد ومحاور، ولكل محور: خلاصة وأدلة حرفية من الكتاب ومسائل، ثم خلاصة الدرس وأسئلة المراجعة. النص الكامل في ملاحظات المقدّم.</span></div></label>
           <label class="mode" data-cap="sample" data-cap-mode="disable"><input type="radio" name="mode" value="ai"${studioSel.mode === 'ai' ? ' checked' : ''}><div><b>✨ ملخص ذكي بالإحالات</b><span>يصوغ Claude شرائح من المصادر المحددة فقط، وتُحذف كل نقطة لا تُحال إلى مسألة. يطلب موافقتك ويُحسب من استخدامك.</span><span class="cap-off" style="color:var(--danger)">غير متاح في هذه النافذة.</span></div></label>
         </div>
         <div class="grid2" data-ai-only>
@@ -1828,26 +2869,155 @@ function evRef(e) {
   return '';
 }
 const SUBTITLE = 'الفقه المنهجي على مذهب الإمام الشافعي – قسم العبادات';
-function buildExtractDeck(title, topics) {
-  const slides = [{ type: 'title', title, subtitle: SUBTITLE }], ids = [];
-  let count = 0;
-  for (const t of topics) {
-    const iss = DB.idx.issuesByTopic.get(sid(t.topic_id)) || [];
-    if (!iss.length && !has(t.definition)) continue;
-    slides.push({ type: 'section', title: String(t.title), subtitle: has(t.definition) ? excerpt(t.definition, 200) : '' });
-    for (const is of iss) {
-      if (count >= 60) break;
-      count++;
-      const id = sid(is.issue_id); ids.push(id);
-      if (has(is.original_text)) slides.push({ type: 'quote', kind: 'nass', title: String(is.title), text: excerpt(is.original_text, 430), cite: [id] });
-      if (has(is.ruling)) slides.push({ type: 'points', title: 'الحكم: ' + is.title, points: [{ text: excerpt(is.ruling, 320), cite: [id] }] });
-      arr(is.evidence_ids).map(e => DB.idx.evidences.get(sid(e))).filter(Boolean).slice(0, 2).forEach(e =>
-        slides.push({ type: 'quote', kind: e.type === 'quran' ? 'quran' : e.type === 'hadith' ? 'hadith' : 'nass', title: 'الدليل: ' + is.title, text: excerpt(e.text, 360), ref: evRef(e), cite: [id] }));
-      if (!has(is.original_text) && !has(is.ruling)) slides.push({ type: 'points', title: String(is.title), points: [{ text: MSG.NA, cite: [] }] });
+function buildExtractDeck(title, topics, bab, only, secBlocks) {
+  const MAX_SLIDES = 800, slides = [{ type: 'title', title, subtitle: SUBTITLE }], ids = [], seen = new Set();
+  const issuesOf = t => only || topicIssues(t);
+  const used = topics.filter(t => issuesOf(t).length);
+  let capped = false, no = 0, subs = 0;
+  const addId = id => { id = sid(id); if (seen.has(id)) return false; seen.add(id); ids.push(id); return true; };
+  const mapSlides = (ttl, groups) => agendaSlides(slides, ttl, groups.map(g => ({ t: g.t, sub: g.c.length ? `${fmt(g.c.length)} عناوين فرعية` : '' })));
+  const evSlides = (is, t) => arr(is.evidence_ids).map(e => DB.idx.evidences.get(sid(e))).filter(Boolean).slice(0, 2).forEach(e =>
+    slides.push({ type: 'quote', kind: e.type === 'quran' ? 'quran' : e.type === 'hadith' ? 'hadith' : 'nass', title: 'الدليل: ' + t.title, text: excerpt(e.text, 360), ref: evRef(e), cite: [sid(is.issue_id)] }));
+  const quoteSlides = (kind, text, ttl, path, cite, max) => { const p = chunkText(text, max); p.forEach((x, i) => slides.push({ type: 'quote', kind, title: ttl, path, text: x, part: p.length > 1 ? [i + 1, p.length] : null, cite })); return p.length; };
+  if (!only && !secBlocks && used.length > 1) mapSlides('خريطة الباب', used.map(t => ({ t: t.title, c: topicHeads(t.topic_id).filter(h => !h.parent_id).map(h => h.title) })));
+  outer: for (const t of used) {
+    no++;
+    if (only) {
+      for (const is of only) {
+        if (slides.length >= MAX_SLIDES) { capped = true; break outer; }
+        const id = sid(is.issue_id); addId(id);
+        const { body, foot } = splitFoot(is.original_text);
+        const n = quoteSlides('nass', body, String(t.title), '', [id], 400); evSlides(is, t);
+        const f = quoteSlides('foot', foot, String(t.title), '', [id], 360);
+        if (!n && !f) slides.push({ type: 'points', title: String(t.title), points: [{ text: MSG.NA, cite: [] }] });
+      }
+      continue;
+    }
+    const hs = topicHeads(t.topic_id);
+    if (!secBlocks) {
+      slides.push({ type: 'section', title: String(t.title), no, of: used.length, subtitle: pageRange(issuesOf(t)) });
+      if (hs.length) mapSlides(t.title, hs.filter(h => !h.parent_id).map(h => ({ t: h.title, c: headKids(h).map(k => k.title) })));
+    } else if (secBlocks[0] && secBlocks[0].h && headKids(secBlocks[0].h).length) mapSlides(secBlocks[0].h.title, headKids(secBlocks[0].h).map(h => ({ t: h.title, c: headKids(h).map(k => k.title) })));
+    const tsm = !secBlocks && summaryOf('topic', t.topic_id);
+    if (tsm) slides.push({ type: 'summary', kicker: '🧭 نظرة عامة', title: 'ملخص: ' + t.title, lead: tsm.ringkas, items: [], ai: true });
+    if (tsm && tsm.masail.length) slides.push({ type: 'summary', kicker: '⚖️ أهم مسائل الموضوع', title: 'ملخص: ' + t.title, lead: '', items: tsm.masail.slice(0, 5), ai: true });
+    for (const b of secBlocks || topicBlocks(t)) {
+      if (b.h) subs++;
+      if (isBareTitle(b, t)) continue; // سطر عنوان مجرد بلا نص
+      const hsm = b.h && summaryOf('heading', b.h.heading_id);
+      if (hsm) slides.push({ type: 'points', mlk: true, kicker: '📌 ملخص آلي من نص الكتاب', title: 'ملخص: ' + b.h.title, points: [{ text: hsm.ringkas, cite: [] }, ...hsm.masail.map(x => ({ text: x, cite: [] }))].slice(0, 5) });
+      const ttl = b.h ? b.h.title : String(t.title), path = b.h ? [t.title, ...headPath(b.h).slice(0, -1).map(x => x.title)].join(' › ') : '';
+      for (const sg of b.segs) {
+        if (slides.length >= MAX_SLIDES) { capped = true; break outer; }
+        const id = sid(sg.is.issue_id), first = addId(id);
+        quoteSlides('nass', sg.text, ttl, path, [id], 400);
+        if (first) evSlides(sg.is, t);
+        if (sg.notes.length) quoteSlides('foot', sg.notes.join('\n'), ttl, path, [id], 360);
+      }
     }
   }
+  slides[0].stats = [{ n: used.length, l: used.length === 1 ? 'موضوع' : 'موضوعاً' }, subs ? { n: subs, l: 'عنواناً فرعياً' } : null, { n: ids.length, l: ids.length === 1 ? 'صفحة' : 'صفحة من الكتاب' }].filter(Boolean);
   slides.push({ type: 'sources', title: 'المصادر', items: ids });
-  return { slides, sources: ids, stats: count >= 60 ? { capped: true } : null };
+  return { slides, sources: ids, stats: capped ? { capped: true } : null };
+}
+
+
+/* ---------- وضع الدرس (PdP): تمهيد ← محاور ← (خلاصة · دليل · تفصيل) ← خلاصة الدرس ← مراجعة ---------- */
+const bareKey = s => norm(s).replace(/[^\p{L}\p{N}]+/gu, '');
+function isBareTitle(b, t) {
+  if (b.segs.some(s => s.notes.length)) return false;
+  const k = bareKey(blockText(b));
+  return k.length < 60 && (k === bareKey(b.h ? b.h.title : t.title) || k === bareKey(t.title));
+}
+/* يقسم القائمة على شرائح متوازنة (٧ ← ٤+٣ لا ٦+١) */
+function evenChunks(list, max) {
+  const n = Math.max(1, Math.ceil(list.length / max)), size = Math.ceil(list.length / n), out = [];
+  for (let i = 0; i < list.length; i += size) out.push({ items: list.slice(i, i + size), start: i, part: n > 1 ? [out.length + 1, n] : null });
+  return out;
+}
+function agendaSlides(slides, title, items, kicker = 'محاور الدرس') {
+  evenChunks(items, 10).forEach(c => slides.push({ type: 'agenda', kicker, title, part: c.part, items: c.items.map((x, j) => ({ ...x, n: c.start + j + 1 })) }));
+}
+function unitData(h) {
+  const inc = sectionBlocks(h, true), own = sectionBlocks(h, false)[0], sm = summaryOf('heading', h.heading_id);
+  const ownT = own ? ownText(own) : '';
+  const masail = sm && sm.masail.length ? sm.masail : masailFallback(ownT).slice(0, 5);
+  const iss = [...new Set(inc.flatMap(b => b.segs.map(s => s.is)))];
+  return {
+    h, title: h.title, ai: !!sm, ringkas: sm ? sm.ringkas : leadOf(h, 220), masail,
+    dalil: extractDalil(inc.map(ownText).join('\n')),
+    kids: headKids(h).map(k => { const ks = summaryOf('heading', k.heading_id); return { t: k.title, r: ks ? ks.ringkas : leadOf(k, 150), ai: !!ks }; }),
+    cite: iss.length ? [sid(iss[0].issue_id)] : [], ids: iss.map(i => sid(i.issue_id)),
+    pg: iss.length ? pageRange(iss) : '', note: inc.map(b => blockText(b)).join('\n\n')
+  };
+}
+function topicUnits(t) { return topicHeads(t.topic_id).filter(x => !x.parent_id).map(unitData); }
+function unitSlides(slides, u, k, n, label = 'المحور') {
+  slides.push({ type: 'section', label, no: k, of: n, title: u.title, subtitle: excerpt(u.ringkas, 210), ai: u.ai, note: u.note });
+  if (u.masail.length || u.ringkas) slides.push({ type: 'summary', kicker: u.masail.length ? '⚖️ المسائل والأحكام' : '📌 الخلاصة', title: u.title, lead: u.masail.length ? '' : u.ringkas, items: u.masail.slice(0, 5), ai: u.ai, cite: u.cite, note: u.note });
+  for (let i = 0; i < Math.min(u.dalil.length, 4); i += 2) slides.push({ type: 'dalil', title: u.title, items: u.dalil.slice(i, i + 2), more: i === 0 && u.dalil.length > 4 ? u.dalil.length - 4 : 0, cite: u.cite, note: u.note });
+  evenChunks(u.kids, 4).forEach(c => c.items.length && slides.push({ type: 'recap', kicker: '🧩 تفصيل المحور', title: u.title, part: c.part, items: c.items, cite: u.cite, note: u.note }));
+}
+function reviewSlides(slides, units) {
+  const qs = units.map(u => ({ t: u.title, q: `بيّن ما ذكره الكتاب في «${u.title}»${u.dalil.length ? ' مع دليله' : ''}${u.masail.length > 1 ? '، واذكر مسائله' : ''}.` }));
+  evenChunks(qs, 5).forEach(c => slides.push({ type: 'review', title: 'أسئلة المراجعة', part: c.part, items: c.items.map((x, j) => ({ ...x, n: c.start + j + 1 })) }));
+}
+function recapSlides(slides, title, items, kicker = '🧭 خلاصة الدرس') {
+  evenChunks(items, 6).forEach(c => slides.push({ type: 'recap', kicker, title, part: c.part, items: c.items }));
+}
+function buildLessonDeck(kind, title, topics, bab, head) {
+  const slides = [], ids = new Set();
+  const add = u => u.ids.forEach(x => ids.add(x));
+  if (kind === 'section') {
+    const root = unitData(head), kids = headKids(head).map(unitData);
+    slides.push({ type: 'title', title, subtitle: SUBTITLE, crumb: [Api.getTopicById(head.topic_id)?.title, ...headPath(head).slice(0, -1).map(x => x.title)].filter(Boolean).join(' › '), stats: [{ n: kids.length || 1, l: 'محوراً' }, { n: root.ids.length, l: 'صفحة' }] });
+    add(root);
+    if (kids.length) agendaSlides(slides, title, kids.map(u => ({ t: u.title, sub: u.pg })));
+    slides.push({ type: 'summary', kicker: '🧭 نظرة عامة', title, lead: root.ringkas, items: [], ai: root.ai, cite: root.cite, note: root.note });
+    if (!kids.length && root.masail.length) slides.push({ type: 'summary', kicker: '⚖️ المسائل والأحكام', title, lead: '', items: root.masail.slice(0, 5), ai: root.ai, cite: root.cite, note: root.note });
+    if (kids.length) {
+      kids.forEach((u, i) => { add(u); unitSlides(slides, u, i + 1, kids.length); });
+      recapSlides(slides, title, kids.map(u => ({ t: u.title, r: u.ringkas, ai: u.ai })));
+      reviewSlides(slides, kids);
+    } else {
+      for (let i = 0; i < Math.min(root.dalil.length, 4); i += 2) slides.push({ type: 'dalil', title, items: root.dalil.slice(i, i + 2), cite: root.cite, note: root.note });
+      reviewSlides(slides, [root]);
+    }
+  } else if (kind === 'topic') {
+    const t = topics[0], units = topicUnits(t), sm = summaryOf('topic', t.topic_id), s = topicStats(t);
+    slides.push({ type: 'title', title, subtitle: SUBTITLE, crumb: BABS.find(b => b.key === bab)?.title || '', stats: [{ n: units.length, l: 'محوراً' }, { n: s.subs, l: 'عنواناً فرعياً' }, { n: s.pages, l: 'صفحة من الكتاب' }] });
+    topicIssues(t).forEach(i => ids.add(sid(i.issue_id)));
+    if (units.length) agendaSlides(slides, title, units.map(u => ({ t: u.title, sub: u.pg })));
+    if (sm) slides.push({ type: 'summary', kicker: '🧭 نظرة عامة', title, lead: sm.ringkas, items: [], ai: true });
+    if (sm && sm.masail.length) slides.push({ type: 'summary', kicker: '⚖️ أهم مسائل الموضوع', title, lead: '', items: sm.masail.slice(0, 5), ai: true });
+    if (units.length) {
+      units.forEach((u, i) => unitSlides(slides, u, i + 1, units.length));
+      recapSlides(slides, title, units.map(u => ({ t: u.title, r: u.ringkas, ai: u.ai })));
+      reviewSlides(slides, units);
+    } else {
+      const own = topicBlocks(t)[0], txt = own ? ownText(own) : '', dal = extractDalil(txt);
+      for (let i = 0; i < Math.min(dal.length, 4); i += 2) slides.push({ type: 'dalil', title, items: dal.slice(i, i + 2), cite: [sid(topicIssues(t)[0].issue_id)], note: txt });
+    }
+  } else { // bab
+    const ts = topics.filter(t => topicIssues(t).length);
+    const tot = ts.reduce((a, t) => { const s = topicStats(t); a.subs += s.subs; a.pages += s.pages; return a; }, { subs: 0, pages: 0 });
+    slides.push({ type: 'title', title, subtitle: SUBTITLE, crumb: 'باب', stats: [{ n: ts.length, l: 'موضوعاً' }, { n: tot.subs, l: 'عنواناً فرعياً' }, { n: tot.pages, l: 'صفحة من الكتاب' }] });
+    agendaSlides(slides, title, ts.map(t => ({ t: t.title, sub: pageRange(topicIssues(t)) })), 'موضوعات الباب');
+    const tu = ts.map(t => {
+      topicIssues(t).forEach(i => ids.add(sid(i.issue_id)));
+      const sm = summaryOf('topic', t.topic_id), units = topicUnits(t), first = topicIssues(t)[0];
+      return { t, sm, units, title: t.title, ringkas: sm ? sm.ringkas : '', masail: sm ? sm.masail : [], dalil: units.flatMap(u => u.dalil), ai: !!sm, cite: first ? [sid(first.issue_id)] : [] };
+    });
+    tu.forEach((x, i) => {
+      slides.push({ type: 'section', label: 'الموضوع', no: i + 1, of: tu.length, title: x.title, subtitle: x.ringkas ? excerpt(x.ringkas, 210) : pageRange(topicIssues(x.t)), ai: !!x.ringkas });
+      if (x.masail.length) slides.push({ type: 'summary', kicker: '⚖️ أهم المسائل', title: x.title, lead: '', items: x.masail.slice(0, 5), ai: x.ai, cite: x.cite });
+      if (x.units.length) recapSlides(slides, x.title, x.units.map(u => ({ t: u.title, r: u.ringkas, ai: u.ai })), '🗂️ محاور الموضوع');
+    });
+    reviewSlides(slides, tu);
+  }
+  const src = [...ids];
+  slides.push({ type: 'sources', title: 'المصادر', items: src });
+  return { slides, sources: src, stats: null };
 }
 
 async function buildAiDeck(title, topics, o, onLen, signal) {
@@ -1929,7 +3099,8 @@ async function studioGenerate(form) {
   const title = form.elements.dtitle.value.trim() || studioDefaultTitle();
   const mode = form.elements.mode.value;
   let result;
-  if (mode === 'extract') result = buildExtractDeck(title, ts);
+  if (mode === 'extract') result = buildExtractDeck(title, ts, studioSel.bab);
+  else if (mode === 'lesson') result = ts.length === 1 ? buildLessonDeck('topic', title, ts, studioSel.bab) : buildLessonDeck('bab', title, ts, studioSel.bab);
   else {
     if (!CAP.sample) { toast('الملخص الذكي غير متاح هنا'); return; }
     const st = $('#genStatus'), btn = $('#genBtn');
@@ -1949,84 +3120,147 @@ async function studioGenerate(form) {
       return;
     } finally { btn.disabled = false; genCtl = null; }
   }
-  const deck = { id: nid('d'), title, mode, created: Date.now(), sources: result.sources, slides: result.slides, stats: result.stats || null };
+  const deck = { id: nid('d'), title, mode: mode === 'lesson' ? 'extract' : mode, lesson: mode === 'lesson', bab: studioSel.bab, created: Date.now(), sources: result.sources, slides: result.slides, stats: result.stats || null };
   DECKS.unshift(deck); await saveDecks();
   toast('تم إنشاء العرض');
   location.hash = '#/deck/' + encodeURIComponent(deck.id);
 }
 
 /* ---------- عرض الشرائح ---------- */
-let deckState = { id: null, i: 0, notes: false, grid: false };
-const curDeck = () => DECKS.find(d => d.id === deckState.id);
+let TMP = null; // عرض مؤقت يُبنى عند فتح #/slides/… ولا يُحفظ إلا بطلب
+let deckState = { id: null, key: '', i: 0, notes: false, grid: false };
+const getDeck = id => id === 'tmp' ? TMP : DECKS.find(d => d.id === id);
+const curDeck = () => getDeck(deckState.id);
 function citeMini(deck, id) {
-  const n = deck.sources.indexOf(sid(id));
-  return `<button class="c-mini" data-act="dk-cite" data-id="${esc(id)}" aria-label="المصدر ${n + 1}">${fmt(n + 1)}</button>`;
+  const is = DB.idx.issues.get(sid(id));
+  const n = deck.sources.indexOf(sid(id)) + 1;
+  const label = deck.mode === 'ai' ? fmt(n) : (is && has(is.page) ? `صـ ${is.page}` : fmt(n));
+  return `<button class="c-mini" data-act="dk-cite" data-id="${esc(id)}" aria-label="المصدر ${fmt(n)}">${esc(label)}</button>`;
 }
-function slideHtml(deck, s, k) {
-  const N = deck.slides.length;
-  const foot = `<div class="s-foot"><span>${esc(deck.title)}</span><span>${deck.mode === 'ai' ? '✨ ملخص آلي   ' : ''}${fmt(k + 1)} / ${fmt(N)}</span></div>`;
+const SLIDE_THEMES = [
+  { key: 'classic', name: 'كلاسيكي', desc: 'بطاقات مرتّبة على رقّ فاتح بألوان الباب — الأصل' },
+  { key: 'mushaf', name: 'مخطوطة', desc: 'كتاب: عناوين متوسطة بزخرفة، المحاور فهرسٌ بنقاط إلى الصفحة، النص بلا صناديق بخط الحاشية، والملخص بالحمرة' },
+  { key: 'lail', name: 'ليلي', desc: 'مسرح داكن: المحاور خط زمني مضيء، الدليل اقتباس كبير منفرد، والمراجعة فقاعات حوار — للقاعات المعتمة' },
+  { key: 'asri', name: 'عصري', desc: 'بِنتو وتقسيم: عمود ملوّن للعنوان بجانب النص، وبلاطات كبيرة بأرقام عملاقة' },
+  { key: 'zakhrafa', name: 'زخرفة', desc: 'تناظر: محاور متعرجة حول محور، بلاطات بقباب كالمحاريب، والآية في خرطوشة' }
+];
+const themeOk = k => SLIDE_THEMES.some(t => t.key === k);
+function slideTheme() { const q = parseHash().params.get('th'); if (themeOk(q)) return q; const v = store.get('slideTheme', 'classic'); return themeOk(v) ? v : 'classic'; }
+function slideHtml(deck, s, k, th) { return slideHtmlRaw(deck, s, k).replace('<div class="slide', `<div class="slide th-${th || slideTheme()}`); }
+function slideHtmlRaw(deck, s, k) {
+  const N = deck.slides.length, ab = deck.bab ? ' ab-' + deck.bab : '';
+  const foot = `<div class="s-foot"><span>${esc(deck.title)}</span><span>${deck.mode === 'ai' ? '✨ ملخص آلي · ' : ''}${fmt(k + 1)} / ${fmt(N)}</span></div><div class="s-bar" style="--p:${((k + 1) / N * 100).toFixed(1)}%"><i></i></div>`;
   const cites = c => arr(c).length ? `<span>${arr(c).map(id => citeMini(deck, id)).join('')}</span>` : '';
+  const lines = t => esc(t).replace(/\n/g, '<br>');
+  const part = s.part ? `<span class="s-part">${fmt(s.part[0])} / ${fmt(s.part[1])}</span>` : '';
   switch (s.type) {
-    case 'title': return `<div class="slide t-title"><div class="t-orn" aria-hidden="true">${STAR}</div><h1>${esc(s.title)}</h1>${has(s.subtitle) ? `<p>${esc(s.subtitle)}</p>` : ''}${deck.mode === 'ai' ? '<p class="ai-note">ملخص آلي محال إلى مسائل الموسوعة</p>' : ''}</div>`;
-    case 'section': return `<div class="slide t-section"><div class="t-orn" aria-hidden="true">${STAR}</div><h2>${esc(s.title)}</h2>${has(s.subtitle) ? `<p>${esc(s.subtitle)}</p>` : ''}${foot}</div>`;
+    case 'title': return `<div class="slide t-title${ab}"><div class="t-deco" aria-hidden="true">${STAR}</div><span class="t-kick">${has(s.crumb) ? esc(s.crumb) + ' · ' : ''}الفقه المنهجي · قسم العبادات</span><h1>${esc(s.title)}</h1>${has(s.subtitle) ? `<p class="t-sub">${esc(s.subtitle)}</p>` : ''}
+      ${arr(s.stats).length ? `<div class="t-stats">${s.stats.map(x => `<div><b>${fmt(x.n)}</b><span>${esc(x.l)}</span></div>`).join('')}</div>` : ''}${deck.mode === 'ai' ? '<p class="ai-note">ملخص آلي محال إلى مسائل الموسوعة</p>' : ''}</div>`;
+    case 'section': return `<div class="slide t-section${ab}">${s.no ? `<div class="sec-no" aria-hidden="true">${fmt(s.no)}</div><div class="sec-of">${esc(s.label || 'الموضوع')} ${fmt(s.no)} من ${fmt(s.of)}</div>` : ''}<h2>${esc(s.title)}</h2>${has(s.subtitle) ? `<p>${esc(s.subtitle)}</p>${s.ai ? '<span class="sec-ai">ملخص آلي من نص الكتاب</span>' : ''}` : ''}${foot}</div>`;
     case 'quote': {
-      const len = String(s.text).length, sz = len > 380 ? 'xl' : len > 230 ? 'lg' : '';
-      const [o, c] = s.kind === 'quran' ? ['﴿', '﴾'] : ['«', '»'];
-      return `<div class="slide t-quote k-${s.kind || 'nass'}"><h3 class="s-title">${esc(s.title)}</h3><blockquote class="q ${sz}"><span>${o}${esc(s.text)}${c}</span></blockquote><div class="q-ref">${has(s.ref) ? esc(s.ref) : ''}${cites(s.cite)}</div>${foot}</div>`;
+      const kind = s.kind || 'nass', len = String(s.text).length, sz = len > 380 ? 'xl' : len > 240 ? 'lg' : '';
+      const label = { foot: 'الحواشي', quran: 'آية كريمة', hadith: 'حديث شريف' }[kind] || 'النص الأصلي';
+      const [o, c] = kind === 'quran' ? ['﴿', '﴾'] : kind === 'hadith' ? ['«', '»'] : ['', ''];
+      return `<div class="slide t-quote k-${kind}${ab}"><div class="s-top"><span class="s-kicker">${label}</span><span class="s-path">${has(s.path) ? esc(s.path) : ''}</span>${s.part ? `<span class="s-part">${fmt(s.part[0])} / ${fmt(s.part[1])}</span>` : ''}</div><h3 class="s-title">${esc(s.title)}</h3><div class="q-card"><blockquote class="q ${sz}">${o}${lines(s.text)}${c}</blockquote></div><div class="q-ref"><span>${has(s.ref) ? esc(s.ref) : ''}</span>${cites(s.cite)}</div>${foot}</div>`;
     }
+    case 'agenda': return `<div class="slide t-agenda${ab}"><div class="s-top"><span class="s-kicker">🗂️ ${esc(s.kicker || 'محاور الدرس')}</span><span class="s-path"></span>${part}</div><h3 class="s-title">${esc(s.title)}</h3>
+      <ol class="ag-list${s.items.length > 5 ? ' two' : ''}">${s.items.map(x => `<li><i>${fmt(x.n)}</i><span><b>${esc(x.t)}</b>${has(x.sub) ? `<small>${esc(x.sub)}</small>` : ''}</span></li>`).join('')}</ol>${foot}</div>`;
+    case 'summary': {
+      const n = arr(s.items).length, long = arr(s.items).some(x => x.length > 110);
+      return `<div class="slide t-summary${ab}"><div class="s-top"><span class="s-kicker">${esc(s.kicker || '📌 الخلاصة')}</span><span class="s-path"></span>${s.ai ? '<span class="s-ai">ملخص آلي من نص الكتاب</span>' : ''}</div><h3 class="s-title">${esc(s.title)}</h3>
+        ${has(s.lead) ? `<div class="sum-lead${n ? '' : ' solo'}">${esc(s.lead)}</div>` : ''}
+        ${n ? `<ul class="sum-cards n${n}${n > 3 ? ' two' : ''}${n > 3 && long ? ' small' : ''}${n <= 3 ? ' big' : ''}">${s.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+        <div class="q-ref"><span>${s.ai ? 'المرجع هو النص الأصلي — انقر رقم الصفحة' : 'من نص الكتاب'}</span>${cites(s.cite)}</div>${foot}</div>`;
+    }
+    case 'dalil': return `<div class="slide t-dalil${ab}"><div class="s-top"><span class="s-kicker">📚 الأدلة</span><span class="s-path"></span><span class="s-part">نص الكتاب حرفياً</span></div><h3 class="s-title">${esc(s.title)}</h3>
+      <div class="dl-grid n${s.items.length}">${s.items.map(d => `<div class="dl ${d.kind}${d.text.length > (s.items.length > 1 ? 150 : 260) ? ' sm' : ''}"><b>${d.kind === 'quran' ? '📖 من القرآن الكريم' : '📜 من السنة'}</b><blockquote>${d.kind === 'quran' ? '﴿' + esc(d.text) + '﴾' : esc(d.text)}</blockquote>${has(d.ref) ? `<small>[${esc(d.ref)}]</small>` : ''}</div>`).join('')}</div>
+      <div class="q-ref"><span>${s.more ? `و${fmt(s.more)} أدلة أخرى في النص` : ''}</span>${cites(s.cite)}</div>${foot}</div>`;
+    case 'recap': return `<div class="slide t-recap${ab}"><div class="s-top"><span class="s-kicker">${esc(s.kicker || 'خلاصة')}</span><span class="s-path"></span>${part}</div><h3 class="s-title">${esc(s.title)}</h3>
+      <div class="rc-grid n${s.items.length}">${s.items.map(x => `<div class="rc"><b>${esc(x.t)}</b>${has(x.r) ? `<p>${esc(x.r)}</p>` : ''}</div>`).join('')}</div>${foot}</div>`;
+    case 'review': return `<div class="slide t-review${ab}"><div class="s-top"><span class="s-kicker">❓ مراجعة</span><span class="s-path"></span>${part}</div><h3 class="s-title">${esc(s.title)}</h3>
+      <ol class="rv-list">${s.items.map(x => `<li><i>س${fmt(x.n)}</i><span>${esc(x.q)}</span></li>`).join('')}</ol>${foot}</div>`;
+    case 'map': return `<div class="slide t-map${ab}"><div class="s-top"><span class="s-kicker">🌳 تشجير</span><span class="s-path"></span>${s.part ? `<span class="s-part">${fmt(s.part[0])} / ${fmt(s.part[1])}</span>` : ''}</div><h3 class="s-title">${esc(s.title)}</h3>
+      <div class="map-grid">${s.groups.map(g => `<div class="map-card"><b><i>${fmt(g.n)}</i><span>${esc(g.t)}</span></b>${g.c.length ? `<ul>${g.c.slice(0, 4).map(c => `<li>${esc(c)}</li>`).join('')}${g.c.length > 4 ? `<li class="more">+${fmt(g.c.length - 4)}</li>` : ''}</ul>` : ''}</div>`).join('')}</div>${foot}</div>`;
     case 'points': {
       const dense = s.points.length > 4 || s.points.some(p => p.text.length > 150);
-      return `<div class="slide t-points"><h3 class="s-title">${esc(s.title)}</h3><ul class="pts${dense ? ' dense' : ''}">${s.points.map(p => `<li>${esc(p.text)}${cites(p.cite)}</li>`).join('')}</ul>${foot}</div>`;
+      const mlk = s.mlk || deck.mode === 'ai';
+      return `<div class="slide t-points${mlk ? ' t-mlk' : ''}${ab}">${s.kicker ? `<div class="s-top"><span class="s-kicker">${esc(s.kicker)}</span></div>` : ''}<h3 class="s-title">${esc(s.title)}</h3><ol class="pcards${dense ? ' dense' : ''}">${s.points.map(p => `<li><span>${esc(p.text)}${cites(p.cite)}</span></li>`).join('')}</ol>${foot}</div>`;
     }
     case 'sources': {
-      const books = new Set();
-      const li = arr(s.items).slice(0, 16).map(id => {
-        const is = DB.idx.issues.get(sid(id));
-        if (!is) return `<li>${citeMini(deck, id)}<span class="na">مسألة غير موجودة في البيانات الحالية</span></li>`;
+      const groups = new Map(), books = new Set();
+      arr(s.items).forEach(id => {
+        const is = DB.idx.issues.get(sid(id)); if (!is) return;
         const c = issueCtx(is); if (c.book) books.add(c.book.title);
-        return `<li>${citeMini(deck, id)}<span>${esc(is.title)}${c.volume ? ' ' + esc(volLabel(c.volume)) : ''}${has(c.page) ? ' صـ ' + esc(c.page) : ''}</span></li>`;
+        const key = c.topic ? sid(c.topic.topic_id) : sid(id);
+        if (!groups.has(key)) groups.set(key, { name: c.topic ? c.topic.title : is.title, vol: c.volume ? volLabel(c.volume) : '', pages: [] });
+        if (has(is.page)) groups.get(key).pages.push(is.page);
+      });
+      const all = [...groups.values()], li = all.slice(0, 12).map(g => {
+        const pg = g.pages.slice().sort((a, b) => toNum(a) - toNum(b));
+        const r = pg.length > 1 && pg[0] !== pg[pg.length - 1] ? `${pg[0]}–${pg[pg.length - 1]}` : (pg[0] || '');
+        return `<li><b>${esc(g.name)}</b><small>${esc([g.vol, r ? 'صـ ' + r : ''].filter(Boolean).join(' · '))}</small></li>`;
       }).join('');
-      const more = arr(s.items).length > 16 ? `<li><span class="na">و${fmt(arr(s.items).length - 16)} مصدراً آخر</span></li>` : '';
-      return `<div class="slide t-sources"><h3 class="s-title">${esc(s.title)}</h3><ul class="src-ol">${li}${more}</ul>${books.size ? `<p class="src-book">${esc([...books].join('، '))}</p>` : ''}${foot}</div>`;
+      const more = all.length > 12 ? `<li class="more">و${fmt(all.length - 12)} موضوعاً آخر</li>` : '';
+      return `<div class="slide t-sources${ab}"><div class="s-top"><span class="s-kicker">المصادر</span></div><h3 class="s-title">${esc(s.title)}</h3><ul class="src-grid">${li}${more}</ul>${books.size ? `<p class="src-book">${esc([...books].join('، '))}</p>` : ''}${foot}</div>`;
     }
   }
   return '<div class="slide"></div>';
 }
+function viewSlides(kind, id) {
+  let title, bab, topics, only = null, secB = null, head = null;
+  const mq = parseHash().params.get('m'), lesson = kind !== 'issue' && (mq ? mq !== 'nas' : store.get('deckMode', 'dars') !== 'nas');
+  if (kind === 'bab') { const b = BABS.find(x => x.key === id); if (!b) return viewNotFound(); bab = id; title = b.title; topics = babTopicsOrdered(id).map(x => x.t); }
+  else if (kind === 'topic') { const t = Api.getTopicById(id); if (!t) return viewNotFound('الموضوع'); bab = DB.idx.chapterBab.get(topicChapterId(t)); title = String(t.title); topics = [t]; }
+  else if (kind === 'section') { const h = Api.getHeadingById(id), t = h && Api.getTopicById(h.topic_id); if (!t) return viewNotFound('العنوان'); bab = babOfTopic(t); title = String(h.title); topics = [t]; secB = sectionBlocks(h, true); head = h; }
+  else if (kind === 'issue') { const is = Api.getIssueById(id); const c = is && issueCtx(is); if (!c || !c.topic) return viewNotFound('المسألة'); bab = c.babKey; title = String(c.topic.title); topics = [c.topic]; only = [is]; }
+  else return viewNotFound();
+  const r = lesson ? buildLessonDeck(kind, title, topics, bab, head) : buildExtractDeck(title, topics, bab, only, secB);
+  if (!r.sources.length) { currentNav = 'studio'; crumbs([HOME, { label: 'عرض شرائح' }]); setView(emptyState('لا توجد نصوص لعرضها في قاعدة البيانات الحالية.', noDataBody())); return; }
+  TMP = { id: 'tmp', title, bab, mode: 'extract', lesson, route: { kind, id }, created: Date.now(), sources: r.sources, slides: r.slides, stats: r.stats };
+  const key = location.hash;
+  if (deckState.id !== 'tmp' || deckState.key !== key) deckState = { id: 'tmp', key, i: Math.max(0, (parseInt(parseHash().params.get('s'), 10) || 1) - 1), notes: false, grid: false };
+  viewDeck('tmp');
+}
 function viewDeck(id) {
-  const deck = DECKS.find(d => d.id === id);
+  const deck = getDeck(id);
   if (!deck) return viewNotFound('العرض');
-  currentNav = 'studio';
-  crumbs([HOME, { label: 'استوديو العروض', href: '#/studio' }, { label: deck.title }]);
-  if (deckState.id !== id) deckState = { id, i: 0, notes: false, grid: false };
+  const tmp = id === 'tmp';
+  currentNav = tmp ? (deck.bab ? 'bab:' + deck.bab : '') : 'studio';
+  crumbs(tmp ? [HOME, IBADAT, babCrumb(deck.bab), { label: 'عرض شرائح: ' + deck.title }].filter(Boolean) : [HOME, { label: 'استوديو العروض', href: '#/studio' }, { label: deck.title }]);
+  if (!tmp && deckState.id !== id) deckState = { id, key: '', i: 0, notes: false, grid: false };
   const st = deck.stats || {};
   const warn = [];
   if (st.dropped) warn.push(`حُذفت ${fmt(st.dropped)} نقطة لأنها بلا إحالة صحيحة.`);
   if (st.quoteFixed) warn.push(`${fmt(st.quoteFixed)} اقتباس لم يطابق النص حرفياً فعُرض نقطةً ملخّصة.`);
   if (st.cut) warn.push(`اختُصرت نصوص ${fmt(st.cut)} مسألة طويلة قبل إرسالها.`);
   if (st.omitted) warn.push(`لم تُرسل ${fmt(st.omitted)} مسألة لتجاوز الحجم المسموح.`);
-  if (st.capped) warn.push('اقتصر العرض على أول ٦٠ مسألة.');
-  setView(`<div class="deck-wrap"><div class="deck-ui">
-    <div class="deck-bar"><h1>${esc(deck.title)}</h1>${deck.mode === 'ai' ? '<span class="pill ai">✨ ملخص ذكي بالإحالات</span>' : '<span class="pill">📖 مستخرج من النص</span>'}</div>
-    ${deck.mode === 'ai' ? `<p class="na" style="margin:0 0 .6rem">صاغه Claude من المصادر المحددة فقط. الأرقام الذهبية تحيل إلى المسائل؛ راجِع كل نقطة مع نصها قبل الاعتماد عليها.${warn.length ? ' ' + esc(warn.join(' ')) : ''}</p>` : (warn.length ? `<p class="na">${esc(warn.join(' '))}</p>` : '')}
-    <div class="present" id="present">
-      <div class="stage" id="stage"></div>
-      <div class="present-ctl"><button data-act="dk-prev" aria-label="السابق">${CHEV_R}</button><span id="dkCount2"></span><button data-act="dk-next" aria-label="التالي">${CHEV_L}</button><button data-act="dk-exit" aria-label="إنهاء العرض">${XICON}</button></div>
-    </div>
-    <div class="progress"><span id="dkProg"></span></div>
-    <div class="deck-ctl">
-      <button class="btn ghost sm" data-act="dk-prev">السابق</button><span class="count" id="dkCount"></span><button class="btn ghost sm" data-act="dk-next">التالي</button>
-      <span class="spacer"></span>
-      <button class="btn sm" data-act="dk-present">▶️ عرض</button>
-      <button class="btn ghost sm" data-act="dk-grid">🗂️ كل الشرائح</button>
-      <button class="btn ghost sm" data-act="dk-notes">📝 ملاحظات</button>
+  if (st.capped) warn.push('اقتصر العرض على أول ٨٠٠ شريحة؛ اختر موضوعات أقل لعرضها كاملة.');
+  const hasNotes = deck.slides.some(s => has(s.note));
+  setView(`<div class="deck-wrap ab${deck.bab ? ' ab-' + deck.bab : ''}"><div class="deck-ui">
+    <div class="deck-top"><h1>${esc(deck.title)}</h1>${deck.mode === 'ai' ? '<span class="pill ai">✨ ملخص ذكي بالإحالات</span>' : deck.lesson ? '<span class="pill">🎓 وضع الدرس</span>' : '<span class="pill">📖 نص الكتاب كما هو</span>'}
+      ${tmp && deck.route && deck.route.kind !== 'issue' ? `<span class="seg-tg" role="group" aria-label="نوع العرض"><a class="${deck.lesson ? 'on' : ''}" href="#/slides/${deck.route.kind}/${enc(deck.route.id)}?m=dars">🎓 وضع الدرس</a><a class="${deck.lesson ? '' : 'on'}" href="#/slides/${deck.route.kind}/${enc(deck.route.id)}?m=nas">📖 النص الكامل</a></span>` : ''}
+      <button class="btn sm" data-act="dk-present">▶ ملء الشاشة</button>
+      ${tmp ? '<button class="btn ghost sm" data-act="dk-save">💾 حفظ في عروضي</button>' : ''}
+      ${hasNotes ? '<button class="btn ghost sm" data-act="dk-notes">📝 ملاحظات المقدّم</button>' : ''}
+      <details class="th-pick"><summary class="btn ghost sm">🎨 النمط: ${esc(SLIDE_THEMES.find(t => t.key === slideTheme()).name)}</summary><div class="th-pop">${SLIDE_THEMES.map(t => `<button type="button" class="chip${t.key === slideTheme() ? ' on' : ''}" data-act="set-theme" data-th="${t.key}">${esc(t.name)}</button>`).join('')}<a class="na sm" href="#/settings">معاينة الأنماط ⚙️</a></div></details>
       <button class="btn ghost sm" data-act="dk-print">🖨️ PDF</button>
       <button class="btn ghost sm" data-act="dk-html" data-cap="downloads">⬇️ HTML</button>
-      <button class="btn ghost sm danger" data-act="dk-del" style="color:var(--danger)">🗑️ حذف</button>
-    </div>
-    <div class="notice ok" id="dkNotes" hidden></div>
-    <div class="thumbs" id="dkGrid" hidden></div>
-  </div>
-  <div class="print-deck">${deck.slides.map((s, k) => `<div class="stage">${slideHtml(deck, s, k)}</div>`).join('')}</div></div>`);
+      ${tmp ? '' : '<button class="btn ghost sm danger" data-act="dk-del" style="color:var(--danger)">🗑️ حذف</button>'}</div>
+    ${deck.lesson ? `<p class="na deck-warn">تمهيد ← محاور (خلاصة · أدلة · تفصيل) ← خلاصة الدرس ← مراجعة. الأدلة منقولة حرفياً من الكتاب، والخلاصات المعلَّمة «ملخص آلي» مصوغة من نصه فقط؛ والنص الكامل لكل محور في «📝 ملاحظات المقدّم».</p>` : ''}
+    ${deck.mode === 'ai' ? `<p class="na deck-warn">صاغه Claude من المصادر المحددة فقط. الأرقام تحيل إلى المسائل؛ راجِع كل نقطة مع نصها قبل الاعتماد عليها.${warn.length ? ' ' + esc(warn.join(' ')) : ''}</p>` : (warn.length ? `<p class="na deck-warn">${esc(warn.join(' '))}</p>` : '')}
+    <div class="deck-body">
+      <aside class="film" id="dkFilm" aria-label="الشرائح">${deck.slides.map((s, k) => `<div class="thumb" role="button" tabindex="0" data-act="dk-go" data-i="${k}" aria-label="الشريحة ${fmt(k + 1)}"><div class="stage" aria-hidden="true">${slideHtml(deck, s, k)}</div><span class="no">${fmt(k + 1)}</span></div>`).join('')}</aside>
+      <div class="deck-main">
+        <div class="canvas"><div class="present" id="present">
+          <div class="stage" id="stage"></div>
+          <div class="present-ctl"><button data-act="dk-prev" aria-label="السابق">${CHEV_R}</button><span id="dkCount2"></span><button data-act="dk-next" aria-label="التالي">${CHEV_L}</button><button data-act="dk-exit" aria-label="إنهاء العرض">${XICON}</button></div>
+        </div></div>
+        <div class="progress"><span id="dkProg"></span></div>
+        <div class="deck-ctl"><div class="pillbar"><button class="round" data-act="dk-prev" aria-label="السابق">${CHEV_R}</button><span class="count" id="dkCount"></span><button class="round" data-act="dk-next" aria-label="التالي">${CHEV_L}</button></div>
+          <button class="btn ghost sm" data-act="dk-grid">🗂️ الشرائح</button></div>
+        <div class="notice ok" id="dkNotes" hidden></div>
+      </div></div>
+  </div><div class="print-deck"></div></div>`);
   showSlide();
 }
 function showSlide() {
@@ -2039,9 +3273,15 @@ function showSlide() {
   $('#dkProg').style.width = ((deckState.i + 1) / n * 100) + '%';
   const note = deck.slides[deckState.i].note, nb = $('#dkNotes');
   nb.hidden = !deckState.notes;
-  nb.innerHTML = `<strong>ملاحظات المقدّم</strong>${has(note) ? esc(note) : '<span class="na">لا توجد ملاحظات لهذه الشريحة.</span>'}`;
-  const g = $('#dkGrid'); g.hidden = !deckState.grid;
-  if (deckState.grid) g.innerHTML = deck.slides.map((s, k) => `<button class="thumb${k === deckState.i ? ' on' : ''}" data-act="dk-go" data-i="${k}"><div class="stage">${slideHtml(deck, s, k)}</div>${fmt(k + 1)}</button>`).join('');
+  nb.innerHTML = `<strong>ملاحظات المقدّم ${deck.lesson ? '<small>— نص الكتاب لهذا المحور</small>' : ''}</strong>${has(note) ? `<div class="nass">${paras(note)}</div>` : '<span class="na">لا توجد ملاحظات لهذه الشريحة.</span>'}`;
+  const film = $('#dkFilm');
+  film.classList.toggle('open', deckState.grid);
+  [...film.children].forEach((el, k) => el.classList.toggle('on', k === deckState.i));
+  const cur = film.children[deckState.i];
+  if (cur && film.scrollHeight > film.clientHeight && film.offsetParent) {
+    if (getComputedStyle(film).flexDirection === 'column') film.scrollTop = cur.offsetTop - (film.clientHeight - cur.clientHeight) / 2;
+    else cur.scrollIntoView({ block: 'nearest', inline: 'center' });
+  }
 }
 function deckGo(d) { deckState.i += d; showSlide(); }
 function enterPresent() {
@@ -2098,18 +3338,51 @@ document.addEventListener('click', async e => {
     document.querySelectorAll('input[name=st-topic]').forEach(i => i.checked = act === 'st-all'); updateStudioSummary();
   }
   else if (act === 'st-stop') genCtl?.abort();
+  else if (act === 'tr-toggle') {
+    if (e.target.closest('a')) return;
+    const id = el.dataset.id, shut = el.dataset.def === '1';
+    treeState.ov.set(id, !shut); drawTree();
+  }
+  else if (act === 'set-theme') {
+    if (e.target.closest('a')) return;
+    store.set('slideTheme', el.dataset.th); toast('النمط: ' + SLIDE_THEMES.find(t => t.key === el.dataset.th).name);
+    if (location.hash.startsWith('#/settings')) viewSettings(); else if (location.hash.startsWith('#/themes/')) viewThemeGallery(parseHash().parts[1]); else if (curDeck() && $('#stage')) viewDeck(deckState.id);
+  }
+  else if (act === 'tr-detail') { treeState.detail = !treeState.detail; drawTree(); }
+  else if (act === 'tr-all') treeSetAll(true);
+  else if (act === 'tr-none') treeSetAll(false);
+  else if (act === 'tr-zoom') { treeState.zoom = Math.max(0.4, Math.min(1.8, +(treeState.zoom + +el.dataset.d).toFixed(2))); drawTree(); }
+  else if (act === 'tr-fit') { const box = $('#treeBox'), sv = box && box.querySelector('svg'); if (sv) { const vb = sv.viewBox.baseVal; treeState.zoom = Math.max(0.3, Math.min(1.8, +((box.clientWidth - 24) / vb.width).toFixed(2))); drawTree(); } }
+  else if (act === 'fc-flip') { CARDS.flip = !CARDS.flip; showCard(); }
+  else if (act === 'fc-next') cardMove(1);
+  else if (act === 'fc-prev') cardMove(-1);
+  else if (act === 'fc-mode') { CARDS.mode = el.dataset.m; CARDS.i = 0; CARDS.flip = false; showCard(true); }
+  else if (act === 'fc-shuffle') { const n = CARDS.list.length, o = [...Array(n).keys()]; for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [o[i], o[j]] = [o[j], o[i]]; } CARDS.shuffled = o; CARDS.i = 0; CARDS.flip = false; showCard(); toast('تم خلط البطاقات'); }
+  else if (act === 'fc-know' || act === 'fc-again') {
+    const ord = cardOrder(), c = CARDS.list[ord[CARDS.i]]; if (!c) return;
+    const k = knownCards(); if (act === 'fc-know') k.add(c.id); else k.delete(c.id);
+    store.set('cardsKnown', [...k]); CARDS.flip = false;
+    if (act === 'fc-again' || CARDS.mode === 'all') CARDS.i++;
+    showCard(true);
+  }
   else if (act === 'dk-next') deckGo(1);
   else if (act === 'dk-prev') deckGo(-1);
-  else if (act === 'dk-go') { deckState.i = +el.dataset.i; deckState.grid = false; showSlide(); $('#stage').scrollIntoView({ block: 'center' }); }
+  else if (act === 'dk-go') { deckState.i = +el.dataset.i; deckState.grid = false; showSlide(); if (innerWidth <= 900) $('#stage').scrollIntoView({ block: 'center' }); }
+  else if (act === 'dk-save') {
+    if (!TMP) return;
+    const d = { ...TMP, id: nid('d') }; DECKS.unshift(d); await saveDecks(); toast('حُفظ العرض في «عروضي»'); location.hash = '#/deck/' + encodeURIComponent(d.id);
+  }
   else if (act === 'dk-present') enterPresent();
   else if (act === 'dk-exit') exitPresent();
   else if (act === 'dk-notes') { deckState.notes = !deckState.notes; showSlide(); }
   else if (act === 'dk-grid') { deckState.grid = !deckState.grid; showSlide(); }
   else if (act === 'dk-cite') { exitPresent(); openIssueCite(el.dataset.id); }
   else if (act === 'dk-print') {
+    const d = curDeck(), pd = $('.print-deck'); if (!d || !pd) return;
+    pd.innerHTML = d.slides.map((s, k) => `<div class="stage">${slideHtml(d, s, k)}</div>`).join('');
     const pg = document.createElement('style'); pg.id = 'pgLandscape'; pg.textContent = '@page{size:A4 landscape;margin:0}';
     document.head.appendChild(pg); document.body.classList.add('print-deck-mode');
-    const done = () => { pg.remove(); document.body.classList.remove('print-deck-mode'); window.removeEventListener('afterprint', done); };
+    const done = () => { pg.remove(); pd.innerHTML = ''; document.body.classList.remove('print-deck-mode'); window.removeEventListener('afterprint', done); };
     window.addEventListener('afterprint', done); window.print(); setTimeout(done, 1500);
   }
   else if (act === 'dk-html') { const d = curDeck(); if (d) saveFile((d.title || 'عرض').replace(/[\\/:*?"<>|]/g, ' ').slice(0, 80) + '.html', deckStandaloneHtml(d)); }
@@ -2121,6 +3394,7 @@ document.addEventListener('click', async e => {
 document.addEventListener('change', e => {
   const t = e.target;
   if (t.name === 'st-topic') { if (t.checked) studioSel.topics.add(t.value); else studioSel.topics.delete(t.value); updateStudioSummary(); }
+  else if (t.name === 'deckMode') { store.set('deckMode', t.value); toast(t.value === 'nas' ? 'العرض الافتراضي: النص الكامل' : 'العرض الافتراضي: وضع الدرس'); }
   else if (t.name === 'mode' && t.closest('#studioForm')) { studioSel.mode = t.value; syncAiOpts(); }
   else if (['n', 'style'].includes(t.name) && t.closest('#studioForm')) studioSel[t.name] = t.value;
 });
@@ -2130,12 +3404,19 @@ document.addEventListener('input', e => {
   if (t.name === 'extra') studioSel.extra = t.value;
 });
 document.addEventListener('keydown', e => {
-  if (!location.hash.startsWith('#/deck/') || (e.target.closest && e.target.closest('input,textarea,select,dialog'))) return;
+  if (e.key === 'Enter' && e.target.classList && (e.target.classList.contains('thumb') || e.target.classList.contains('trn') || e.target.classList.contains('th-card'))) { e.target.click(); return; }
+  if (location.hash.startsWith('#/cards/') && !(e.target.closest && e.target.closest('input,textarea,select,dialog'))) {
+    if ([' ', 'Enter'].includes(e.key) && !(e.target.closest && e.target.closest('a,button'))) { e.preventDefault(); CARDS.flip = !CARDS.flip; showCard(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); cardMove(1); } else if (e.key === 'ArrowRight') { e.preventDefault(); cardMove(-1); }
+    return;
+  }
+  if (!/^#\/(deck|slides)\//.test(location.hash) || (e.target.closest && e.target.closest('input,textarea,select,dialog'))) return;
   if (['ArrowLeft', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); deckGo(1); }
   else if (['ArrowRight', 'PageUp'].includes(e.key)) { e.preventDefault(); deckGo(-1); }
   else if (e.key === 'Home') { deckState.i = 0; showSlide(); }
   else if (e.key === 'End') { deckState.i = 1e9; showSlide(); }
   else if (e.key === 'f' || e.key === 'F') enterPresent();
+  else if (e.key === 'n' || e.key === 'N') { deckState.notes = !deckState.notes; showSlide(); }
   else if (e.key === 'Escape') exitPresent();
 });
 let touchX = null;
@@ -2153,6 +3434,57 @@ document.addEventListener('touchend', e => {
   } catch (e) { log.info('القدرات غير متاحة'); }
 })();
 
+/* ======================= الإعدادات ======================= */
+function sampleDeck() {
+  const t = DB.raw.topics.find(x => topicHeads(x.topic_id).length && topicIssues(x).length);
+  if (t) {
+    const r = buildLessonDeck('topic', t.title, [t], babOfTopic(t)), pick = ty => r.slides.findIndex(s => s.type === ty);
+    const full = buildExtractDeck(t.title, [t], babOfTopic(t)), qi = full.slides.findIndex(s => s.type === 'quote');
+    const deck = { title: t.title, mode: 'extract', bab: babOfTopic(t), sources: r.sources, slides: r.slides };
+    const out = ['title', 'section', 'summary', 'dalil'].map(pick).filter(i => i > -1).map(i => ({ deck, s: r.slides[i], k: i }));
+    if (qi > -1) out.splice(2, 0, { deck: { ...deck, slides: full.slides, sources: full.sources }, s: full.slides[qi], k: qi });
+    return out.slice(0, 5);
+  }
+  const deck = { title: MSG.DEMO, mode: 'extract', bab: 'salah', sources: [], slides: [] };
+  return [{ type: 'title', title: MSG.DEMO, subtitle: SUBTITLE }, { type: 'section', no: 1, of: 3, label: 'المحور', title: MSG.DEMO }, { type: 'quote', kind: 'nass', title: MSG.DEMO, text: MSG.DEMO, cite: [] }, { type: 'summary', kicker: '📌 الخلاصة', title: MSG.DEMO, lead: MSG.DEMO, items: [] }].map((s, k) => ({ deck: { ...deck, slides: Array(4) }, s, k }));
+}
+function galleryItems() {
+  const t = DB.raw.topics.find(x => topicHeads(x.topic_id).filter(h => !h.parent_id).some(h => headKids(h).length) && summaryOf('topic', x.topic_id)) || DB.raw.topics.find(x => topicHeads(x.topic_id).length);
+  if (!t) return sampleDeck().map(x => ({ ...x, cap: x.s.type }));
+  const bab = babOfTopic(t), r = buildLessonDeck('topic', t.title, [t], bab), f = buildExtractDeck(t.title, [t], bab);
+  const L = { title: 'العنوان', agenda: 'محاور الدرس', section: 'فاصل المحور', summary: 'الملخص', dalil: 'الأدلة', recap: 'خلاصة الدرس', review: 'أسئلة المراجعة', sources: 'المصادر', quote: 'نص الكتاب', foot: 'الحواشي', mlk: 'ملخص داخل النص الكامل' };
+  const dl = { title: t.title, mode: 'extract', bab, sources: r.sources, slides: r.slides }, df = { title: t.title, mode: 'extract', bab, sources: f.sources, slides: f.slides };
+  const out = [], seen = new Set(), add = (deck, k, cap) => { if (k > -1 && !seen.has(cap)) { seen.add(cap); out.push({ deck, s: deck.slides[k], k, cap }); } };
+  add(dl, 0, L.title); add(dl, r.slides.findIndex(s => s.type === 'agenda'), L.agenda); add(dl, r.slides.findIndex(s => s.type === 'section'), L.section);
+  add(dl, r.slides.findIndex(s => s.type === 'summary' && has(s.lead)), L.summary + ' (نظرة عامة)'); add(dl, r.slides.findIndex(s => s.type === 'summary' && arr(s.items).length > 3), L.summary + ' (المسائل)');
+  add(dl, r.slides.findIndex(s => s.type === 'dalil' && s.items.length > 1), L.dalil); add(df, f.slides.findIndex(s => s.type === 'quote' && s.kind === 'nass' && s.text.length > 250), L.quote);
+  add(df, f.slides.findIndex(s => s.type === 'quote' && s.kind === 'foot'), L.foot); add(df, f.slides.findIndex(s => s.mlk), L.mlk);
+  add(dl, r.slides.findIndex(s => s.type === 'recap'), L.recap); add(dl, r.slides.findIndex(s => s.type === 'review'), L.review); add(dl, r.slides.length - 1, L.sources);
+  return out;
+}
+function viewThemeGallery(key) {
+  if (!themeOk(key)) return viewNotFound();
+  const th = SLIDE_THEMES.find(t => t.key === key);
+  currentNav = 'settings'; crumbs([HOME, { label: 'الإعدادات', href: '#/settings' }, { label: 'نمط: ' + th.name }]);
+  const cur = store.get('slideTheme', 'classic');
+  setView(`<header class="page-head head-row"><div><h1>🎨 نمط «${esc(th.name)}»</h1><p>${esc(th.desc)}</p></div>
+    <div class="cta-row" style="margin:0">${key === cur ? '<span class="pill">✓ النمط الحالي</span>' : `<button class="btn sm" data-act="set-theme" data-th="${key}">اعتماد هذا النمط</button>`}<a class="btn ghost sm" href="#/settings">كل الأنماط</a></div></header>
+    <div class="chips" style="margin-bottom:1rem">${SLIDE_THEMES.map(t => `<a class="chip${t.key === key ? ' on' : ''}" href="#/themes/${t.key}">${esc(t.name)}</a>`).join('')}</div>
+    <div class="gal">${galleryItems().map(x => `<figure><div class="stage">${slideHtml(x.deck, x.s, x.k, key)}</div><figcaption>${esc(x.cap)}</figcaption></figure>`).join('')}</div>`);
+}
+function viewSettings() {
+  currentNav = 'settings'; crumbs([HOME, { label: 'الإعدادات' }]);
+  const cur = store.get('slideTheme', 'classic'), sm = sampleDeck(), defMode = store.get('deckMode', 'dars');
+  setView(`<header class="page-head"><h1>⚙️ الإعدادات</h1><p>تُحفظ في هذا المتصفح.</p></header>
+    ${blk('🎨 نمط الشرائح', `<p class="na sm" style="margin:0 0 .8rem">يتغيّر الشكل فقط؛ ويبقى التمييز ثابتاً في كل نمط: نص الكتاب، والملخص الآلي (لون مختلف وخط Amiri/Lotus)، والأدلة.</p>
+      <div class="th-grid">${SLIDE_THEMES.map(t => `<div class="th-card${t.key === cur ? ' on' : ''}" role="button" tabindex="0" data-act="set-theme" data-th="${t.key}" aria-pressed="${t.key === cur}">
+        <div class="th-prev">${sm.map(x => `<div class="stage" aria-hidden="true">${slideHtml(x.deck, x.s, x.k, t.key)}</div>`).join('')}</div>
+        <div class="th-meta"><b>${t.key === cur ? '✓ ' : ''}${esc(t.name)}</b><span>${esc(t.desc)}</span><a class="na sm" href="#/themes/${t.key}" style="display:block">عرض كل أنواع الشرائح ←</a></div></div>`).join('')}</div>`)}
+    ${blk('🎓 العرض الافتراضي للشرائح', `<div class="modes">
+      <label class="mode"><input type="radio" name="deckMode" value="dars"${defMode !== 'nas' ? ' checked' : ''}><div><b>🎓 وضع الدرس</b><span>محاور وخلاصات وأدلة ومسائل ومراجعة، والنص الكامل في ملاحظات المقدّم.</span></div></label>
+      <label class="mode"><input type="radio" name="deckMode" value="nas"${defMode === 'nas' ? ' checked' : ''}><div><b>📖 النص الكامل</b><span>نص الكتاب كما هو مقسّماً على الشرائح.</span></div></label></div>`)}`);
+}
+
 /* ======================= SIDEBAR / THEME ======================= */
 function renderSidebar() {
   $('#nav').innerHTML = `
@@ -2161,11 +3493,13 @@ function renderSidebar() {
     <ul class="tree">${BABS.map(b => `<li><a href="#/bab/${b.key}" data-nav="bab:${b.key}"><span aria-hidden="true">${b.icon}</span>${b.title}<span class="cnt">${fmt(babCounts(b.key).issues)}</span></a></li>`).join('')}</ul>
     <div class="nav-sep"></div>
     <a href="#/search" data-nav="search">البحث</a>
+    <a href="#/tree" data-nav="tree">🌳 التشجير</a>
     <a href="#/studio" data-nav="studio">🎞️ استوديو العروض</a>
     <a href="#/edit" data-nav="edit">➕ إضافة مسألة</a>
     <a href="#/refs" data-nav="refs">المراجع</a>
     <a href="#/favs" data-nav="favs">المفضلة</a>
     <a href="#/recent" data-nav="recent">آخر الموضوعات</a>
+    <a href="#/settings" data-nav="settings">⚙️ الإعدادات</a>
     <a href="#/about" data-nav="about">حول الموسوعة</a>`;
   const dot = DB.mode === 'none' ? '' : DB.mode === 'demo' ? 'demo' : 'on';
   const label = DB.mode === 'none' ? 'قاعدة البيانات غير متصلة' : DB.mode === 'demo' ? 'بيانات تجريبية' : 'قاعدة البيانات متصلة';
@@ -2210,6 +3544,12 @@ function render() {
       case 'edit': viewEdit(a, params); break;
       case 'studio': viewStudio(params); break;
       case 'deck': viewDeck(a); break;
+      case 'slides': viewSlides(a, parts[2]); break;
+      case 'section': viewSection(a); break;
+      case 'tree': viewTree(a, parts[2]); break;
+      case 'cards': viewCards(a, parts[2]); break;
+      case 'settings': viewSettings(); break;
+      case 'themes': viewThemeGallery(a); break;
       default: viewNotFound();
     }
   } catch (e) { log.error(e); setView(emptyState('تعذّر عرض هذه الصفحة.', '<a href="#/">العودة إلى الرئيسية</a>')); }

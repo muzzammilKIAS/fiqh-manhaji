@@ -79,11 +79,34 @@ const text = D => D.getElementById('view').textContent.replace(/\s+/g, ' ');
     submit(w, D.getElementById('studioForm')); await wait(80);
     ok(w.location.hash.startsWith('#/deck/') && w.eval('DECKS[0].slides.length') > 3, 'extract deck created');
     w.location.hash = '#/studio'; await wait(50);
+    { const f0 = D.getElementById('studioForm'), le = f0.querySelector('input[name=mode][value=lesson]');
+      le.checked = true; le.dispatchEvent(new w.Event('change', { bubbles: true })); submit(w, f0); await wait(80);
+      ok(w.eval('DECKS[0].lesson') === true && w.eval('DECKS[0].slides[0].type') === 'title' && D.querySelector('#stage .slide'), 'lesson (PdP) deck created from studio');
+      w.eval("studioSel.mode = 'extract'"); }
+    w.location.hash = '#/studio'; await wait(50);
     const f = D.getElementById('studioForm'); const ai = f.querySelector('input[name=mode][value=ai]');
     ai.checked = true; ai.dispatchEvent(new w.Event('change', { bubbles: true }));
     submit(w, f); await wait(150);
     ok(w.eval('DECKS[0].stats.dropped') === 1, 'AI deck drops uncited point');
     ok(errs.length === 0, 'studio without errors'); }
+
+  // 6. Slide themes (settings) — every theme renders every slide type, choice persists
+  { const { w, D, errs } = boot('#/data'); await wait(200);
+    D.querySelector('[data-act=load-demo]').click(); await wait(50);
+    w.location.hash = '#/settings'; await wait(50);
+    ok(D.querySelectorAll('.th-card').length === 5, 'settings shows 5 slide themes');
+    D.querySelector('.th-card[data-th=lail]').click(); await wait(50);
+    ok(w.eval("store.get('slideTheme')") === 'lail', 'theme choice saved');
+    w.location.hash = '#/slides/topic/demo-t1-1'; await wait(80);
+    ok(D.querySelector('#stage .slide.th-lail'), 'slides use the chosen theme');
+    const bad = w.eval(`(() => { const t = DB.raw.topics[0], r = buildLessonDeck('topic', t.title, [t], 'taharah'), f = buildExtractDeck(t.title, [t], 'taharah'); const deck = { title: 'x', mode: 'extract', bab: 'taharah', sources: [], slides: r.slides };
+      const extra = [{ type: 'agenda', title: 'x', items: [{ t: 'a', n: 1 }] }, { type: 'summary', title: 'x', lead: 'a', items: ['b'], ai: true }, { type: 'dalil', title: 'x', items: [{ kind: 'quran', text: 'a', ref: 'b' }] }, { type: 'recap', title: 'x', items: [{ t: 'a', r: 'b' }] }, { type: 'review', title: 'x', items: [{ q: 'a', n: 1 }] }, { type: 'points', mlk: true, title: 'x', points: [{ text: 'a', cite: [] }] }];
+      const out = []; SLIDE_THEMES.forEach(th => [...r.slides, ...f.slides, ...extra].forEach((s, k) => { const h = slideHtml(deck, s, k, th.key); if (!h.includes('th-' + th.key) || h === '<div class="slide th-' + th.key + '"></div>') out.push(th.key + ':' + s.type); })); return out; })()`);
+    ok(bad.length === 0, 'all 5 themes render every slide type' + (bad.length ? ': ' + bad.slice(0, 4).join() : ''));
+    for (const th of ['classic', 'mushaf', 'lail', 'asri', 'zakhrafa']) { w.location.hash = '#/themes/' + th; await wait(40); if (D.querySelectorAll('.gal .slide.th-' + th).length < 4) bad.push('gallery:' + th); }
+    ok(!bad.some(x => x.startsWith('gallery')), 'theme galleries render');
+    w.eval("store.set('slideTheme','classic')");
+    ok(errs.length === 0, 'themes without errors'); }
 
   console.log(failed ? `\n${failed} test(s) failed` : '\nAll tests passed');
   process.exit(failed ? 1 : 0);
