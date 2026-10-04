@@ -1,5 +1,3 @@
 node_modules/
 .DS_Store
-data/fiqh-data.json
-data/summaries.json
 data/sections.json
