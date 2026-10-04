@@ -108,6 +108,11 @@ const text = D => D.getElementById('view').textContent.replace(/\s+/g, ' ');
     w.eval("store.set('slideTheme','classic')");
     ok(errs.length === 0, 'themes without errors'); }
 
+  // 7. Copyright notice
+  { const { w, D } = boot('#/about'); await wait(200);
+    const C = '© Muzzammil Najib 2026 | FPIB-KIAS';
+    ok(D.querySelector('.site-foot').textContent.includes(C) && D.getElementById('sideFoot').textContent.includes(C) && text(D).includes(C), 'copyright shown in footer, sidebar and about page'); }
+
   console.log(failed ? `\n${failed} test(s) failed` : '\nAll tests passed');
   process.exit(failed ? 1 : 0);
 })();

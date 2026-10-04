@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>موسوعة الفقه المنهجي – قسم العبادات</title>
+<meta name="author" content="Muzzammil Najib — FPIB-KIAS">
+<meta name="copyright" content="© Muzzammil Najib 2026 | FPIB-KIAS">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -981,6 +983,13 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .gal figcaption{font-size:.85rem;color:var(--muted);margin-top:.3rem;text-align:center}
 @media (max-width:760px){.gal{grid-template-columns:1fr}}
 
+
+/* حقوق */
+.site-foot .copy{margin-top:.8rem;font-size:.82rem;color:var(--muted);letter-spacing:.2px}
+.side-foot .copy.side{margin-top:.6rem;font-size:.72rem;color:var(--muted);opacity:.85}
+.s-copy{position:absolute;bottom:3.2cqh;inset-inline-start:9cqw;font-size:2.1cqh;color:rgba(247,241,223,.72);font-family:var(--ui);z-index:3}
+.th-asri.t-title .s-copy{color:var(--smut)}
+@media print{body:not(.print-deck-mode) .site-foot{display:block!important;border:0}.site-foot nav{display:none}}
 /* ---------- responsive ---------- */
 @media (max-width:900px){
   .shell{grid-template-columns:1fr}
@@ -1058,6 +1067,7 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
       <div class="t">الفقه المنهجي على مذهب الإمام الشافعي</div>
       <div>قسم العبادات</div>
       <nav><a href="#/refs">المراجع</a><a href="#/about">حول الموسوعة</a></nav>
+      <div class="copy" dir="ltr">© Muzzammil Najib 2026 | FPIB-KIAS</div>
     </footer>
   </main>
 </div>
@@ -1941,6 +1951,7 @@ function viewAbout() {
     ${blk('نطاق المشروع', `<p>قسم العبادات فقط، في خمسة أبواب: ${BABS.map(b => b.title).join('، ')}.</p>`)}
     ${blk('المصدر الأساسي', `<p class="nass" style="font-size:1.25rem">الفقه المنهجي على مذهب الإمام الشافعي</p><p>للمؤلفين: مصطفى سعيد الخِن، ومصطفى مصطفى البُغا، وعلي الشَّرْبجي.</p>
       ${bib.length ? `<dl class="fields">${bib.map(([a, v]) => `<dt>${a}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : `<p class="na">بيانات الطبعة والنشر تُعرض بحسب ما في قاعدة البيانات، وهي غير متوفرة حالياً.</p>`}`)}
+    ${blk('حقوق التطوير', `<p dir="ltr" style="text-align:end;font-weight:600">${esc(COPYRIGHT)}</p><p class="na sm">حقوق تصميم الموسوعة وبرمجتها. أما نص كتاب «الفقه المنهجي» فحقوقه لأصحابها، ولا يُنشر مع التطبيق.</p>`)}
     <div class="notice ok"><strong>تنبيه</strong>${MSG.ABOUT_NOTE}</div>`);
 }
 
@@ -2869,6 +2880,7 @@ function evRef(e) {
   return '';
 }
 const SUBTITLE = 'الفقه المنهجي على مذهب الإمام الشافعي – قسم العبادات';
+const COPYRIGHT = '© Muzzammil Najib 2026 | FPIB-KIAS';
 function buildExtractDeck(title, topics, bab, only, secBlocks) {
   const MAX_SLIDES = 800, slides = [{ type: 'title', title, subtitle: SUBTITLE }], ids = [], seen = new Set();
   const issuesOf = t => only || topicIssues(t);
@@ -3155,7 +3167,7 @@ function slideHtmlRaw(deck, s, k) {
   const part = s.part ? `<span class="s-part">${fmt(s.part[0])} / ${fmt(s.part[1])}</span>` : '';
   switch (s.type) {
     case 'title': return `<div class="slide t-title${ab}"><div class="t-deco" aria-hidden="true">${STAR}</div><span class="t-kick">${has(s.crumb) ? esc(s.crumb) + ' · ' : ''}الفقه المنهجي · قسم العبادات</span><h1>${esc(s.title)}</h1>${has(s.subtitle) ? `<p class="t-sub">${esc(s.subtitle)}</p>` : ''}
-      ${arr(s.stats).length ? `<div class="t-stats">${s.stats.map(x => `<div><b>${fmt(x.n)}</b><span>${esc(x.l)}</span></div>`).join('')}</div>` : ''}${deck.mode === 'ai' ? '<p class="ai-note">ملخص آلي محال إلى مسائل الموسوعة</p>' : ''}</div>`;
+      ${arr(s.stats).length ? `<div class="t-stats">${s.stats.map(x => `<div><b>${fmt(x.n)}</b><span>${esc(x.l)}</span></div>`).join('')}</div>` : ''}${deck.mode === 'ai' ? '<p class="ai-note">ملخص آلي محال إلى مسائل الموسوعة</p>' : ''}<div class="s-copy" dir="ltr">${esc(COPYRIGHT)}</div></div>`;
     case 'section': return `<div class="slide t-section${ab}">${s.no ? `<div class="sec-no" aria-hidden="true">${fmt(s.no)}</div><div class="sec-of">${esc(s.label || 'الموضوع')} ${fmt(s.no)} من ${fmt(s.of)}</div>` : ''}<h2>${esc(s.title)}</h2>${has(s.subtitle) ? `<p>${esc(s.subtitle)}</p>${s.ai ? '<span class="sec-ai">ملخص آلي من نص الكتاب</span>' : ''}` : ''}${foot}</div>`;
     case 'quote': {
       const kind = s.kind || 'nass', len = String(s.text).length, sz = len > 380 ? 'xl' : len > 240 ? 'lg' : '';
@@ -3201,7 +3213,7 @@ function slideHtmlRaw(deck, s, k) {
         return `<li><b>${esc(g.name)}</b><small>${esc([g.vol, r ? 'صـ ' + r : ''].filter(Boolean).join(' · '))}</small></li>`;
       }).join('');
       const more = all.length > 12 ? `<li class="more">و${fmt(all.length - 12)} موضوعاً آخر</li>` : '';
-      return `<div class="slide t-sources${ab}"><div class="s-top"><span class="s-kicker">المصادر</span></div><h3 class="s-title">${esc(s.title)}</h3><ul class="src-grid">${li}${more}</ul>${books.size ? `<p class="src-book">${esc([...books].join('، '))}</p>` : ''}${foot}</div>`;
+      return `<div class="slide t-sources${ab}"><div class="s-top"><span class="s-kicker">المصادر</span></div><h3 class="s-title">${esc(s.title)}</h3><ul class="src-grid">${li}${more}</ul>${books.size ? `<p class="src-book">${esc([...books].join('، '))}</p>` : ''}<p class="src-book" dir="ltr" style="text-align:end">${esc(COPYRIGHT)}</p>${foot}</div>`;
     }
   }
   return '<div class="slide"></div>';
@@ -3503,7 +3515,7 @@ function renderSidebar() {
     <a href="#/about" data-nav="about">حول الموسوعة</a>`;
   const dot = DB.mode === 'none' ? '' : DB.mode === 'demo' ? 'demo' : 'on';
   const label = DB.mode === 'none' ? 'قاعدة البيانات غير متصلة' : DB.mode === 'demo' ? 'بيانات تجريبية' : 'قاعدة البيانات متصلة';
-  $('#sideFoot').innerHTML = `<div><span class="dot ${dot}"></span>${label}</div><a href="#/data" data-nav="data">إدارة البيانات</a>`;
+  $('#sideFoot').innerHTML = `<div><span class="dot ${dot}"></span>${label}</div><a href="#/data" data-nav="data">إدارة البيانات</a><div class="copy side" dir="ltr">${esc(COPYRIGHT)}</div>`;
   $('#demoRibbon').hidden = DB.mode !== 'demo';
 }
 function markNav() {
