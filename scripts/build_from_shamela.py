@@ -80,10 +80,12 @@ def main():
     toc = parse_toc(s.call('shamela_get_toc', book_id=BOOK, depth=5))
     for n in toc:  # fihrist Shamela membawa salah salin yang sama dengan baris tajuk dalam halaman
         for x, y in SHM_FIX.get(n['page_id'], []):
-            xs, ys = x.strip().rstrip(':').strip(), y.strip().rstrip(':').strip()
-            p = n['title'].find(xs)
-            if p >= 0 and not re.match(r'\w', n['title'][p - 1:p]) and not re.match(r'\w', n['title'][p + len(xs):p + len(xs) + 1]):
-                n['title'] = n['title'].replace(xs, ys)
+            tash = lambda s: re.sub(r'[ً-ْٰـ]', '', s)
+            xs, ys = tash(x).strip().rstrip(':').strip(), tash(y).strip().rstrip(':').strip()
+            tt = tash(n['title'])  # tajuk fihrist tanpa tashkil, jadi padanan tidak peka tashkil
+            p = tt.find(xs)
+            if p >= 0 and not re.match(r'\w', tt[p - 1:p]) and not re.match(r'\w', tt[p + len(xs):p + len(xs) + 1]):
+                n['title'] = tt.replace(xs, ys)
     pages, nxt = {}, 1
     while nxt and nxt <= LAST_PAGE_ID:
         sc = s.rpc('tools/call', {'name': 'shamela_get_pages_range',
