@@ -17,6 +17,13 @@ OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file_
 AR = str.maketrans('٠١٢٣٤٥٦٧٨٩', '0123456789')
 LAST_PAGE_ID = 445  # akhir jilid 2 (Haji); jilid 3 dan seterusnya bukan Ibadat
 
+# Salah salin Shamela yang disahkan terhadap naskhah bercetak (NOTA SILIBUS/الفقه المنهجي ١.pdf, hlm. cetakan dalam komen).
+# {page_id: [(teks Shamela, teks cetakan)]} — dikenakan pada body/foot sebelum tajuk dicari, jadi offset kekal betul.
+SHM_FIX = {
+    28: [('عَطِشْنَا، أَفَتَوَضَّأُ بِماءِ', 'عَطِشْنَا، أَفَنَتَوَضَّأُ بِماءِ'),  # hlm. 30, hadis air laut
+         ('ماُؤهُ الحِلُّ', 'ماؤُهُ، الحِلُّ')],
+}
+
 # (key, tajuk, title_id awal, title_id akhir (eksklusif), mod topik)
 #   'sib'  = topik ialah nod peringkat-2 dalam julat title_id
 #   'child'= topik ialah anak (peringkat-3) bagi nod title_id awal
@@ -80,6 +87,12 @@ def main():
         for p in sc.get('pages', []): pages[int(p['page_id'])] = p
         nxt = max(pages) + 1 if sc.get('has_more') and pages else 0
     assert len(pages) >= LAST_PAGE_ID - 5, f'halaman tidak lengkap: {len(pages)}'
+    for pid, fixes in SHM_FIX.items():
+        for x, y in fixes:
+            p = pages[pid]
+            assert x in p['body'] + p.get('foot', ''), f'SHM_FIX page_id {pid}: «{x}» tiada lagi dalam Shamela'
+            p['body'] = p['body'].replace(x, y)
+            if p.get('foot'): p['foot'] = p['foot'].replace(x, y)
 
     d = {'meta': {'schema_version': '1.0', 'primary_book_id': 'b1',
                   'project': 'موسوعة الفقه المنهجي – قسم العبادات',
