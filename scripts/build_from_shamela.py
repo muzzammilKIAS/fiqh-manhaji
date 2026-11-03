@@ -17,12 +17,10 @@ OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file_
 AR = str.maketrans('٠١٢٣٤٥٦٧٨٩', '0123456789')
 LAST_PAGE_ID = 445  # akhir jilid 2 (Haji); jilid 3 dan seterusnya bukan Ibadat
 
-# Salah salin Shamela yang disahkan terhadap naskhah bercetak (NOTA SILIBUS/الفقه المنهجي ١.pdf, hlm. cetakan dalam komen).
-# {page_id: [(teks Shamela, teks cetakan)]} — dikenakan pada body/foot sebelum tajuk dicari, jadi offset kekal betul.
-SHM_FIX = {
-    28: [('عَطِشْنَا، أَفَتَوَضَّأُ بِماءِ', 'عَطِشْنَا، أَفَنَتَوَضَّأُ بِماءِ'),  # hlm. 30, hadis air laut
-         ('ماُؤهُ الحِلُّ', 'ماؤُهُ، الحِلُّ')],
-}
+# Salah salin Shamela yang disahkan terhadap naskhah bercetak (lihat _note dalam fail). {page_id: [(teks Shamela, teks cetakan)]}
+# — dikenakan pada body/foot sebelum tajuk dicari, jadi offset kekal betul.
+with open(os.path.join(os.path.dirname(__file__), 'shamela_fixes.json'), encoding='utf-8') as f:
+    SHM_FIX = {int(k): v for k, v in json.load(f)['fixes'].items()}
 
 # (key, tajuk, title_id awal, title_id akhir (eksklusif), mod topik)
 #   'sib'  = topik ialah nod peringkat-2 dalam julat title_id
@@ -80,6 +78,12 @@ def label(pp):
 def main():
     s = Shm()
     toc = parse_toc(s.call('shamela_get_toc', book_id=BOOK, depth=5))
+    for n in toc:  # fihrist Shamela membawa salah salin yang sama dengan baris tajuk dalam halaman
+        for x, y in SHM_FIX.get(n['page_id'], []):
+            xs, ys = x.strip().rstrip(':').strip(), y.strip().rstrip(':').strip()
+            p = n['title'].find(xs)
+            if p >= 0 and not re.match(r'\w', n['title'][p - 1:p]) and not re.match(r'\w', n['title'][p + len(xs):p + len(xs) + 1]):
+                n['title'] = n['title'].replace(xs, ys)
     pages, nxt = {}, 1
     while nxt and nxt <= LAST_PAGE_ID:
         sc = s.rpc('tools/call', {'name': 'shamela_get_pages_range',
