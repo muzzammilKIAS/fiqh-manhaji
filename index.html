@@ -387,7 +387,7 @@ body.presenting{overflow:hidden}
 .pcards{list-style:none;margin:0;padding:0;display:grid;gap:1.8cqh;counter-reset:p;align-content:start;flex:1;min-height:0;overflow:hidden}
 .pcards li{counter-increment:p;display:flex;align-items:center;gap:2cqw;background:var(--card,#fff);border:.25cqh solid var(--sline);border-radius:2.2cqh;padding:2cqh 2.4cqw;font-size:3.7cqh;line-height:1.6}
 .pcards li::before{content:counter(p,arabic-indic);flex:none;width:6.4cqh;height:6.4cqh;border-radius:50%;background:var(--sa);color:#fff;display:grid;place-items:center;font-family:var(--nass);font-size:4cqh;line-height:1}
-.pcards.dense li{font-size:3cqh;padding:1.4cqh 2cqw}.pcards.dense{gap:1.2cqh}
+.pcards.dense li{font-size:3.35cqh;padding:1.4cqh 2cqw}.pcards.dense{gap:1.2cqh}
 .pcards.dense li::before{width:5cqh;height:5cqh;font-size:3cqh}
 .src-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:1.5cqh 2cqw;align-content:start;flex:1;min-height:0;overflow:hidden}
 .src-grid li{background:var(--card,#fff);border:.25cqh solid var(--sline);border-radius:2cqh;padding:1.5cqh 1.8cqw;display:flex;flex-direction:column;gap:.3cqh;min-width:0}
@@ -695,7 +695,7 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .sum-cards{list-style:none;margin:0;padding:0;display:grid;gap:1.6cqh 2cqw;flex:1;min-height:0;align-content:start;overflow:hidden;counter-reset:m}
 .sum-cards.two{grid-template-columns:1fr 1fr}
 .sum-cards li{counter-increment:m;position:relative;background:var(--card,#fff);border:.25cqh solid var(--sline);border-radius:2cqh;padding:1.7cqh 2cqw;padding-inline-start:6.4cqw;font-size:3.4cqh;line-height:1.6;overflow:hidden}
-.sum-cards.small li{font-size:2.8cqh;padding-block:1.3cqh}
+.sum-cards.small li{font-size:3.15cqh;padding-block:1.3cqh}
 .sum-cards li::before{content:counter(m,arabic-indic);position:absolute;inset-inline-start:1.6cqw;top:1.5cqh;width:5cqh;height:5cqh;border-radius:1.4cqh;background:color-mix(in srgb,var(--sa) 14%,#fff);color:var(--sa);display:grid;place-items:center;font-family:var(--nass);font-weight:700;font-size:3cqh}
 .dl-grid{display:grid;gap:2.4cqh;flex:1;min-height:0}
 .dl-grid.n2{grid-template-rows:1fr 1fr}
@@ -706,15 +706,15 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .dl blockquote{margin:0;font-family:var(--nass);font-size:4.4cqh;line-height:1.85;overflow:hidden}
 .dl.quran blockquote{color:var(--sd);text-align:center;font-size:4.8cqh}
 .dl-grid.n2 .dl blockquote{font-size:3.6cqh}
-.dl.sm blockquote,.dl-grid.n2 .dl.sm blockquote{font-size:3cqh;line-height:1.75}
+.dl.sm blockquote,.dl-grid.n2 .dl.sm blockquote{font-size:3.45cqh;line-height:1.75}
 .dl small{font-size:2.4cqh;color:var(--smut);align-self:flex-end}
 .rc-grid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:2cqh 2cqw;flex:1;min-height:0}
 .rc-grid.n1{grid-template-columns:1fr}
 .rc-grid.n5,.rc-grid.n6{grid-template-columns:repeat(3,1fr)}
 .rc{background:var(--card,#fff);border:.25cqh solid var(--sline);border-top:.9cqh solid var(--sa);border-radius:2.2cqh;padding:1.8cqh 1.8cqw;display:flex;flex-direction:column;gap:1cqh;overflow:hidden;min-height:0}
-.rc b{font-family:var(--nass);font-size:3.5cqh;line-height:1.35;color:var(--sd)}
-.rc p{margin:0;font-size:2.6cqh;line-height:1.65;color:var(--sink);display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
-.rc-grid.n5 .rc p,.rc-grid.n6 .rc p{-webkit-line-clamp:4;font-size:2.4cqh}
+.rc b{font-family:var(--nass);font-size:3.5cqh;line-height:1.6;color:var(--sd)}
+.rc p{margin:0;font-size:3.2cqh;line-height:1.65;color:var(--sink);flex:1;min-height:0;overflow:hidden}
+.rc-grid.n5 .rc p,.rc-grid.n6 .rc p{font-size:2.9cqh}
 .rv-list{list-style:none;margin:0;padding:0;display:grid;gap:1.8cqh;flex:1;min-height:0;align-content:center}
 .rv-list li{display:flex;align-items:center;gap:2cqw;background:var(--card,#fff);border:.25cqh solid var(--sline);border-radius:2.2cqh;padding:1.6cqh 2.2cqw;font-family:var(--nass);font-size:3.5cqh;line-height:1.6}
 .rv-list i{flex:none;font-style:normal;font-family:var(--ui);font-weight:700;font-size:2.6cqh;color:#fff;background:var(--sg);border-radius:1.4cqh;padding:.6cqh 1.4cqw}
@@ -726,10 +726,9 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 #dkNotes .nass{font-size:1.15rem;margin-top:.5rem}
 
 
-.sum-cards li{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
-.sum-cards.small li{-webkit-line-clamp:4}
+.sum-cards li{display:block}
 .sum-cards.big{align-content:center;gap:2.4cqh}
-.sum-cards.big li{font-size:3.8cqh;padding-block:2.2cqh;-webkit-line-clamp:4}
+.sum-cards.big li{font-size:3.8cqh;padding-block:2.2cqh}
 .sum-cards.big li::before{top:2.1cqh}
 .sec-ai{display:inline-block;margin-top:2cqh;font-size:2.2cqh;color:#E9D08E;border:.2cqh solid rgba(233,208,142,.5);border-radius:99px;padding:.4cqh 1.6cqw}
 
@@ -748,8 +747,8 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .t-summary .q-ref{color:#7A5A12}
 .t-recap .rc{background:#FFFDF7;border-color:#E8D49A;border-top-color:#B8902F}
 .t-recap .rc b{font-family:var(--mlk);color:#5E440C;font-size:3.6cqh}
-.t-recap .rc p{font-family:var(--mlk);font-size:2.9cqh;line-height:1.75;color:#2A2110}
-.t-recap .rc-grid.n5 .rc p,.t-recap .rc-grid.n6 .rc p{font-size:2.6cqh}
+.t-recap .rc p{font-family:var(--mlk);font-size:3.4cqh;line-height:1.75;color:#2A2110}
+.t-recap .rc-grid.n5 .rc p,.t-recap .rc-grid.n6 .rc p{font-size:3cqh}
 .t-summary .s-bar i,.t-recap .s-bar i{background:linear-gradient(90deg,#8A6516,#D2AE58)}
 .t-summary .s-foot,.t-recap .s-foot{color:#7A5A12}
 .t-summary .c-mini{background:#fff;color:#7A5A12;border:.2cqh solid #E2C77F}
@@ -764,8 +763,8 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .t-mlk .s-title{color:#5E440C;font-family:var(--mlk)}
 .t-mlk .pcards li{font-family:var(--mlk);font-size:3.5cqh;line-height:1.75;background:#FFFDF7;border-color:#E8D49A;color:#2A2110}
 .t-mlk .pcards li:first-child{background:#FFFBF1;border-inline-start:1cqh solid #B8902F;font-size:3.8cqh}
-.t-mlk .pcards.dense li{font-size:2.95cqh;line-height:1.7}
-.t-mlk .pcards.dense li:first-child{font-size:3.2cqh}
+.t-mlk .pcards.dense li{font-size:3.35cqh;line-height:1.7}
+.t-mlk .pcards.dense li:first-child{font-size:3.6cqh}
 .t-mlk .pcards li::before{background:#B8902F;font-family:var(--mlk)}
 .t-mlk .c-mini{background:#fff;color:#7A5A12;border:.2cqh solid #E2C77F}
 .t-mlk .s-bar i{background:linear-gradient(90deg,#8A6516,#D2AE58)}
@@ -914,9 +913,9 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .th-mushaf .sum-cards li{background:transparent!important;border:0!important;border-radius:0;padding:1.3cqh 6cqw 1.3cqh 0;border-bottom:.2cqh dashed #D9B8A6!important}
 .th-mushaf .sum-cards li:last-child{border-bottom:0!important}
 .th-mushaf .sum-cards li::before{background:none!important;color:#8E2323!important;font-size:4cqh;top:1cqh;inset-inline-start:0}
-.th-mushaf .sum-cards.two li{font-size:3cqh}
+.th-mushaf .sum-cards.two li{font-size:3.35cqh}
 .th-mushaf .sum-lead{background:transparent!important;border:0;border-radius:0;text-align:center;font-size:4.2cqh;padding:0 4cqw}
-.th-mushaf .sum-lead::before{content:"«";color:#8E2323}.th-mushaf .sum-lead::after{content:"»";color:#8E2323}
+.th-mushaf .sum-lead::before,.th-mushaf .sum-lead::after{content:none}
 /* الأدلة */
 .th-mushaf .dl{background:transparent!important;border:0;border-top:.3cqh double #A88449;border-bottom:.3cqh double #A88449;border-radius:0;text-align:center;align-items:center}
 .th-mushaf .dl blockquote{text-align:center}
@@ -924,9 +923,9 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .th-mushaf .dl small{align-self:center}
 /* خلاصة الدرس: حواشٍ متدفقة */
 .th-mushaf .rc-grid{grid-template-columns:1fr 1fr!important;grid-auto-rows:auto;column-gap:5cqw;row-gap:1.6cqh;align-content:center}
-.th-mushaf .rc{background:transparent!important;border:0!important;border-radius:0;padding:0;display:block}
-.th-mushaf .rc b{display:inline;font-size:3.3cqh}.th-mushaf .rc b::after{content:": "}
-.th-mushaf .rc p{display:inline;font-size:2.8cqh}
+.th-mushaf .rc{background:transparent!important;border:0!important;border-radius:0;padding:0;display:block;font-size:0}
+.th-mushaf .rc b{display:inline;font-size:3.3cqh;line-height:1.35}.th-mushaf .rc b::after{content:": "}
+.th-mushaf .rc p{display:inline;font-size:3.2cqh}
 /* المراجعة: س في الهامش */
 .th-mushaf .rv-list li{background:transparent;border:0;border-bottom:.2cqh dashed #D7BF92;border-radius:0;padding:1.2cqh 0}
 .th-mushaf .rv-list i{background:none;color:#8E2323;font-family:var(--nass);font-size:3.6cqh;padding:0;min-width:7cqw}
@@ -957,7 +956,7 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .th-lail .dl small{align-self:center}
 /* خلاصة الدرس: بطاقات زجاجية برقم علوي */
 .th-lail .rc{border:0;border-top:0;background:rgba(255,255,255,.05)!important;text-align:center;align-items:center;position:relative;padding-top:3cqh}
-.th-lail .rc::before{content:"✦";color:#F2DDA0;font-size:3cqh;line-height:1}
+.th-lail .rc::before{content:"✦";color:#F2DDA0;font-size:2.6cqh;line-height:1;position:absolute;top:.5cqh;inset-inline-start:50%;translate:50% 0}
 /* المراجعة: فقاعات حوار متبادلة */
 .th-lail .rv-list{gap:1.4cqh}
 .th-lail .rv-list li{width:78%;border-radius:3cqh 3cqh 3cqh .6cqh;background:rgba(255,255,255,.06);border:0}
@@ -984,11 +983,11 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .th-asri .ag-list li:first-child b,.th-asri .ag-list li:first-child small{color:#fff}
 .th-asri .ag-list i{background:none!important;color:var(--sa);width:auto;height:auto;font-family:var(--ui);font-weight:800;font-size:7cqh;border-radius:0}
 .th-asri .ag-list li:first-child i{color:rgba(255,255,255,.85);font-size:12cqh}
-.th-asri .ag-list b{white-space:normal;font-family:var(--ui);font-weight:800;font-size:3cqh;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.th-asri .ag-list b{white-space:normal;font-family:var(--ui);font-weight:800;font-size:3.5cqh;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .th-asri .sum-cards,.th-asri .sum-cards.two{grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;align-content:stretch}
 .th-asri .sum-cards.big{grid-template-columns:repeat(auto-fit,minmax(0,1fr))}
-.th-asri .sum-cards li,.th-asri .sum-cards.small li,.th-asri .sum-cards.big li{padding:7.5cqh 2cqw 2cqh;font-size:3cqh}
-.th-asri .sum-cards li::before{inset-inline-start:2cqw;top:1.6cqh;width:auto;height:auto;background:none!important;color:#B8902F!important;font-family:var(--ui);font-weight:800;font-size:5.4cqh}
+.th-asri .sum-cards li,.th-asri .sum-cards.small li,.th-asri .sum-cards.big li{padding:7cqh 2cqw 2cqh;font-size:3.5cqh}
+.th-asri .sum-cards li::before{inset-inline-start:2cqw;top:1.1cqh;line-height:1;width:auto;height:auto;background:none!important;color:#B8902F!important;font-family:var(--ui);font-weight:800;font-size:4.8cqh}
 .th-asri .sum-cards.n4{grid-template-columns:1fr 1fr}
 .th-asri .sum-cards.n5 li:first-child{grid-column:span 2}
 .th-asri .sum-lead.solo{font-size:4.8cqh;border-inline-start:0;border-top:1.4cqh solid #B8902F;border-radius:0 0 3cqh 3cqh}
@@ -1009,18 +1008,18 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
 .th-zakhrafa .ag-list li:nth-child(even){margin-inline-start:auto;flex-direction:row}
 .th-zakhrafa .ag-list li::after{content:"✦";position:absolute;inset-inline-end:-4.6%;color:#B8902F;font-size:3cqh;line-height:1}
 .th-zakhrafa .ag-list li:nth-child(even)::after{inset-inline-end:auto;inset-inline-start:-4.6%}
-.th-zakhrafa .ag-list b{font-size:3cqh}
+.th-zakhrafa .ag-list b{font-size:3.5cqh}
 .th-zakhrafa .ag-list i{width:4.6cqh;height:4.6cqh;font-size:2.6cqh}
 .th-zakhrafa .ag-list small{display:none}
 /* بلاطات بقباب (محاريب) */
 .th-zakhrafa .sum-cards,.th-zakhrafa .sum-cards.two,.th-zakhrafa .sum-cards.big{display:flex;gap:1.6cqw;align-items:stretch;align-content:stretch}
-.th-zakhrafa .sum-cards li,.th-zakhrafa .sum-cards.small li,.th-zakhrafa .sum-cards.big li{flex:1;border-radius:40% 40% 1.4cqh 1.4cqh/18% 18% 1.4cqh 1.4cqh;padding:9cqh 1.6cqw 2cqh;text-align:center;font-size:2.8cqh;-webkit-line-clamp:8!important}
+.th-zakhrafa .sum-cards li,.th-zakhrafa .sum-cards.small li,.th-zakhrafa .sum-cards.big li{flex:1;border-radius:40% 40% 1.4cqh 1.4cqh/18% 18% 1.4cqh 1.4cqh;padding:9cqh 1.6cqw 2cqh;text-align:center;font-size:3.35cqh}
 .th-zakhrafa .sum-cards li::before{inset-inline-start:50%;transform:translateX(50%);top:3cqh;border-radius:50%}
 .th-zakhrafa .sum-lead{text-align:center;border-inline-start:0;border-top:.4cqh solid #C9AE6E;border-bottom:.4cqh solid #C9AE6E;border-radius:0}
 .th-zakhrafa .rc-grid{display:flex!important;gap:1.6cqw}
 .th-zakhrafa .rc{flex:1;border-top:0;border:.3cqh solid #E2CF9C;border-radius:40% 40% 1.4cqh 1.4cqh/16% 16% 1.4cqh 1.4cqh;padding-top:6cqh;text-align:center;align-items:center}
-.th-zakhrafa .rc b{font-size:3cqh}
-.slide.th-zakhrafa .rc p{font-size:2.4cqh;-webkit-line-clamp:8!important}
+.th-zakhrafa .rc b{font-size:3.5cqh}
+.slide.th-zakhrafa .rc p{font-size:3.1cqh;-webkit-line-clamp:8!important}
 /* الآية في خرطوشة */
 .th-zakhrafa .dl{border:0;background:transparent!important;align-items:center;text-align:center;padding:2cqh 6cqw;position:relative}
 .th-zakhrafa .dl::before{content:"";position:absolute;inset:0;border:.4cqh double #C9AE6E;border-radius:99px;pointer-events:none}
@@ -1117,6 +1116,104 @@ ol.outline.l2>li>a{font-size:.9rem;color:var(--muted)}
   .h2{margin-top:1.8rem}
   .bab2{min-height:220px}
 }
+/* ======================= لمسات الإبهار: حركة هادئة · شرائح حيّة · نصوص مقروءة =======================
+   الحركة بخاصية translate المستقلة (لا transform) كي لا تتعارض مع تحويلات الأنماط، وبملء backwards فلا يبقى أثرها بعد انتهائها.
+   تُطفأ كلها مع prefers-reduced-motion (القاعدة التالية). */
+@keyframes vin{from{opacity:0;translate:0 14px}to{opacity:1;translate:none}}
+@keyframes sInF{from{opacity:0;translate:-3% 0;scale:.985}to{opacity:1;translate:none;scale:none}}
+@keyframes sInB{from{opacity:0;translate:3% 0;scale:.985}to{opacity:1;translate:none;scale:none}}
+@keyframes sUp{from{opacity:0;translate:0 2.6cqh}to{opacity:1;translate:none}}
+@keyframes sPop{from{opacity:0;scale:.9}to{opacity:1;scale:none}}
+@keyframes spinSlow{to{rotate:360deg}}
+@keyframes shine{from{background-position:120% 0}to{background-position:-120% 0}}
+@keyframes glowPulse{0%,100%{opacity:.55}50%{opacity:.95}}
+/* دخول الصفحة: يجري عند تغيّر المسار فقط (setView) */
+.v-enter>*{animation:vin .55s var(--ease) backwards}
+.v-enter>:nth-child(2){animation-delay:.06s}.v-enter>:nth-child(3){animation-delay:.12s}.v-enter>:nth-child(4){animation-delay:.18s}.v-enter>:nth-child(n+5){animation-delay:.24s}
+.v-enter .babs2>.bab2,.v-enter .tgrid>.tcard,.v-enter .stats>div{animation:vin .6s var(--ease) backwards}
+.v-enter .babs2>:nth-child(2),.v-enter .tgrid>:nth-child(2),.v-enter .stats>:nth-child(2){animation-delay:.2s}
+.v-enter .babs2>:nth-child(3),.v-enter .tgrid>:nth-child(3),.v-enter .stats>:nth-child(3){animation-delay:.28s}
+.v-enter .babs2>:nth-child(4),.v-enter .tgrid>:nth-child(4),.v-enter .stats>:nth-child(4){animation-delay:.36s}
+.v-enter .babs2>:nth-child(n+5),.v-enter .tgrid>:nth-child(n+5),.v-enter .stats>:nth-child(n+5){animation-delay:.44s}
+.v-enter .babs2>:first-child,.v-enter .tgrid>:first-child,.v-enter .stats>:first-child{animation-delay:.12s}
+
+/* البطل في الرئيسية: نجمة تدور ببطء، وهج ذهبي، عنوان يلمع */
+.hero2{isolation:isolate}
+.hero2::after{content:"";position:absolute;width:520px;height:520px;inset-inline-start:-160px;bottom:-300px;border-radius:50%;background:radial-gradient(circle,rgba(233,208,142,.32),transparent 65%);pointer-events:none;z-index:-1;animation:glowPulse 7s ease-in-out infinite}
+.hero2 .deco svg{animation:spinSlow 120s linear infinite}
+.hero2 h1{background:linear-gradient(100deg,#fff 38%,#F6E3A8 50%,#fff 62%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s ease-in-out 1s infinite;padding-bottom:.08em}
+.hero2 .kick{background:rgba(233,208,142,.08);backdrop-filter:blur(4px)}
+
+/* بطاقات الأبواب: وهج بلون الباب، رقم ينزلق، أيقونة تقفز */
+.bab2{transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.bab2:hover{transform:translateY(-6px);box-shadow:0 26px 48px -22px color-mix(in srgb,var(--a) 85%,#000),0 0 0 1px rgba(255,255,255,.22) inset}
+.bab2 .no{transition:translate .5s var(--ease),-webkit-text-stroke-color .5s}
+.bab2:hover .no{translate:0 6px;-webkit-text-stroke-color:rgba(246,240,222,.6)}
+.bab2 .ico{display:inline-block;transition:scale .35s var(--ease)}
+.bab2:hover .ico{scale:1.18}
+.bab2 h3{text-shadow:0 2px 18px rgba(0,0,0,.18)}
+
+/* لوحة الإحصاءات */
+.stats>div{position:relative;overflow:hidden;transition:transform .25s var(--ease)}
+.stats>div::before{content:"";position:absolute;inset-inline:0;top:0;height:3px;background:linear-gradient(90deg,var(--emerald),var(--gold-line))}
+.stats>div:hover{transform:translateY(-3px)}
+.stats dd{font-variant-numeric:tabular-nums}
+
+/* قارئ النص: شريط تقدم القراءة */
+#readProg{position:fixed;top:var(--bar,64px);inset-inline:0;height:3px;z-index:40;pointer-events:none;background:linear-gradient(270deg,var(--emerald),var(--gold-line));transform-origin:right;transform:scaleX(var(--p,0));opacity:0;transition:opacity .3s}
+#readProg.on{opacity:1}
+body.presenting #readProg{display:none}
+
+/* النص الأصلي والحواشي (النوتة) */
+.blk.source-text>h2::after{content:"❁";margin-inline-start:auto;color:var(--gold);font-size:1.1rem;opacity:.8}
+.blk.source-text>.body{background-image:linear-gradient(90deg,transparent calc(100% - 4px),color-mix(in srgb,var(--gold-line) 45%,transparent) 0)}
+.nass p+p{text-indent:0}
+.notes{margin-top:1.3rem;padding:.9rem 0 0;border:0;border-top:1px dashed var(--gold-line);border-radius:0}
+.notes>b{display:inline-flex;align-items:center;gap:.35rem;padding:.1rem .85rem;border-radius:999px;background:var(--gold-soft);color:var(--gold);font-size:.8rem}
+.notes>b::before{content:"✦"}
+.notes .nass{margin-top:.55rem;color:color-mix(in srgb,var(--ink) 82%,var(--muted))}
+.blk.foot{border:0;border-top:2px solid var(--gold-line);border-radius:0 0 var(--r) var(--r);background:linear-gradient(180deg,var(--gold-soft),transparent 75%)}
+.blk.foot>h2{background:transparent;color:var(--gold)}
+.ev{transition:box-shadow .25s var(--ease)}
+.ev:hover{box-shadow:var(--shadow)}
+
+/* ملاحظات المقدّم: لوحة مستقلة واضحة */
+#dkNotes{margin-top:1rem;padding:0 1.25rem 1rem;border:0;border-inline-start:4px solid var(--gold-line);border-radius:18px;background:linear-gradient(180deg,var(--gold-soft),var(--surface) 140px);box-shadow:var(--shadow);color:var(--ink)}
+#dkNotes>strong{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:.45rem;padding:.8rem 0 .5rem;margin-bottom:.2rem;background:linear-gradient(180deg,var(--gold-soft) 70%,transparent);color:var(--gold);font-size:.95rem}
+#dkNotes>strong::before{content:"📝"}
+#dkNotes .nass{max-width:75ch;font-size:1.22rem;line-height:2.15}
+#dkNotes .na{display:block;padding-bottom:.2rem}
+
+/* الشرائح: انتقال باتجاه القراءة، ثم ظهور العناصر تباعاً (يُضاف بعد fitSlide فلا يؤثر في القياس) */
+.stage{transition:box-shadow .4s var(--ease)}
+#stage{box-shadow:0 30px 70px -30px rgba(10,30,22,.6),0 0 0 1px rgba(255,255,255,.05)}
+#stage>.slide.s-fwd{animation:sInF .5s var(--ease) backwards}
+#stage>.slide.s-back{animation:sInB .5s var(--ease) backwards}
+#stage>.s-in :is(.s-title,.t-kick,.sec-of){animation:sUp .5s var(--ease) .08s backwards}
+#stage>.s-in :is(.t-title h1,.t-section h2,.sec-no){animation:sPop .7s var(--ease) .12s backwards}
+#stage>.s-in :is(.t-sub,.t-section p){animation:sUp .6s var(--ease) .3s backwards}
+#stage>.s-in :is(.pcards>li,.sum-cards>li,.rc,.ag-list>li,.dl,.map-card,.rv-list>li,.t-stats>div,.src-grid>*,.q-card,.sum-lead){animation:sUp .55s var(--ease) .18s backwards}
+#stage>.s-in :is(.pcards,.sum-cards,.rc-grid,.ag-list,.dl-grid,.map-grid,.rv-list,.t-stats,.src-grid)>:nth-child(2){animation-delay:.26s}
+#stage>.s-in :is(.pcards,.sum-cards,.rc-grid,.ag-list,.dl-grid,.map-grid,.rv-list,.t-stats,.src-grid)>:nth-child(3){animation-delay:.34s}
+#stage>.s-in :is(.pcards,.sum-cards,.rc-grid,.ag-list,.dl-grid,.map-grid,.rv-list,.t-stats,.src-grid)>:nth-child(4){animation-delay:.42s}
+#stage>.s-in :is(.pcards,.sum-cards,.rc-grid,.ag-list,.dl-grid,.map-grid,.rv-list,.t-stats,.src-grid)>:nth-child(5){animation-delay:.5s}
+#stage>.s-in :is(.pcards,.sum-cards,.rc-grid,.ag-list,.dl-grid,.map-grid,.rv-list,.t-stats,.src-grid)>:nth-child(n+6){animation-delay:.58s}
+#stage>.slide .t-deco svg{animation:spinSlow 90s linear infinite}
+/* محاور كثيرة: تُعاد هندسة القائمة بدل تصغير الخط إلى حدّ لا يُقرأ */
+.th-zakhrafa .ag-list.two{grid-template-columns:1fr 1fr;column-gap:9%;row-gap:1.4cqh}
+.th-zakhrafa .ag-list.two li,.th-zakhrafa .ag-list.two li:nth-child(even){width:auto;margin:0}
+.th-zakhrafa .ag-list.two li::after{inset-inline-end:-13%}
+.th-zakhrafa .ag-list.two li:nth-child(even)::after{inset-inline-end:auto;inset-inline-start:-13%}
+.th-zakhrafa .ag-list.two li:nth-child(odd)::after{content:none}
+.th-asri .ag-list.many{grid-template-columns:repeat(4,1fr)}
+.th-asri .ag-list.two li,.th-asri .ag-list.two li:first-child{grid-row:auto;flex-direction:row;align-items:center;justify-content:flex-start;gap:1.4cqw;padding:1.6cqh 1.6cqw}
+.th-asri .ag-list.two i,.th-asri .ag-list.two li:first-child i{font-size:6cqh;line-height:1}
+.th-asri .ag-list.many i,.th-asri .ag-list.many li:first-child i{font-size:5.4cqh}
+.th-asri .ag-list.many b{font-size:3.2cqh}
+.film .thumb{transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.film .thumb:hover{transform:translateY(-2px)}
+.film .thumb.on{box-shadow:0 0 0 3px var(--gold-line),0 10px 24px -12px rgba(0,0,0,.5)}
+
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 
 /* ---------- print ---------- */
@@ -1651,7 +1748,35 @@ const SCHEMA_EXAMPLE = {
 };
 
 /* ======================= UI HELPERS ======================= */
-function setView(html) { $('#view').innerHTML = html; }
+let lastViewRoute = null;
+function setView(html) {
+  const v = $('#view'); v.innerHTML = html;
+  /* حركة الدخول عند تغيّر المسار فقط، لا عند إعادة الرسم في الصفحة نفسها (كالاختبار) */
+  const route = location.hash.split('?')[0];
+  if (route !== lastViewRoute) { lastViewRoute = route; v.classList.remove('v-enter'); void v.offsetWidth; v.classList.add('v-enter'); }
+  readProgress();
+}
+const motionOk = () => typeof requestAnimationFrame === 'function' && !!window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* عدّاد تصاعدي للأرقام المحسوبة من البيانات؛ النص النهائي هو fmt(n) نفسه */
+function countUp(root) {
+  if (!motionOk()) return;
+  root.querySelectorAll('[data-count]').forEach(el => {
+    const n = +el.dataset.count; if (!(n > 1)) return;
+    const t0 = performance.now(), D = 1200;
+    const step = t => { const p = Math.min(1, (t - t0) / D); el.textContent = fmt(Math.round(n * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+}
+/* شريط تقدم القراءة في الصفحات الطويلة */
+function readProgress() {
+  let bar = document.getElementById('readProg');
+  if (!bar) { bar = document.createElement('div'); bar.id = 'readProg'; bar.setAttribute('aria-hidden', 'true'); document.body.appendChild(bar); }
+  const se = document.scrollingElement || document.documentElement, max = se.scrollHeight - se.clientHeight;
+  bar.classList.toggle('on', max > se.clientHeight * 0.8 && !!document.querySelector('#view .nass'));
+  bar.style.setProperty('--p', max > 0 ? Math.min(1, se.scrollTop / max).toFixed(4) : 0);
+}
+let rpTick = false;
+window.addEventListener('scroll', () => { if (rpTick) return; rpTick = true; (window.requestAnimationFrame || setTimeout)(() => { rpTick = false; readProgress(); }); }, { passive: true });
 function crumbs(items) {
   $('#crumbs').innerHTML = '<ol>' + items.map((it, i) => {
     const last = i === items.length - 1;
@@ -1734,7 +1859,7 @@ function viewHome() {
       <div class="go">${n.issues ? `<a class="gbtn solid" href="#/slides/bab/${b.key}">▶ شرائح</a>` : ''}<a class="gbtn" href="#/bab/${b.key}">تصفّح الباب</a></div></article>`;
   }).join('');
   const stats = [['إجمالي الأبواب', C.chapters], ['إجمالي الموضوعات', C.topics], ['إجمالي المسائل', C.issues], ['إجمالي الأدلة', C.evidences], ['إجمالي المراجع', C.references], ['إجمالي الأجزاء', C.volumes], ['إجمالي المصادر', C.books]]
-    .map(([l, v]) => `<div><dt>${l}</dt><dd>${fmt(v)}</dd></div>`).join('');
+    .map(([l, v]) => `<div><dt>${l}</dt><dd data-count="${+v || 0}">${fmt(v)}</dd></div>`).join('');
   const recent = store.get('recent', []).filter(r => (r.k === 'issue' ? DB.idx.issues : DB.idx.topics).has(r.id)).slice(0, 5);
   setView(`
     <section class="hero2">
@@ -1756,6 +1881,7 @@ function viewHome() {
     <dl class="stats">${stats}</dl>
     ${recent.length ? `<h2 class="h2">آخر ما قرأت</h2><div class="cards">${recent.map(r => `<div class="card"><h3><a href="#/${r.k}/${encodeURIComponent(r.id)}">${esc(r.t)}</a></h3></div>`).join('')}</div>` : ''}
   `);
+  countUp($('#view'));
 }
 
 function pageRange(issues) {
@@ -3158,7 +3284,7 @@ function reviewSlides(slides, units) {
   evenChunks(qs, 5).forEach(c => slides.push({ type: 'review', title: 'أسئلة المراجعة', part: c.part, items: c.items.map((x, j) => ({ ...x, n: c.start + j + 1 })) }));
 }
 function recapSlides(slides, title, items, kicker = '🧭 خلاصة الدرس') {
-  evenChunks(items, 6).forEach(c => slides.push({ type: 'recap', kicker, title, part: c.part, items: c.items }));
+  evenChunks(items, 4).forEach(c => slides.push({ type: 'recap', kicker, title, part: c.part, items: c.items }));
 }
 function buildLessonDeck(kind, title, topics, bab, head) {
   const slides = [], ids = new Set();
@@ -3348,14 +3474,34 @@ const FIT_LEAF = '.q,li,p,blockquote,b,small,.sum-lead';
 function fitSlide(stage) {
   const sl = stage && stage.querySelector('.slide'); if (!sl) return;
   const cqh = stage.clientHeight / 100; if (!cqh) return;
+  /* يبدأ كل استدعاء من الأحجام الأصلية، فيصحّ تكراره (بعد تحميل الخطوط أو تغيّر الحجم) */
+  sl.querySelectorAll(FIT_LEAF + ',' + FIT_BOX + ',.s-title,.s-path').forEach(e => { e.style.fontSize = ''; });
   const shrink = el => { const px = parseFloat(getComputedStyle(el).fontSize); el.style.fontSize = (px * 0.93 / cqh).toFixed(3) + 'cqh'; };
+  const slBase = Math.max(sl.scrollHeight, sl.clientHeight);
   sl.querySelectorAll(FIT_BOX).forEach(box => {
-    const leaves = box.matches('.sum-lead,.t-section p,.t-sub') ? [box] : [...box.querySelectorAll(FIT_LEAF)];
-    const over = () => box.scrollHeight > box.clientHeight + 1 || leaves.some(l => l.scrollHeight > l.clientHeight + 1);
+    const self = box.matches('.sum-lead,.t-section p,.t-sub');
+    const leaves = self ? [box] : [...box.querySelectorAll(FIT_LEAF)];
+    /* العنصر الفرعي لا يُعدّ فائضاً إلا إذا كان يقصّ نصه فعلاً (overflow غير مرئي أو line-clamp)؛ وإلا فبروز حروف أميري بكسلات لا يقصّ شيئاً */
+    const clips = leaves.map(l => { const cs = getComputedStyle(l); return (l === box || cs.overflowY !== 'visible' || cs.webkitLineClamp !== 'none') && cs.whiteSpace !== 'nowrap'; });
+    const wclip = leaves.map(l => getComputedStyle(l).overflowX !== 'visible');
+    /* والبطاقات المباشرة التي تقصّ محتواها (كبطاقة الخلاصة) تُراقب أيضاً */
+    const kids = self ? [] : [...box.children].filter(k => !leaves.includes(k) && getComputedStyle(k).overflowY !== 'visible');
+    const over = () => box.scrollHeight > box.clientHeight + 1 || leaves.some((l, i) => clips[i] && l.scrollHeight > l.clientHeight + 1) || kids.some(k => k.scrollHeight > k.clientHeight + 2);
+    /* تكبير أولاً: إذا بقي في الصندوق فراغ كبّر الخط تدريجياً (حتى ×1.35 ولا يتجاوز 5.6cqh) ما دام لا فيض ولا قصّ عرضي ولا خروج من الشريحة */
+    if (!self && !box.matches('.src-grid') && leaves.length && !over()) {
+      const base = leaves.map(l => parseFloat(getComputedStyle(l).fontSize)), cap = 5.6 * cqh;
+      const put = f => leaves.forEach((l, i) => { l.style.fontSize = (Math.min(base[i] * f, Math.max(base[i], cap)) / cqh).toFixed(3) + 'cqh'; });
+      const bad = () => over() || sl.scrollHeight > slBase + 1 || leaves.some((l, i) => wclip[i] && l.scrollWidth > l.clientWidth + 1);
+      let f = 1;
+      while (f < 1.35) { const g = Math.min(1.35, f * 1.06); put(g); if (bad()) { put(f); break; } f = g; }
+      if (f === 1) leaves.forEach(l => { l.style.fontSize = ''; });
+    }
     for (let n = 0; n < 16 && over(); n++) leaves.forEach(shrink);
   });
   sl.querySelectorAll('.s-title,.ag-list b,.s-path').forEach(t => { for (let n = 0; n < 8 && (t.scrollWidth > t.clientWidth + 1 || t.scrollHeight > t.clientHeight + 2); n++) shrink(t); });
 }
+/* إذا وصل خط (أميري مثلاً) بعد القياس تتغير المقاسات، فيُعاد ضبط الشرائح المعروضة */
+if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', () => document.querySelectorAll('#stage,.gal .stage,.th-prev .stage').forEach(st => fitSlide(st)));
 function slideHtmlRaw(deck, s, k) {
   const N = deck.slides.length, ab = deck.bab ? ' ab-' + deck.bab : '';
   const foot = `<div class="s-foot"><span>${esc(deck.title)}</span><span>${deck.mode === 'ai' ? '✨ ملخص آلي · ' : ''}${fmt(k + 1)} / ${fmt(N)}</span></div><div class="s-bar" style="--p:${((k + 1) / N * 100).toFixed(1)}%"><i></i></div>`;
@@ -3373,7 +3519,7 @@ function slideHtmlRaw(deck, s, k) {
       return `<div class="slide t-quote k-${kind}${ab}"><div class="s-top"><span class="s-kicker">${label}</span><span class="s-path">${has(s.path) ? esc(s.path) : ''}</span>${s.part ? `<span class="s-part">${fmt(s.part[0])} / ${fmt(s.part[1])}</span>` : ''}</div><h3 class="s-title">${esc(s.title)}</h3><div class="q-card"><blockquote class="q ${sz}">${o}${lines(s.text)}${c}</blockquote></div><div class="q-ref"><span>${has(s.ref) ? esc(s.ref) : ''}</span>${cites(s.cite)}</div>${foot}</div>`;
     }
     case 'agenda': return `<div class="slide t-agenda${ab}"><div class="s-top"><span class="s-kicker">🗂️ ${esc(s.kicker || 'محاور الدرس')}</span><span class="s-path"></span>${part}</div><h3 class="s-title">${esc(s.title)}</h3>
-      <ol class="ag-list${s.items.length > 5 ? ' two' : ''}">${s.items.map(x => `<li><i>${fmt(x.n)}</i><span><b>${esc(x.t)}</b>${has(x.sub) ? `<small>${esc(x.sub)}</small>` : ''}</span></li>`).join('')}</ol>${foot}</div>`;
+      <ol class="ag-list${s.items.length > 5 ? ' two' : ''}${s.items.length > 8 ? ' many' : ''}">${s.items.map(x => `<li><i>${fmt(x.n)}</i><span><b>${esc(x.t)}</b>${has(x.sub) ? `<small>${esc(x.sub)}</small>` : ''}</span></li>`).join('')}</ol>${foot}</div>`;
     case 'summary': {
       const n = arr(s.items).length, long = arr(s.items).some(x => x.length > 110);
       return `<div class="slide t-summary${ab}"><div class="s-top"><span class="s-kicker">${esc(s.kicker || '📌 الخلاصة')}</span><span class="s-path"></span>${s.ai ? '<span class="s-ai">ملخص آلي من نص الكتاب</span>' : ''}</div><h3 class="s-title">${esc(s.title)}</h3>
@@ -3478,6 +3624,12 @@ function showSlide() {
   deckState.i = Math.max(0, Math.min(n - 1, deckState.i));
   $('#stage').innerHTML = slideHtml(deck, deck.slides[deckState.i], deckState.i);
   fitSlide($('#stage'));
+  /* الحركة بعد القياس، وفقط عند تغيّر الشريحة (لا عند فتح الملاحظات مثلاً) */
+  if (deckState.shown !== deckState.i) {
+    const sl = $('#stage .slide');
+    if (sl) sl.classList.add('s-in', deckState.i < (deckState.shown ?? -1) ? 's-back' : 's-fwd');
+    deckState.shown = deckState.i;
+  }
   const label = `${fmt(deckState.i + 1)} / ${fmt(n)}`;
   $('#dkCount').textContent = label; $('#dkCount2').textContent = label;
   $('#dkProg').style.width = ((deckState.i + 1) / n * 100) + '%';
